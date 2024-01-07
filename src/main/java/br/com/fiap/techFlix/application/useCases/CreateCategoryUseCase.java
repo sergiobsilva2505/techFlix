@@ -1,7 +1,7 @@
-package br.com.fiap.techFlix.useCases.category;
+package br.com.fiap.techFlix.application.useCases;
 
-import br.com.fiap.techFlix.adapters.category.CategoryMapper;
-import br.com.fiap.techFlix.adapters.category.CategoryRepository;
+import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
+import br.com.fiap.techFlix.infrastructure.persistence.CategoryRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -14,7 +14,7 @@ public class CreateCategoryUseCase {
         this.categoryRepository = categoryRepository;
     }
 
-    public Mono<CategoryMapper> createCategory(String name) {
-        return categoryRepository.save(new CategoryMapper(name));
+    public Mono<CategoryDocument> createCategory(String name) {
+        return categoryRepository.save(new CategoryDocument(name));
     }
 }

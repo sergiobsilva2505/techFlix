@@ -1,6 +1,7 @@
-package br.com.fiap.techFlix.adapters.category;
+package br.com.fiap.techFlix.infrastructure.controllers;
 
-import br.com.fiap.techFlix.useCases.category.CreateCategoryUseCase;
+import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
+import br.com.fiap.techFlix.application.useCases.CreateCategoryUseCase;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -16,6 +17,6 @@ public class CategoryController {
 
     @PostMapping("/categories")
     public Mono<String> createCategory(@Valid @RequestBody CategoryCreateDTO categoryDTO) {
-        return createCategoryUseCase.createCategory("name").map(CategoryMapper::getId).map(id -> "/categories/" + id);
+        return createCategoryUseCase.createCategory("name").map(CategoryDocument::getId).map(id -> "/categories/" + id);
     }
 }

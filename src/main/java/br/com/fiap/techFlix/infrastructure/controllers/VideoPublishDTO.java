@@ -1,4 +1,4 @@
-package br.com.fiap.techFlix.adapters.video;
+package br.com.fiap.techFlix.infrastructure.controllers;
 
 import jakarta.validation.constraints.NotEmpty;
 

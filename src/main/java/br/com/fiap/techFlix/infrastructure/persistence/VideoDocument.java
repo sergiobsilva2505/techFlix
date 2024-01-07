@@ -1,25 +1,21 @@
-package br.com.fiap.techFlix.entities.video;
+package br.com.fiap.techFlix.infrastructure.persistence;
 
-import br.com.fiap.techFlix.entities.category.Category;
-import org.springframework.util.Assert;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-public class Video {
+@Document(collection = "videos")
+public class VideoDocument {
 
+    @Id
     private String id;
     private String title;
     private String description;
-    private Category category;
+    private CategoryDocument category;
     private LocalDateTime publicationDate;
 
-    public Video(String id, String title, String description, Category category, LocalDateTime publicationDate) {
-        Assert.hasText(id, "Id cannot be empty");
-        Assert.hasText(title, "Title cannot be empty");
-        Assert.hasText(description, "Description cannot be empty");
-        Assert.notNull(category, "Category cannot be null");
-        Assert.notNull(publicationDate, "Publication date cannot be null");
-        this.id = id;
+    public VideoDocument(String title, String description, CategoryDocument category, LocalDateTime publicationDate) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -50,11 +46,15 @@ public class Video {
         this.description = description;
     }
 
-    public Category getCategory() {
+    public CategoryDocument getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    public void setCategory(CategoryDocument category) {
         this.category = category;
     }
 

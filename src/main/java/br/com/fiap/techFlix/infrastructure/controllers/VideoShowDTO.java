@@ -1,4 +1,6 @@
-package br.com.fiap.techFlix.adapters.video;
+package br.com.fiap.techFlix.infrastructure.controllers;
+
+import br.com.fiap.techFlix.infrastructure.persistence.VideoDocument;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -6,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record VideoShowDTO(String id, String title, String description, String categoryName,
                            LocalDateTime publicationDate) {
-    public VideoShowDTO(VideoMapper videoMapper) {
+    public VideoShowDTO(VideoDocument videoMapper) {
         this(videoMapper.getId(), videoMapper.getTitle(), videoMapper.getDescription(), videoMapper.getCategoryName(), videoMapper.getPublicationDate());
     }
 

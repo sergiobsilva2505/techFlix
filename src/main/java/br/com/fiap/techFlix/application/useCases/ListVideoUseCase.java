@@ -1,7 +1,8 @@
-package br.com.fiap.techFlix.useCases.video;
+package br.com.fiap.techFlix.application.useCases;
 
-import br.com.fiap.techFlix.adapters.video.*;
-import org.springframework.data.domain.Page;
+import br.com.fiap.techFlix.infrastructure.controllers.VideoShowDTO;
+import br.com.fiap.techFlix.infrastructure.persistence.VideoDocument;
+import br.com.fiap.techFlix.infrastructure.persistence.VideoRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -17,13 +18,13 @@ public class ListVideoUseCase {
     }
 
     public Flux<VideoShowDTO> listVideosUseCase(PageRequest pageRequest) {
-        Flux<VideoMapper> videos = videoRepository.findAll();
+        Flux<VideoDocument> videos = videoRepository.findAll();
 
         return videos.map(VideoShowDTO::new);
     }
 
     public Mono<VideoShowDTO> listVideoUseCase(String id) {
-        Mono<VideoMapper> videoMapper = videoRepository.findById(id);
+        Mono<VideoDocument> videoMapper = videoRepository.findById(id);
 
         return videoMapper.map(VideoShowDTO::new);
     }
