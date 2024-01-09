@@ -7,6 +7,7 @@ import br.com.fiap.techFlix.domain.entities.Video;
 import br.com.fiap.techFlix.infrastructure.persistence.CategoryRepository;
 import br.com.fiap.techFlix.infrastructure.persistence.VideoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class VideoRepositoryGateway implements VideoGateway {
@@ -27,5 +28,10 @@ public class VideoRepositoryGateway implements VideoGateway {
     @Override
     public Optional<Video> findById(String id) {
         return Optional.empty();
+    }
+
+    @Override
+    public List<Video> findAll() {
+        return List.of();
     }
 }

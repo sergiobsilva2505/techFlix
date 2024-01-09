@@ -2,7 +2,7 @@ package br.com.fiap.techFlix.config;
 
 import br.com.fiap.techFlix.application.gateways.CategoryGateway;
 import br.com.fiap.techFlix.application.gateways.VideoGateway;
-import br.com.fiap.techFlix.application.useCases.PublishVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.*;
 import br.com.fiap.techFlix.infrastructure.gateways.*;
 import br.com.fiap.techFlix.infrastructure.persistence.CategoryRepository;
 import br.com.fiap.techFlix.infrastructure.persistence.VideoRepository;
@@ -23,7 +23,22 @@ public class Config {
     }
 
     @Bean
+    CreateCategoryUseCase createCategoryUseCase(CategoryGateway categoryGateway) {
+        return new CreateCategoryUseCase(categoryGateway);
+    }
+
+    @Bean
+    ListCategoryUseCase listCategoryUseCase(CategoryGateway categoryGateway) {
+        return new ListCategoryUseCase(categoryGateway);
+    }
+
+    @Bean
     PublishVideoUseCase publishVideoUseCase(CategoryGateway categoryGateway, VideoGateway videoGateway) {
         return new PublishVideoUseCase(categoryGateway, videoGateway);
+    }
+
+    @Bean
+    ListVideoUseCase listVideoUseCase(VideoGateway videoGateway) {
+        return new ListVideoUseCase(videoGateway);
     }
 }

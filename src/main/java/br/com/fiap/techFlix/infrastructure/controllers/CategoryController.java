@@ -1,22 +1,36 @@
 package br.com.fiap.techFlix.infrastructure.controllers;
 
-import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
 import br.com.fiap.techFlix.application.useCases.CreateCategoryUseCase;
+import br.com.fiap.techFlix.application.useCases.ListCategoryUseCase;
+import br.com.fiap.techFlix.domain.entities.Category;
+import br.com.fiap.techFlix.infrastructure.gateways.CategoryMapper;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
+
+import java.net.URI;
 
 @RestController
 public class CategoryController {
 
     private final CreateCategoryUseCase createCategoryUseCase;
+    private final ListCategoryUseCase listCategoryUseCase;
 
-    public CategoryController(CreateCategoryUseCase createCategoryUseCase) {
+    public CategoryController(CreateCategoryUseCase createCategoryUseCase, ListCategoryUseCase listCategoryUseCase) {
         this.createCategoryUseCase = createCategoryUseCase;
+        this.listCategoryUseCase = listCategoryUseCase;
     }
 
     @PostMapping("/categories")
-    public Mono<String> createCategory(@Valid @RequestBody CategoryCreateDTO categoryDTO) {
-        return createCategoryUseCase.createCategory("name").map(CategoryDocument::getId).map(id -> "/categories/" + id);
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryCreateDTO categoryDTO) {
+        Category category = createCategoryUseCase.createCategory(categoryDTO);
+
+        URI uri = URI.create("/categories/" + category.getName());
+        return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/categories/{name}")
+    public CategoryShowDTO getCategoryByName(@PathVariable String name) {
+        return CategoryMapper.toView(listCategoryUseCase.listCategory(name));
     }
 }

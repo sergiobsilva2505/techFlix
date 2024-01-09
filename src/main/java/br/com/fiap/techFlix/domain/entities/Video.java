@@ -2,6 +2,7 @@ package br.com.fiap.techFlix.domain.entities;
 
 import org.springframework.util.Assert;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 
 public class Video {
@@ -68,5 +69,10 @@ public class Video {
 
     public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    public URI getUrl() {
+        Assert.hasText(this.id, "Id cannot be empty");
+        return URI.create("/videos/play/" + this.id);
     }
 }

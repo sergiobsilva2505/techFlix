@@ -2,6 +2,7 @@ package br.com.fiap.techFlix.infrastructure.gateways;
 
 import br.com.fiap.techFlix.domain.entities.Category;
 import br.com.fiap.techFlix.domain.entities.Video;
+import br.com.fiap.techFlix.infrastructure.controllers.VideoShowDTO;
 import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
 import br.com.fiap.techFlix.infrastructure.persistence.VideoDocument;
 
@@ -15,5 +16,9 @@ public class VideoMapper {
     public static VideoDocument toPersistence(Video video) {
         CategoryDocument categoryDocument = CategoryMapper.toPersistence(video.getCategory());
         return new VideoDocument(video.getTitle(), video.getDescription(), categoryDocument, video.getPublicationDate());
+    }
+
+    public static VideoShowDTO toView(Video video) {
+        return new VideoShowDTO(video.getId(), video.getTitle(), video.getDescription(), video.getCategory().getName(), video.getUrl(), video.getPublicationDate());
     }
 }

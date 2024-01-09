@@ -1,6 +1,7 @@
 package br.com.fiap.techFlix.infrastructure.gateways;
 
 import br.com.fiap.techFlix.domain.entities.Category;
+import br.com.fiap.techFlix.infrastructure.controllers.CategoryShowDTO;
 import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
 
 public class CategoryMapper {
@@ -11,5 +12,9 @@ public class CategoryMapper {
 
     public static CategoryDocument toPersistence(Category category) {
         return new CategoryDocument(category.getName());
+    }
+
+    public static CategoryShowDTO toView(Category category) {
+        return new CategoryShowDTO(category.getName());
     }
 }

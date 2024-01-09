@@ -1,20 +1,18 @@
 package br.com.fiap.techFlix.application.useCases;
 
-import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
-import br.com.fiap.techFlix.infrastructure.persistence.CategoryRepository;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import br.com.fiap.techFlix.application.gateways.CategoryGateway;
+import br.com.fiap.techFlix.domain.entities.Category;
+import br.com.fiap.techFlix.infrastructure.controllers.CategoryCreateDTO;
 
-@Component
 public class CreateCategoryUseCase {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryGateway categoryGateway;
 
-    public CreateCategoryUseCase(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CreateCategoryUseCase(CategoryGateway categoryGateway) {
+        this.categoryGateway = categoryGateway;
     }
 
-    public Mono<CategoryDocument> createCategory(String name) {
-        return categoryRepository.save(new CategoryDocument(name));
+    public Category createCategory(CategoryCreateDTO categoryCreateDTO) {
+        return categoryGateway.save(new Category(categoryCreateDTO.name()));
     }
 }
