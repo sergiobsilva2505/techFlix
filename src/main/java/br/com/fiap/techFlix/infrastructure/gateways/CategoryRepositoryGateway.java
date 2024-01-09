@@ -9,17 +9,17 @@ import java.util.Optional;
 
 public class CategoryRepositoryGateway implements CategoryGateway {
 
-    private final CategoryMapper categoryMapper;
     private final CategoryRepository categoryRepository;
 
-    public CategoryRepositoryGateway(CategoryMapper categoryMapper, CategoryRepository categoryRepository) {
-        this.categoryMapper = categoryMapper;
+    public CategoryRepositoryGateway(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
     @Override
     public Category save(Category category) {
-        CategoryDocument saved = categoryRepository.save(categoryMapper.toPersistence(category));
+//        CategoryDocument saved = categoryRepository.save(CategoryMapper.toPersistence(category));
+//        return CategoryMapper.toDomain(saved);
+        return null;
     }
 
     @Override

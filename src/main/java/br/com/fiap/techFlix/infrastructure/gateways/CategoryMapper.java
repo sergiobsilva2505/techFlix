@@ -5,11 +5,11 @@ import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
 
 public class CategoryMapper {
 
-    Category toDomain(CategoryDocument categoryDocument) {
+    public static Category toDomain(CategoryDocument categoryDocument) {
         return new Category(categoryDocument.getName());
     }
 
-    CategoryDocument toPersistence(Category category) {
+    public static CategoryDocument toPersistence(Category category) {
         return new CategoryDocument(category.getName());
     }
 }
