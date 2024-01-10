@@ -1,11 +1,9 @@
 package br.com.fiap.techFlix.config;
 
-import br.com.fiap.techFlix.application.gateways.CategoryGateway;
-import br.com.fiap.techFlix.application.gateways.VideoGateway;
+import br.com.fiap.techFlix.application.gateways.*;
 import br.com.fiap.techFlix.application.useCases.*;
 import br.com.fiap.techFlix.infrastructure.gateways.*;
-import br.com.fiap.techFlix.infrastructure.persistence.CategoryRepository;
-import br.com.fiap.techFlix.infrastructure.persistence.VideoRepository;
+import br.com.fiap.techFlix.infrastructure.persistence.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,6 +18,11 @@ public class Config {
     @Bean
     VideoGateway videoGateway(VideoRepository videoRepository) {
         return new VideoRepositoryGateway(videoRepository);
+    }
+
+    @Bean
+    FileGateway fileGateway(FileRepository fileRepository) {
+        return new FileUploadGateway(fileRepository);
     }
 
     @Bean

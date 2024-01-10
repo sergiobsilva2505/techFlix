@@ -42,8 +42,8 @@ public class VideoController {
         return VideoMapper.toView(listVideoUseCase.listVideo(id));
     }
 
-    @GetMapping("/videos/play/{id}")
-    public VideoShowDTO playVideo(@PathVariable String id) {
-        return VideoMapper.toView(listVideoUseCase.listVideo(id));
-    }
+//    @GetMapping("/videos/play/{id}")
+//    public VideoShowDTO playVideo(@PathVariable String id) {
+//        return VideoMapper.toView(listVideoUseCase.listVideo(id));
+//    }
 }

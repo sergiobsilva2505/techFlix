@@ -17,13 +17,15 @@ public class CategoryRepositoryGateway implements CategoryGateway {
 
     @Override
     public Category save(Category category) {
-//        CategoryDocument saved = categoryRepository.save(CategoryMapper.toPersistence(category));
-//        return CategoryMapper.toDomain(saved);
-        return null;
+        CategoryDocument saved = categoryRepository.save(CategoryMapper.toPersistence(category)).share().block();
+        return CategoryMapper.toDomain(saved);
+//        return null;
     }
 
     @Override
     public Optional<Category> findByName(String name) {
-        return Optional.empty();
+        return Optional.ofNullable(categoryRepository.findByName(name)
+                .map(CategoryMapper::toDomain)
+                .share().block());
     }
 }
