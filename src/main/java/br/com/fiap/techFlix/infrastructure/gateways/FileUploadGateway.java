@@ -24,12 +24,12 @@ public class FileUploadGateway implements FileGateway {
         return fileRepository.findById(id).map(FileDocument::getContent);
     }
 
-    public File saveAttachment(MultipartFile file, String id) throws Exception {
+    public Mono<File> saveAttachment(MultipartFile file, String id) throws Exception {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
-            if(fileName.contains("..")) {
-                throw  new Exception("Filename contains invalid path sequence " + fileName);
+            if (fileName.contains("..")) {
+                throw new Exception("Filename contains invalid path sequence " + fileName);
             }
 
             if (file.getBytes().length > (1024 * 1024 * 4)) {
@@ -38,7 +38,7 @@ public class FileUploadGateway implements FileGateway {
 
             FileDocument attachment = new FileDocument(id, fileName, file.getContentType(), file.getSize(), file.getBytes());
 
-            return FileMapper.toDomain(fileRepository.save(attachment).block());
+            return fileRepository.save(attachment).map(FileMapper::toDomain);
         } catch (MaxUploadSizeExceededException e) {
             throw new MaxUploadSizeExceededException(file.getSize());
         }
