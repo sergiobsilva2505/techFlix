@@ -3,7 +3,6 @@ package br.com.fiap.techFlix.application.useCases;
 import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.gateways.VideoGateway;
 import br.com.fiap.techFlix.domain.entities.Video;
-import org.springframework.data.domain.PageRequest;
 
 public class ListVideoUseCase {
 
