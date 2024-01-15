@@ -1,10 +1,9 @@
 package br.com.fiap.techFlix.application.useCases;
 
+import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.gateways.VideoGateway;
 import br.com.fiap.techFlix.domain.entities.Video;
 import org.springframework.data.domain.PageRequest;
-
-import java.util.List;
 
 public class ListVideoUseCase {
 
@@ -14,8 +13,8 @@ public class ListVideoUseCase {
         this.videoGateway = videoGateway;
     }
 
-    public List<Video> listVideos(PageRequest pageRequest) {
-        return videoGateway.findAll();
+    public PagePort<Video> listVideos(int page, int size) {
+        return videoGateway.findAll(page, size);
     }
 
     public Video listVideo(String id) {

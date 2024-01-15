@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @SpringBootApplication
+@EnableMongoRepositories
 @EnableReactiveMongoRepositories
 public class TechFlixApplication {
 

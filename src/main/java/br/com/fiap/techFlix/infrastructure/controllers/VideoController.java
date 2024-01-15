@@ -1,25 +1,31 @@
 package br.com.fiap.techFlix.infrastructure.controllers;
 
+import br.com.fiap.techFlix.application.gateways.FileGateway;
+import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.useCases.ListVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.PublishVideoUseCase;
 import br.com.fiap.techFlix.domain.entities.Video;
+import br.com.fiap.techFlix.infrastructure.gateways.FileMapper;
 import br.com.fiap.techFlix.infrastructure.gateways.VideoMapper;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 public class VideoController {
 
+    private final FileGateway fileGateway;
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
 
-    public VideoController(ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase) {
+    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase) {
+        this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
     }
@@ -32,18 +38,24 @@ public class VideoController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PostMapping("/videos/upload")
+    public Mono<FileShowDTO> fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
+        return fileGateway.saveAttachment(file, "659e0dcdca671e438e3de375").map(FileMapper::toView);
+    }
+
+    @GetMapping(value = "/videos/play/{id}")
+    public Mono<Resource> getVideo(@PathVariable String id, @RequestHeader("Range") String range) {
+        return fileGateway.findById(id).map(ByteArrayResource::new);
+    }
+
     @GetMapping("/videos")
-    public List<VideoShowDTO> getVideoById(@PageableDefault PageRequest pageRequest) {
-        return listVideoUseCase.listVideos(pageRequest).stream().map(VideoMapper::toView).toList();
+    public PagePort<VideoShowDTO> getVideoById(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        return listVideoUseCase.listVideos(page, size).map(VideoMapper::toView);
     }
 
     @GetMapping("/videos/{id}")
     public VideoShowDTO getVideoById(@PathVariable String id) {
-        return VideoMapper.toView(listVideoUseCase.listVideo(id));
-    }
-
-    @GetMapping("/videos/play/{id}")
-    public VideoShowDTO playVideo(@PathVariable String id) {
         return VideoMapper.toView(listVideoUseCase.listVideo(id));
     }
 }

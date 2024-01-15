@@ -1,6 +1,6 @@
 package br.com.fiap.techFlix.infrastructure.persistence;
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface VideoRepository extends ReactiveCrudRepository<VideoDocument, String> {
+public interface VideoRepository extends MongoRepository<VideoDocument, String> {
 }
