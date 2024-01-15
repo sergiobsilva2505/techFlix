@@ -26,6 +26,16 @@ public class Config {
     }
 
     @Bean
+    UserGateway userGateway(UserRepository userRepository) {
+        return new UserRepositoryGateway(userRepository);
+    }
+
+    @Bean
+    CreateUserUseCase createUserUseCase(UserGateway userGateway) {
+        return new CreateUserUseCase(userGateway);
+    }
+
+    @Bean
     CreateCategoryUseCase createCategoryUseCase(CategoryGateway categoryGateway) {
         return new CreateCategoryUseCase(categoryGateway);
     }

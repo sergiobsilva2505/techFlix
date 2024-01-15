@@ -1,13 +1,17 @@
 package br.com.fiap.techFlix.application.useCases;
 
+import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.gateways.VideoGateway;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import br.com.fiap.techFlix.domain.entities.Video;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class ListVideoUseCaseTest {
 
@@ -27,11 +31,23 @@ class ListVideoUseCaseTest {
     }
 
     @Test
-    void listVideos() {
+    void listVideosReturnsPagePort() {
+        when(videoGateway.findAll(anyInt(), anyInt())).thenReturn(mock(PagePort.class));
+        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
+        assertNotNull(useCase.listVideos(1, 10));
     }
 
     @Test
-    void listVideo() {
-        fail("teste não implementado");
+    void listVideoReturnsVideo() {
+        when(videoGateway.findById(anyString())).thenReturn(Optional.of(mock(Video.class)));
+        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
+        assertNotNull(useCase.listVideo("1"));
+    }
+
+    @Test
+    void listVideoThrowsExceptionWhenVideoNotFound() {
+        when(videoGateway.findById(anyString())).thenReturn(Optional.empty());
+        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
+        assertThrows(IllegalArgumentException.class, () -> useCase.listVideo("1"));
     }
 }

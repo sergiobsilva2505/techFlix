@@ -32,7 +32,7 @@ public class FileUploadGateway implements FileGateway {
                 throw new Exception("Filename contains invalid path sequence " + fileName);
             }
 
-            if (file.getBytes().length > (1024 * 1024 * 4)) {
+            if (file.getBytes().length > (1024 * 1024 * 15)) {
                 throw new Exception("File size exceeds maximum limit");
             }
 
