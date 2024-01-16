@@ -1,13 +1,13 @@
 package br.com.fiap.techFlix.domain.entities;
 
-import org.springframework.util.Assert;
+import br.com.fiap.techFlix.domain.validation.Validator;
 
 public class Category {
 
     private String name;
 
     public Category(String name) {
-        Assert.hasText(name, "Name cannot be empty");
+        Validator.notEmptyOrNull(name, "Category name");
         this.name = name;
     }
 

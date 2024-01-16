@@ -1,6 +1,6 @@
 package br.com.fiap.techFlix.domain.entities;
 
-import org.springframework.util.Assert;
+import br.com.fiap.techFlix.domain.validation.Validator;
 
 public class File {
 
@@ -11,11 +11,11 @@ public class File {
     private byte[] content;
 
     public File(String id, String name, String contentType, long size, byte[] content) {
-        Assert.hasText(id, "Id must not be empty");
-        Assert.hasText(name, "Name must not be empty");
-        Assert.hasText(contentType, "Content type must not be empty");
-        Assert.isTrue(size > 0, "Size must be greater than zero");
-        Assert.notNull(content, "Content must not be null");
+        Validator.notEmptyOrNull(id, "file id");
+        Validator.notEmptyOrNull(name, "file name");
+        Validator.notEmptyOrNull(contentType, "file contentType");
+        Validator.greaterThan(size, 0, "file size");
+        Validator.objectNotNull(content, "file content");
         this.id = id;
         this.name = name;
         this.contentType = contentType;

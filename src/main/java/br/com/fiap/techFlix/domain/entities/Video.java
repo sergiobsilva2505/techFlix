@@ -1,5 +1,6 @@
 package br.com.fiap.techFlix.domain.entities;
 
+import br.com.fiap.techFlix.domain.validation.Validator;
 import org.springframework.util.Assert;
 
 import java.net.URI;
@@ -14,10 +15,10 @@ public class Video {
     private LocalDateTime publicationDate;
 
     public Video(String title, String description, Category category, LocalDateTime publicationDate) {
-        Assert.hasText(title, "Title cannot be empty");
-        Assert.hasText(description, "Description cannot be empty");
-        Assert.notNull(category, "Category cannot be null");
-        Assert.notNull(publicationDate, "Publication date cannot be null");
+        Validator.notEmptyOrNull(title, "video title");
+        Validator.notEmptyOrNull(description, "video description");
+        Validator.objectNotNull(category, "video category");
+        Validator.objectNotNull(publicationDate, "video publication date");
         this.title = title;
         this.description = description;
         this.category = category;

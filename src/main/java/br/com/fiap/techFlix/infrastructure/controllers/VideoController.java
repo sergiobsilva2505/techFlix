@@ -44,7 +44,7 @@ public class VideoController {
         return fileGateway.saveAttachment(file, id).map(FileMapper::toView);
     }
 
-    @GetMapping(value = "/videos/play/{id}")
+    @GetMapping(value = "/videos/play/{id}", produces = "video/mp4")
     public Mono<Resource> getVideo(@PathVariable String id, @RequestHeader("Range") String range) {
         return fileGateway.findById(id).map(ByteArrayResource::new);
     }

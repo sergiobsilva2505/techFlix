@@ -1,5 +1,6 @@
 package br.com.fiap.techFlix.domain.entities;
 
+import br.com.fiap.techFlix.domain.validation.Validator;
 import org.springframework.util.Assert;
 
 public class User {
@@ -11,9 +12,9 @@ public class User {
     private String token;
 
     public User(String name, String email, String password) {
-        Assert.hasText(name, "Name must not be empty");
-        Assert.hasText(email, "Email must not be empty");
-        Assert.hasText(password, "Password must not be empty");
+        Validator.notEmptyOrNull(name, "user name");
+        Validator.notEmptyOrNull(email, "user email");
+        Validator.notEmptyOrNull(password, "user password");
         this.name = name;
         this.email = email;
         this.password = password;
@@ -21,8 +22,8 @@ public class User {
 
     public User(String id, String name, String email, String password, String token) {
         this(name, email, password);
-        Assert.hasText(id, "Id must not be empty");
-        Assert.hasText(token, "Token must not be empty");
+        Validator.notEmptyOrNull(id, "user id");
+        Validator.notEmptyOrNull(token, "user token");
         this.id = id;
         this.token = token;
     }
