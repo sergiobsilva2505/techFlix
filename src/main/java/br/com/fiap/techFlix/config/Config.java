@@ -54,4 +54,13 @@ public class Config {
     ListVideoUseCase listVideoUseCase(VideoGateway videoGateway) {
         return new ListVideoUseCase(videoGateway);
     }
+
+    @Bean
+    BookmarkVideoGateway bookmarkVideoGateway(BookmarkVideoRepository bookmarkVideoRepository) { return new BookmarkVideoRepositoryGateway(bookmarkVideoRepository);}
+
+    @Bean
+    CreateBookmarkVideo createBookmarkVideo(BookmarkVideoGateway bookmarkVideoGateway) { return new CreateBookmarkVideo(bookmarkVideoGateway);}
+
+    @Bean
+    ListBookmarkVideoUseCase listBookmarkVideoUserCase(BookmarkVideoGateway bookmarkVideoGateway) { return new ListBookmarkVideoUseCase(bookmarkVideoGateway); }
 }
