@@ -4,7 +4,7 @@ import br.com.fiap.techFlix.domain.entities.User;
 import br.com.fiap.techFlix.domain.entities.Video;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "categories")
+@Document(collection = "bookmarkVideos")
 public class BookmarkVideoDocument {
 
     private String id;

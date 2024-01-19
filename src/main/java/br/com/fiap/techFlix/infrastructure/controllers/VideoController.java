@@ -4,6 +4,7 @@ import br.com.fiap.techFlix.application.gateways.FileGateway;
 import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.useCases.ListVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.PublishVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.SearchVideoUseCase;
 import br.com.fiap.techFlix.domain.entities.Video;
 import br.com.fiap.techFlix.infrastructure.gateways.FileMapper;
 import br.com.fiap.techFlix.infrastructure.gateways.VideoMapper;
@@ -23,11 +24,13 @@ public class VideoController {
     private final FileGateway fileGateway;
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
+    private final SearchVideoUseCase searchVideoUseCase;
 
-    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase) {
+    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase) {
         this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
+        this.searchVideoUseCase = searchVideoUseCase;
     }
 
     @PostMapping("/videos")
@@ -50,9 +53,8 @@ public class VideoController {
     }
 
     @GetMapping("/videos")
-    public PagePort<VideoShowDTO> getVideoById(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
-        return listVideoUseCase.listVideos(page, size).map(VideoMapper::toView);
+    public PagePort<VideoShowDTO> searchVideos(SearchVideoDTO searchVideoDTO) {
+        return searchVideoUseCase.searchVideos(searchVideoDTO).map(VideoMapper::toView);
     }
 
     @GetMapping("/videos/{id}")

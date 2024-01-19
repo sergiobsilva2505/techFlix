@@ -9,10 +9,7 @@ public class BookmarkVideo {
     private Video video;
     private boolean bookmark;
 
-    public BookmarkVideo() {}
-
     public BookmarkVideo(User user, Video video, boolean bookmark) {
-        Validator.notEmptyOrNull(id, "bookmark video id");
         Validator.objectNotNull(user, "bookmark video user");
         Validator.objectNotNull(video, "bookmark user");
         this.user = user;

@@ -6,6 +6,7 @@ import br.com.fiap.techFlix.infrastructure.gateways.*;
 import br.com.fiap.techFlix.infrastructure.persistence.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 public class Config {
@@ -16,8 +17,8 @@ public class Config {
     }
 
     @Bean
-    VideoGateway videoGateway(VideoRepository videoRepository) {
-        return new VideoRepositoryGateway(videoRepository);
+    VideoGateway videoGateway(MongoTemplate mongoTemplate, VideoRepository videoRepository) {
+        return new VideoRepositoryGateway(mongoTemplate, videoRepository);
     }
 
     @Bean
@@ -33,6 +34,11 @@ public class Config {
     @Bean
     CreateUserUseCase createUserUseCase(UserGateway userGateway) {
         return new CreateUserUseCase(userGateway);
+    }
+
+    @Bean
+    ListUserUseCase listUsersUseCase(UserGateway userGateway) {
+        return new ListUserUseCase(userGateway);
     }
 
     @Bean
@@ -53,6 +59,11 @@ public class Config {
     @Bean
     ListVideoUseCase listVideoUseCase(VideoGateway videoGateway) {
         return new ListVideoUseCase(videoGateway);
+    }
+
+    @Bean
+    SearchVideoUseCase searchVideoUseCase(VideoGateway videoGateway) {
+        return new SearchVideoUseCase(videoGateway);
     }
 
     @Bean

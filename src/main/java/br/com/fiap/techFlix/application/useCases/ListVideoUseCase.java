@@ -19,5 +19,4 @@ public class ListVideoUseCase {
     public Video listVideo(String id) {
         return videoGateway.findById(id).orElseThrow(() -> new IllegalArgumentException("Video not found"));
     }
-
 }
