@@ -3,7 +3,7 @@ package br.com.fiap.techFlix.infrastructure.controllers;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record SearchVideoDTO(Integer page, Integer size, String title, String categoryName, LocalDate publicationDate) {
+public record SearchVideoDTO(Integer page, Integer size, String title, String categoryName, LocalDate publicationDate, Operation publicationDateOperation) {
 
     @Override
     public Integer page() {
@@ -24,6 +24,12 @@ public record SearchVideoDTO(Integer page, Integer size, String title, String ca
     }
 
     public boolean hasPublicationDate() {
-        return publicationDate != null;
+        return publicationDate != null && hasPublicationDateOperation();
     }
+
+    public boolean hasPublicationDateOperation() {
+        return publicationDateOperation != null;
+    }
+
+
 }
