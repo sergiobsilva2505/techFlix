@@ -1,5 +1,6 @@
 package br.com.fiap.techFlix.infrastructure.controllers;
 
+import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.useCases.CreateBookmarkVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.DeleteBookmarkVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.ListBookmarkVideoUseCase;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 public class VideoBookmarkController {
@@ -40,13 +40,17 @@ public class VideoBookmarkController {
     }
 
     @GetMapping("/bookmarks/{id}")
-    public BookmarkVideoShowDTO getBookmarkVideoById(@PathVariable String id) {
-        return BookmarkVideoMapper.toView(listBookmarkVideoUseCase.listBookmarkVideo(id));
+    public ResponseEntity<BookmarkVideoShowDTO> getBookmarkVideoById(@PathVariable String id) {
+        BookmarkVideoShowDTO videoShowDTO = BookmarkVideoMapper.toView(listBookmarkVideoUseCase.listBookmarkVideo(id));
+
+        return ResponseEntity.ok(videoShowDTO);
     }
 
     @GetMapping("/bookmarks")
-    public List<BookmarkVideoShowDTO> getAllBookmarkVideo() {
-        List<BookmarkVideo> bookmarkVideos = listBookmarkVideoUseCase.listAllBookmarkVideo();
-        return bookmarkVideos.stream().map(BookmarkVideoMapper::toView).toList();
+    public ResponseEntity<PagePort<BookmarkVideoShowDTO>> getAllBookmarkVideo(@RequestParam(defaultValue = "0") int page,
+                                                                              @RequestParam(defaultValue = "10") int size) {
+        PagePort<BookmarkVideoShowDTO> dtoPagePort = listBookmarkVideoUseCase.listAllBookmarkVideo(page, size);
+
+        return ResponseEntity.ok(dtoPagePort);
     }
 }

@@ -1,11 +1,13 @@
 package br.com.fiap.techFlix.infrastructure.gateways;
 
 import br.com.fiap.techFlix.application.gateways.BookmarkVideoGateway;
+import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.domain.entities.BookmarkVideo;
 import br.com.fiap.techFlix.infrastructure.persistence.BookmarkVideoDocument;
 import br.com.fiap.techFlix.infrastructure.persistence.BookmarkVideoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
 import java.util.Optional;
 
 public class BookmarkVideoRepositoryGateway implements BookmarkVideoGateway {
@@ -28,8 +30,10 @@ public class BookmarkVideoRepositoryGateway implements BookmarkVideoGateway {
     }
 
     @Override
-    public List<BookmarkVideo> allBookmarkVideo() {
-        return bookmarkVideoRepository.findAll().stream().map(BookmarkVideoMapper::toDomain).toList();
+    public PagePort<BookmarkVideo> allBookmarkVideo(int page, int size) {
+        Page<BookmarkVideo> bookmarkVideos = bookmarkVideoRepository.findAll(PageRequest.of(page, size)).map(BookmarkVideoMapper::toDomain);
+
+        return new PageDTO<>(bookmarkVideos);
     }
 
     @Override

@@ -2,7 +2,6 @@ package br.com.fiap.techFlix.application.gateways;
 
 import br.com.fiap.techFlix.domain.entities.BookmarkVideo;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface BookmarkVideoGateway {
@@ -11,7 +10,7 @@ public interface BookmarkVideoGateway {
 
     Optional<BookmarkVideo> findByUserId(String userId);
 
-    List<BookmarkVideo> allBookmarkVideo();
+    PagePort<BookmarkVideo> allBookmarkVideo(int page, int size);
 
     Optional<BookmarkVideo> findByVideoIdAndUserId(String videoId, String userId);
 
