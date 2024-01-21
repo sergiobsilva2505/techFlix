@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface BookmarkVideoRepository extends MongoRepository<BookmarkVideoDocument, String> {
 
-    Optional<BookmarkVideoDocument> findById(String id);
+    Optional<BookmarkVideoDocument> findByVideoIdAndUserId(String videoId, String userId);
 }

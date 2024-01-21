@@ -5,8 +5,6 @@ import br.com.fiap.techFlix.application.gateways.UserGateway;
 import br.com.fiap.techFlix.domain.entities.User;
 import br.com.fiap.techFlix.infrastructure.controllers.UserViewDTO;
 
-import java.util.List;
-
 public class ListUserUseCase {
 
     private final UserGateway userGateway;
@@ -22,7 +20,7 @@ public class ListUserUseCase {
     }
 
     public UserViewDTO findById(String id) {
-        User user = userGateway.findById(id);
+        User user = userGateway.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         return new UserViewDTO(user);
     }

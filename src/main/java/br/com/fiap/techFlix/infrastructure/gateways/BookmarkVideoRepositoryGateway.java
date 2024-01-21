@@ -5,6 +5,7 @@ import br.com.fiap.techFlix.domain.entities.BookmarkVideo;
 import br.com.fiap.techFlix.infrastructure.persistence.BookmarkVideoDocument;
 import br.com.fiap.techFlix.infrastructure.persistence.BookmarkVideoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BookmarkVideoRepositoryGateway implements BookmarkVideoGateway {
@@ -22,12 +23,22 @@ public class BookmarkVideoRepositoryGateway implements BookmarkVideoGateway {
     }
 
     @Override
-    public Optional<BookmarkVideo> findByName(String name) {
+    public Optional<BookmarkVideo> findByUserId(String userId) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<BookmarkVideo> findByUserId(String userId) {
-        return Optional.empty();
+    public List<BookmarkVideo> allBookmarkVideo() {
+        return bookmarkVideoRepository.findAll().stream().map(BookmarkVideoMapper::toDomain).toList();
+    }
+
+    @Override
+    public Optional<BookmarkVideo> findByVideoIdAndUserId(String videoId, String userId) {
+        return bookmarkVideoRepository.findByVideoIdAndUserId(videoId, userId).map(BookmarkVideoMapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        bookmarkVideoRepository.deleteById(id);
     }
 }

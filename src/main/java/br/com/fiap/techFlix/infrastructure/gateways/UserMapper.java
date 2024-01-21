@@ -1,10 +1,8 @@
 package br.com.fiap.techFlix.infrastructure.gateways;
 
-import br.com.fiap.techFlix.domain.entities.Category;
 import br.com.fiap.techFlix.domain.entities.User;
-import br.com.fiap.techFlix.infrastructure.controllers.CategoryShowDTO;
 import br.com.fiap.techFlix.infrastructure.controllers.UserCreateDTO;
-import br.com.fiap.techFlix.infrastructure.persistence.CategoryDocument;
+import br.com.fiap.techFlix.infrastructure.controllers.UserViewDTO;
 import br.com.fiap.techFlix.infrastructure.persistence.UserDocument;
 
 public class UserMapper {
@@ -21,7 +19,7 @@ public class UserMapper {
         return new UserDocument(user.getName(), user.getEmail(), user.getPassword(), user.getToken());
     }
 
-//    public static CategoryShowDTO toView(Category category) {
-//        return new CategoryShowDTO(category.getName());
-//    }
+    public static UserViewDTO toView(User user) {
+        return new UserViewDTO(user.getId(), user.getName(), user.getEmail());
+    }
 }

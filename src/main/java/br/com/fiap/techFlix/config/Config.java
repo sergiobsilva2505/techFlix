@@ -42,6 +42,11 @@ public class Config {
     }
 
     @Bean
+    DeleteBookmarkVideoUseCase deleteBookmarkVideoUseCase(BookmarkVideoGateway bookmarkVideoGateway) {
+        return new DeleteBookmarkVideoUseCase(bookmarkVideoGateway);
+    }
+
+    @Bean
     CreateCategoryUseCase createCategoryUseCase(CategoryGateway categoryGateway) {
         return new CreateCategoryUseCase(categoryGateway);
     }
@@ -67,11 +72,17 @@ public class Config {
     }
 
     @Bean
-    BookmarkVideoGateway bookmarkVideoGateway(BookmarkVideoRepository bookmarkVideoRepository) { return new BookmarkVideoRepositoryGateway(bookmarkVideoRepository);}
+    BookmarkVideoGateway bookmarkVideoGateway(BookmarkVideoRepository bookmarkVideoRepository) {
+        return new BookmarkVideoRepositoryGateway(bookmarkVideoRepository);
+    }
 
     @Bean
-    CreateBookmarkVideo createBookmarkVideo(BookmarkVideoGateway bookmarkVideoGateway) { return new CreateBookmarkVideo(bookmarkVideoGateway);}
+    CreateBookmarkVideoUseCase createBookmarkVideo(BookmarkVideoGateway bookmarkVideoGateway, UserGateway userGateway, VideoGateway videoGateway) {
+        return new CreateBookmarkVideoUseCase(bookmarkVideoGateway, userGateway, videoGateway);
+    }
 
     @Bean
-    ListBookmarkVideoUseCase listBookmarkVideoUserCase(BookmarkVideoGateway bookmarkVideoGateway) { return new ListBookmarkVideoUseCase(bookmarkVideoGateway); }
+    ListBookmarkVideoUseCase listBookmarkVideoUserCase(BookmarkVideoGateway bookmarkVideoGateway) {
+        return new ListBookmarkVideoUseCase(bookmarkVideoGateway);
+    }
 }

@@ -3,10 +3,11 @@ package br.com.fiap.techFlix.infrastructure.gateways;
 import br.com.fiap.techFlix.application.gateways.PagePort;
 import br.com.fiap.techFlix.application.gateways.UserGateway;
 import br.com.fiap.techFlix.domain.entities.User;
-import br.com.fiap.techFlix.infrastructure.persistence.UserDocument;
 import br.com.fiap.techFlix.infrastructure.persistence.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.Optional;
 
 public class UserRepositoryGateway implements UserGateway {
 
@@ -29,11 +30,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public User findById(String id) {
-        UserDocument userDocument = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        return UserMapper.toDomain(userDocument);
+    public Optional<User> findById(String id) {
+        return userRepository.findById(id).map(UserMapper::toDomain);
     }
-
-
 }

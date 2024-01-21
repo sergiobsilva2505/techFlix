@@ -7,14 +7,17 @@ public class BookmarkVideo {
     private String id;
     private User user;
     private Video video;
-    private boolean bookmark;
 
-    public BookmarkVideo(User user, Video video, boolean bookmark) {
+    public BookmarkVideo(String id, User user, Video video) {
+        this(user, video);
+        this.id = id;
+    }
+
+    public BookmarkVideo(User user, Video video) {
         Validator.objectNotNull(user, "bookmark video user");
         Validator.objectNotNull(video, "bookmark user");
         this.user = user;
         this.video = video;
-        this.bookmark = bookmark;
     }
 
     public String getId() {
@@ -27,9 +30,5 @@ public class BookmarkVideo {
 
     public Video getVideo() {
         return video;
-    }
-
-    public boolean isBookmark() {
-        return bookmark;
     }
 }
