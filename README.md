@@ -262,13 +262,6 @@
         - Request:
           ```bash
             curl -X POST 'localhost:8080/bookmarks/video/65abbc65252b6124cbb4c9fe/user/65abbc3b252b6124cbb4c9fc' \
-            -H 'Content-Type: application/json' \
-            --data '{
-                "name": "Sergio Bezerra da Silva",
-                "birthDate": "1974-05-25",
-                "gender": "MALE",
-                "addressesIds": [1],
-                "userId": 1
-            }'
+            -H 'Content-Type: application/json' 
           ```
   </details>
