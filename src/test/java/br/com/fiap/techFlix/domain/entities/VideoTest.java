@@ -1,5 +1,7 @@
 package br.com.fiap.techFlix.domain.entities;
 
+import br.com.fiap.techFlix.domain.entities.category.Category;
+import br.com.fiap.techFlix.domain.entities.video.Video;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

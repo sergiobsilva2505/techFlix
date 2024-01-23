@@ -1,9 +1,30 @@
 package br.com.fiap.techFlix.config;
 
-import br.com.fiap.techFlix.application.gateways.*;
-import br.com.fiap.techFlix.application.useCases.*;
-import br.com.fiap.techFlix.infrastructure.gateways.*;
-import br.com.fiap.techFlix.infrastructure.persistence.*;
+import br.com.fiap.techFlix.application.gateways.bookmark.BookmarkVideoGateway;
+import br.com.fiap.techFlix.application.gateways.category.CategoryGateway;
+import br.com.fiap.techFlix.application.gateways.file.FileGateway;
+import br.com.fiap.techFlix.application.gateways.user.UserGateway;
+import br.com.fiap.techFlix.application.gateways.video.VideoGateway;
+import br.com.fiap.techFlix.application.useCases.bookmark.CreateBookmarkVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.bookmark.DeleteBookmarkVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.bookmark.ListBookmarkVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.category.CreateCategoryUseCase;
+import br.com.fiap.techFlix.application.useCases.category.ListCategoryUseCase;
+import br.com.fiap.techFlix.application.useCases.user.CreateUserUseCase;
+import br.com.fiap.techFlix.application.useCases.user.ListUserUseCase;
+import br.com.fiap.techFlix.application.useCases.video.ListVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.video.PublishVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.video.SearchVideoUseCase;
+import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoGatewayAdapter;
+import br.com.fiap.techFlix.adapter.persistence.category.CategoryGatewayAdapter;
+import br.com.fiap.techFlix.adapter.persistence.file.FileGatewayAdapter;
+import br.com.fiap.techFlix.adapter.persistence.user.UserGatewayAdapter;
+import br.com.fiap.techFlix.adapter.persistence.video.VideoGatewayAdapter;
+import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoRepository;
+import br.com.fiap.techFlix.adapter.persistence.category.CategoryRepository;
+import br.com.fiap.techFlix.adapter.persistence.file.FileRepository;
+import br.com.fiap.techFlix.adapter.persistence.user.UserRepository;
+import br.com.fiap.techFlix.adapter.persistence.video.VideoRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,22 +34,22 @@ public class Config {
 
     @Bean
     CategoryGateway categoryGateway(CategoryRepository categoryRepository) {
-        return new CategoryRepositoryGateway(categoryRepository);
+        return new CategoryGatewayAdapter(categoryRepository);
     }
 
     @Bean
     VideoGateway videoGateway(MongoTemplate mongoTemplate, VideoRepository videoRepository) {
-        return new VideoRepositoryGateway(mongoTemplate, videoRepository);
+        return new VideoGatewayAdapter(mongoTemplate, videoRepository);
     }
 
     @Bean
     FileGateway fileGateway(FileRepository fileRepository) {
-        return new FileUploadGateway(fileRepository);
+        return new FileGatewayAdapter(fileRepository);
     }
 
     @Bean
     UserGateway userGateway(UserRepository userRepository) {
-        return new UserRepositoryGateway(userRepository);
+        return new UserGatewayAdapter(userRepository);
     }
 
     @Bean
@@ -73,7 +94,7 @@ public class Config {
 
     @Bean
     BookmarkVideoGateway bookmarkVideoGateway(BookmarkVideoRepository bookmarkVideoRepository) {
-        return new BookmarkVideoRepositoryGateway(bookmarkVideoRepository);
+        return new BookmarkVideoGatewayAdapter(bookmarkVideoRepository);
     }
 
     @Bean
