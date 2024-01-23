@@ -2,13 +2,14 @@
 
 ## Tecnologias
 
-- Como linguagem base usamos Java na versão 17 LTS.
+- Como linguagem base usamos Java na versão 21 LTS.
 - O Framework utilizado foi o Spring Boot que simplifica a configuração e o desenvolvimento.
     - Spring Web MVC para tratar as requisições HTTP, fazer o mapeamento de URLs e a comunicação entre a camada de apresentação e a camada de negócio.
+    - Spring WebFlux para supoertar requisições não bloqueantes e reativas, principalmente no streaming dos vídeos.
     - O Spring Validation foi utilizado para validar os dados de entrada da API, para assegurar a integridade dos dados.
-    - O Spring Data JPA foi utilizado para facilitar a persistência dos dados.
+    - O Spring Data MongoDB foi utilizado para facilitar a persistência dos dados.
+    - O Spring Data Reactive MongoDB foi utilizado para facilitar a criação e gerenciamento dos dados de forma não bloqueante.
 - A biblioteca Springdoc OpenAPI foi utilizada para facilitar a geração da documentação do projeto.
-- O SQL foi utilizado para buscas e ações mais avançadas não disponíveis diretamente no Spring Data JPA.
 
 ## Ferramentas
 
@@ -18,7 +19,7 @@
 - Maven
 - Copilot
 - Spring initializr
-- MySQL
+- MongoDB
 
 ## Documentacao das APIs
 
