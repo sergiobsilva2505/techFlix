@@ -10,16 +10,13 @@ public class BookmarkVideo {
     private User user;
     private Video video;
 
-    public BookmarkVideo(User user, Video video) {
+    public BookmarkVideo(String id, User user, Video video) {
+        Validator.objectNotNull(id, "bookmark video id");
         Validator.objectNotNull(user, "bookmark video user");
         Validator.objectNotNull(video, "bookmark user");
+        this.id = id;
         this.user = user;
         this.video = video;
-    }
-
-    public BookmarkVideo(String id, User user, Video video) {
-        this(user, video);
-        this.id = id;
     }
 
     public String getId() {

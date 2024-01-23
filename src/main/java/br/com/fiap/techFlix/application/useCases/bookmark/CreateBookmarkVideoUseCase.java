@@ -19,10 +19,14 @@ public class CreateBookmarkVideoUseCase {
         this.videoGateway = videoGateway;
     }
 
-    public BookmarkVideo createBookmarkVideo(String videoId, String userId) {
+    public BookmarkVideo createBookmarkVideo(String userId, String videoId) {
         User user = userGateway.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Video video = videoGateway.findById(videoId).orElseThrow(() -> new IllegalArgumentException("Video not found"));
 
-        return bookmarkVideoGateway.save(new BookmarkVideo(user, video));
+        if (bookmarkVideoGateway.existsByVideoIdAndUserId(videoId, userId)) {
+            throw new IllegalArgumentException("Video already bookmarked");
+        }
+
+        return bookmarkVideoGateway.create(user, video);
     }
 }

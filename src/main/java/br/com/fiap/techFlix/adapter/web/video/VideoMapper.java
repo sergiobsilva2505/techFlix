@@ -1,13 +1,12 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
+import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
+import br.com.fiap.techFlix.adapter.persistence.video.VideoDocument;
+import br.com.fiap.techFlix.adapter.web.category.CategoryMapper;
 import br.com.fiap.techFlix.application.ports.VideoPublishPort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
-import br.com.fiap.techFlix.adapter.web.category.CategoryMapper;
-import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
-import br.com.fiap.techFlix.adapter.persistence.video.VideoDocument;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class VideoMapper {

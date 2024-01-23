@@ -1,6 +1,6 @@
 package br.com.fiap.techFlix.adapter.web.bookmarkvideo;
 
-import br.com.fiap.techFlix.application.gateways.PagePort;
+import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.bookmark.CreateBookmarkVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.bookmark.DeleteBookmarkVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.bookmark.ListBookmarkVideoUseCase;
@@ -25,7 +25,7 @@ public class VideoBookmarkController {
 
     @PostMapping("/bookmarks/video/{videoId}/user/{userId}")
     public ResponseEntity<String> createBookmarkVideo(@PathVariable String videoId, @PathVariable String userId) {
-        BookmarkVideo bookmarkVideo = createBookmarkVideoUseCase.createBookmarkVideo(videoId, userId);
+        BookmarkVideo bookmarkVideo = createBookmarkVideoUseCase.createBookmarkVideo(userId, videoId);
 
         URI uri = URI.create("/bookmarks/" + bookmarkVideo.getId());
         return ResponseEntity.created(uri).build();

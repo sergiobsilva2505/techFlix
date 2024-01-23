@@ -1,11 +1,13 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
 import br.com.fiap.techFlix.adapter.web.Operation;
+import br.com.fiap.techFlix.application.ports.VideoSearchPort;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record SearchVideoDTO(Integer page, Integer size, String title, String categoryName, LocalDate publicationDate, Operation publicationDateOperation) {
+public record VideoSearchDTO(Integer page, Integer size, String title, String categoryName, LocalDate publicationDate,
+                             Operation publicationDateOperation) implements VideoSearchPort {
 
     @Override
     public Integer page() {

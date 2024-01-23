@@ -12,9 +12,7 @@ import br.com.fiap.techFlix.application.useCases.category.CreateCategoryUseCase;
 import br.com.fiap.techFlix.application.useCases.category.ListCategoryUseCase;
 import br.com.fiap.techFlix.application.useCases.user.CreateUserUseCase;
 import br.com.fiap.techFlix.application.useCases.user.ListUserUseCase;
-import br.com.fiap.techFlix.application.useCases.video.ListVideoUseCase;
-import br.com.fiap.techFlix.application.useCases.video.PublishVideoUseCase;
-import br.com.fiap.techFlix.application.useCases.video.SearchVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.video.*;
 import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoGatewayAdapter;
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryGatewayAdapter;
 import br.com.fiap.techFlix.adapter.persistence.file.FileGatewayAdapter;
@@ -90,6 +88,11 @@ public class Config {
     @Bean
     SearchVideoUseCase searchVideoUseCase(VideoGateway videoGateway) {
         return new SearchVideoUseCase(videoGateway);
+    }
+
+    @Bean
+    VideoRecommendationsUseCase videoRecommendationsUseCase(VideoGateway videoGateway) {
+        return new VideoRecommendationsUseCase(videoGateway);
     }
 
     @Bean

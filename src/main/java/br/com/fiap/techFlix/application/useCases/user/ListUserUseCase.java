@@ -1,6 +1,6 @@
 package br.com.fiap.techFlix.application.useCases.user;
 
-import br.com.fiap.techFlix.application.gateways.PagePort;
+import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.gateways.user.UserGateway;
 import br.com.fiap.techFlix.domain.entities.user.User;
 import br.com.fiap.techFlix.adapter.web.user.UserViewDTO;
@@ -13,15 +13,11 @@ public class ListUserUseCase {
         this.userGateway = userGateway;
     }
 
-    public PagePort<UserViewDTO> findAll(int page, int size) {
-        PagePort<User> users = userGateway.findAll(page, size);
-
-        return users.map(UserViewDTO::new);
+    public PagePort<User> findAll(int page, int size) {
+        return userGateway.findAll(page, size);
     }
 
-    public UserViewDTO findById(String id) {
-        User user = userGateway.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        return new UserViewDTO(user);
+    public User findById(String id) {
+        return userGateway.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 }

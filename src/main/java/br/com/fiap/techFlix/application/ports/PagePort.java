@@ -1,4 +1,4 @@
-package br.com.fiap.techFlix.application.gateways;
+package br.com.fiap.techFlix.application.ports;
 
 import java.util.List;
 import java.util.function.Function;

@@ -1,4 +1,6 @@
 package br.com.fiap.techFlix.adapter.web.user;
 
-public record UserCreateDTO(String name, String email, String password) {
+import br.com.fiap.techFlix.application.ports.UserCreatePort;
+
+public record UserCreateDTO(String name, String email, String password) implements UserCreatePort {
 }

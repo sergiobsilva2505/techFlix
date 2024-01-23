@@ -39,7 +39,4 @@ public class File {
         return size;
     }
 
-    public byte[] getContent() {
-        return content;
-    }
 }

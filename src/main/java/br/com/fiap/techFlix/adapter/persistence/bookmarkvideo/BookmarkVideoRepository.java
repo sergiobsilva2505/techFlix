@@ -8,5 +8,6 @@ public interface BookmarkVideoRepository extends MongoRepository<BookmarkVideoDo
 
     Optional<BookmarkVideoDocument> findByVideoIdAndUserId(String videoId, String userId);
 
+    boolean existsByUser_IdAndVideo_Id(String userId, String videoId);
 
 }

@@ -1,9 +1,8 @@
 package br.com.fiap.techFlix.application.useCases.user;
 
 import br.com.fiap.techFlix.application.gateways.user.UserGateway;
+import br.com.fiap.techFlix.application.ports.UserCreatePort;
 import br.com.fiap.techFlix.domain.entities.user.User;
-import br.com.fiap.techFlix.adapter.web.user.UserCreateDTO;
-import br.com.fiap.techFlix.adapter.web.user.UserMapper;
 
 import java.util.UUID;
 
@@ -15,11 +14,8 @@ public class CreateUserUseCase {
         this.userGateway = userGateway;
     }
 
-    public User createUser(UserCreateDTO userCreateDTO) {
+    public User createUser(UserCreatePort userCreatePort) {
         UUID uuid = UUID.randomUUID();
-        User user = UserMapper.toDomain(userCreateDTO);
-        user.setToken(uuid.toString());
-
-        return userGateway.save(user);
+        return userGateway.save(userCreatePort, uuid.toString());
     }
 }

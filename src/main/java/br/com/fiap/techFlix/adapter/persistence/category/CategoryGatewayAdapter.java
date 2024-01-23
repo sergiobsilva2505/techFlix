@@ -2,6 +2,7 @@ package br.com.fiap.techFlix.adapter.persistence.category;
 
 import br.com.fiap.techFlix.adapter.web.category.CategoryMapper;
 import br.com.fiap.techFlix.application.gateways.category.CategoryGateway;
+import br.com.fiap.techFlix.application.ports.CategoryCreatePort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 
 import java.util.Optional;
@@ -15,8 +16,8 @@ public class CategoryGatewayAdapter implements CategoryGateway {
     }
 
     @Override
-    public Category save(Category category) {
-        CategoryDocument saved = categoryRepository.save(CategoryMapper.toPersistence(category));
+    public Category save(CategoryCreatePort categoryCreatePort) {
+        CategoryDocument saved = categoryRepository.save(CategoryMapper.toPersistence(categoryCreatePort));
         return CategoryMapper.toDomain(saved);
     }
 

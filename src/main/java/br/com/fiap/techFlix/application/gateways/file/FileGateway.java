@@ -7,5 +7,6 @@ import reactor.core.publisher.Mono;
 public interface FileGateway {
 
     Mono<byte[]> findById(String id);
+
     Mono<File> saveAttachment(MultipartFile file, String id) throws Exception;
 }

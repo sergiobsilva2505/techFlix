@@ -1,13 +1,14 @@
 package br.com.fiap.techFlix.application.gateways.user;
 
-import br.com.fiap.techFlix.application.gateways.PagePort;
+import br.com.fiap.techFlix.application.ports.PagePort;
+import br.com.fiap.techFlix.application.ports.UserCreatePort;
 import br.com.fiap.techFlix.domain.entities.user.User;
 
 import java.util.Optional;
 
 public interface UserGateway {
 
-    User save(User user);
+    User save(UserCreatePort userCreatePort, String token);
 
     PagePort<User> findAll(int page, int size);
 

@@ -1,6 +1,6 @@
 package br.com.fiap.techFlix.adapter.web.user;
 
-import br.com.fiap.techFlix.application.gateways.PagePort;
+import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.user.CreateUserUseCase;
 import br.com.fiap.techFlix.application.useCases.user.ListUserUseCase;
 import br.com.fiap.techFlix.domain.entities.user.User;
@@ -30,9 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<PagePort<UserViewDTO>> listUser(@RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size) {
-        PagePort<UserViewDTO> usersDTO = listUserUseCase.findAll(page, size);
+    public ResponseEntity<PagePort<UserViewDTO>> listUser(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        PagePort<UserViewDTO> usersDTO = listUserUseCase.findAll(page, size).map(UserMapper::toView);
 
         return ResponseEntity.ok(usersDTO);
     }
@@ -40,15 +39,9 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<UserViewDTO> showUser(@PathVariable("id") String id) {
-        UserViewDTO userViewDTO = listUserUseCase.findById(id);
+        UserViewDTO userViewDTO = UserMapper.toView(listUserUseCase.findById(id));
 
         return ResponseEntity.ok(userViewDTO);
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<UserViewDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
-        UserViewDTO userViewDTO = listUserUseCase.findById(id);
-
-        return ResponseEntity.ok(userViewDTO);
-    }
 }

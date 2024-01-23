@@ -1,7 +1,7 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
 import br.com.fiap.techFlix.application.gateways.file.FileGateway;
-import br.com.fiap.techFlix.application.gateways.PagePort;
+import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.video.ListVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.video.PublishVideoUseCase;
 import br.com.fiap.techFlix.application.useCases.video.SearchVideoUseCase;
@@ -43,7 +43,6 @@ public class VideoController {
 
     @PostMapping("/videos/upload")
     public Mono<FileShowDTO> fileUpload(@RequestParam("id") String id, @RequestParam("file") MultipartFile file) throws Exception {
-        System.out.println("id: " + id);
         return fileGateway.saveAttachment(file, id).map(FileMapper::toView);
     }
 
@@ -53,7 +52,7 @@ public class VideoController {
     }
 
     @GetMapping("/videos")
-    public PagePort<VideoShowDTO> searchVideos(SearchVideoDTO searchVideoDTO) {
+    public PagePort<VideoShowDTO> searchVideos(VideoSearchDTO searchVideoDTO) {
         return searchVideoUseCase.searchVideos(searchVideoDTO).map(VideoMapper::toView);
     }
 
