@@ -1,5 +1,8 @@
 package br.com.fiap.techFlix.domain.validation;
 
+import java.util.Collection;
+import java.util.List;
+
 public class Validator {
 
     public static final String MESSAGE_NOT_EMPTY_OR_NULL = " can't be empty or null.";
@@ -8,6 +11,12 @@ public class Validator {
 
     public static void notEmptyOrNull(String text, String field) {
         if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException(field + MESSAGE_NOT_EMPTY_OR_NULL);
+        }
+    }
+
+    public static void notEmptyOrNull(Collection<?> itens, String field) {
+        if (itens == null || itens.isEmpty()) {
             throw new IllegalArgumentException(field + MESSAGE_NOT_EMPTY_OR_NULL);
         }
     }

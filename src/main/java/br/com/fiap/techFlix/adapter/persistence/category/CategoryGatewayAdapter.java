@@ -5,6 +5,7 @@ import br.com.fiap.techFlix.application.gateways.category.CategoryGateway;
 import br.com.fiap.techFlix.application.ports.CategoryCreatePort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CategoryGatewayAdapter implements CategoryGateway {
@@ -24,5 +25,10 @@ public class CategoryGatewayAdapter implements CategoryGateway {
     @Override
     public Optional<Category> findByName(String name) {
         return categoryRepository.findByName(name).map(CategoryMapper::toDomain);
+    }
+
+    @Override
+    public List<Category> findAllByNameIn(List<String> strings) {
+        return categoryRepository.findByNameIn(strings).stream().map(CategoryMapper::toDomain).toList();
     }
 }

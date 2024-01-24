@@ -35,15 +35,13 @@ public class VideoGatewayAdapter implements VideoGateway {
     }
 
     @Override
-    public Video save(VideoPublishPort videoPublishPort, Category category, LocalDateTime publicationDate) {
-        CategoryDocument categoryDocument = CategoryMapper.toPersistence(category);
-        VideoDocument saved = videoRepository.save(VideoMapper.toPersistence(videoPublishPort, categoryDocument, publicationDate));
-        return VideoMapper.toDomain(saved);
+    public void watchVideo(String id) {
+        videoRepository.addView(id);
     }
 
     @Override
-    public List<Video> getRecommendations(String userId) {
-        return List.of();
+    public boolean existsById(String id) {
+        return videoRepository.existsById(id);
     }
 
     @Override
@@ -89,4 +87,17 @@ public class VideoGatewayAdapter implements VideoGateway {
 
         return new PageDTO<>(page).map(VideoMapper::toDomain);
     }
+
+    @Override
+    public Video save(VideoPublishPort videoPublishPort, List<Category> categories, LocalDateTime publicationDate) {
+        List<CategoryDocument> categoryDocuments = categories.stream().map(CategoryMapper::toPersistence).toList();
+        VideoDocument saved = videoRepository.save(VideoMapper.toPersistence(videoPublishPort, categoryDocuments, publicationDate));
+        return VideoMapper.toDomain(saved);
+    }
+
+    @Override
+    public List<Video> getRecommendations(String userId) {
+        return List.of();
+    }
+
 }

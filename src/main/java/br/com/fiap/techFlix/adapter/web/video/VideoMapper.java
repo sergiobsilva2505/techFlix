@@ -8,24 +8,26 @@ import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class VideoMapper {
 
     public static Video toDomain(VideoDocument videoDocument) {
-        Category category = CategoryMapper.toDomain(videoDocument.getCategory());
-        return new Video(videoDocument.getId(), videoDocument.getTitle(), videoDocument.getDescription(), category, videoDocument.getPublicationDate());
+        List<Category> categories = videoDocument.getCategories().stream().map(CategoryMapper::toDomain).toList();
+        return new Video(videoDocument.getId(), videoDocument.getTitle(), videoDocument.getDescription(), categories, videoDocument.getPublicationDate());
     }
 
     public static VideoDocument toPersistence(Video video) {
-        CategoryDocument categoryDocument = CategoryMapper.toPersistence(video.getCategory());
-        return new VideoDocument(video.getId(), video.getTitle(), video.getDescription(), categoryDocument, video.getPublicationDate());
+        List<CategoryDocument> categoryDocuments = video.getCategories().stream().map(CategoryMapper::toPersistence).toList();
+        return new VideoDocument(video.getId(), video.getTitle(), video.getDescription(), categoryDocuments, video.getPublicationDate());
     }
 
-    public static VideoDocument toPersistence(VideoPublishPort videoPublishPort, CategoryDocument categoryDocument, LocalDateTime publicationDate) {
-        return new VideoDocument(videoPublishPort.fileId(), videoPublishPort.title(), videoPublishPort.description(), categoryDocument, publicationDate);
+    public static VideoDocument toPersistence(VideoPublishPort videoPublishPort, List<CategoryDocument> categoryDocuments, LocalDateTime publicationDate) {
+        return new VideoDocument(videoPublishPort.fileId(), videoPublishPort.title(), videoPublishPort.description(), categoryDocuments, publicationDate);
     }
 
     public static VideoShowDTO toView(Video video) {
-        return new VideoShowDTO(video.getId(), video.getTitle(), video.getDescription(), video.getCategory().getName(), video.getUrl(), video.getPublicationDate());
+        List<String> categories = video.getCategories().stream().map(Category::getName).toList();
+        return new VideoShowDTO(video.getId(), video.getTitle(), video.getDescription(), categories, video.getUrl(), video.getPublicationDate());
     }
 }

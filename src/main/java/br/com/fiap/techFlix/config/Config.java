@@ -96,6 +96,11 @@ public class Config {
     }
 
     @Bean
+    WatchVideoUseCase watchVideoUseCase(VideoGateway videoGateway) {
+        return new WatchVideoUseCase(videoGateway);
+    }
+
+    @Bean
     BookmarkVideoGateway bookmarkVideoGateway(BookmarkVideoRepository bookmarkVideoRepository) {
         return new BookmarkVideoGatewayAdapter(bookmarkVideoRepository);
     }

@@ -2,9 +2,7 @@ package br.com.fiap.techFlix.adapter.web.video;
 
 import br.com.fiap.techFlix.application.gateways.file.FileGateway;
 import br.com.fiap.techFlix.application.ports.PagePort;
-import br.com.fiap.techFlix.application.useCases.video.ListVideoUseCase;
-import br.com.fiap.techFlix.application.useCases.video.PublishVideoUseCase;
-import br.com.fiap.techFlix.application.useCases.video.SearchVideoUseCase;
+import br.com.fiap.techFlix.application.useCases.video.*;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 import br.com.fiap.techFlix.adapter.web.file.FileShowDTO;
 import br.com.fiap.techFlix.adapter.web.file.FileMapper;
@@ -25,12 +23,14 @@ public class VideoController {
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
     private final SearchVideoUseCase searchVideoUseCase;
+    private final WatchVideoUseCase watchVideoUseCase;
 
-    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase) {
+    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, WatchVideoUseCase watchVideoUseCase) {
         this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
         this.searchVideoUseCase = searchVideoUseCase;
+        this.watchVideoUseCase = watchVideoUseCase;
     }
 
     @PostMapping("/videos")
@@ -47,7 +47,8 @@ public class VideoController {
     }
 
     @GetMapping(value = "/videos/play/{id}", produces = "video/mp4")
-    public Mono<Resource> getVideo(@PathVariable String id, @RequestHeader("Range") String range) {
+    public Mono<Resource> playVideo(@PathVariable String id, @RequestHeader("Range") String range) {
+        watchVideoUseCase.watchVideo(id);
         return fileGateway.findById(id).map(ByteArrayResource::new);
     }
 

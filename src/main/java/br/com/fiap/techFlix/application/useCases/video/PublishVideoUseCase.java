@@ -7,6 +7,7 @@ import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PublishVideoUseCase {
 
@@ -19,10 +20,15 @@ public class PublishVideoUseCase {
     }
 
     public Video publishVideo(VideoPublishPort videoPublishPort) {
-        Category category = categoryGateway.findByName(videoPublishPort.categoryName()).orElseThrow(() -> new IllegalArgumentException("Category not found"));
+        List<Category> categories = categoryGateway.findAllByNameIn(videoPublishPort.categoryNames());
+
+        if (categories.size() != videoPublishPort.categoryNames().size()) {
+            throw new IllegalArgumentException("Category not found");
+        }
+
         LocalDateTime now = LocalDateTime.now();
 
-        return videoGateway.save(videoPublishPort, category, now);
+        return videoGateway.save(videoPublishPort, categories, now);
     }
 }
 

@@ -10,13 +10,17 @@ import java.util.Optional;
 
 public interface VideoGateway {
 
+    void watchVideo(String id);
+
+    boolean existsById(String id);
+
     Optional<Video> findById(String id);
 
     PagePort<Video> findAll(int page, int size);
 
     PagePort<Video> searchVideos(VideoSearchPort videoSearchPort);
 
-    Video save(VideoPublishPort videoPublishPort, Category category, LocalDateTime publicationDate);
+    Video save(VideoPublishPort videoPublishPort, List<Category> categories, LocalDateTime publicationDate);
 
     List<Video> getRecommendations(String userId);
 }

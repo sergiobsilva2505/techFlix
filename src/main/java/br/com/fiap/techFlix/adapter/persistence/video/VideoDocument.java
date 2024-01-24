@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document(collection = "videos")
 public class VideoDocument {
@@ -13,65 +14,36 @@ public class VideoDocument {
     private String id;
     private String title;
     private String description;
-    private CategoryDocument category;
+    private List<CategoryDocument> categories;
+    private VideoDetails details;
     private LocalDateTime publicationDate;
 
-    public VideoDocument() {
-    }
-
-    public VideoDocument(String title, String description, CategoryDocument category, LocalDateTime publicationDate) {
+    public VideoDocument(String id, String title, String description, List<CategoryDocument> categories, LocalDateTime publicationDate) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.category = category;
+        this.categories = categories;
+        this.details = new VideoDetails(0);
         this.publicationDate = publicationDate;
-    }
-
-    public VideoDocument(String id, String title, String description, CategoryDocument category, LocalDateTime publicationDate) {
-       this(title, description, category, publicationDate);
-       this.id = id;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public CategoryDocument getCategory() {
-        return category;
-    }
-
-    public String getCategoryName() {
-        return category.getName();
-    }
-
-    public void setCategory(CategoryDocument category) {
-        this.category = category;
+    public List<CategoryDocument> getCategories() {
+        return categories;
     }
 
     public LocalDateTime getPublicationDate() {
         return publicationDate;
-    }
-
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
     }
 }

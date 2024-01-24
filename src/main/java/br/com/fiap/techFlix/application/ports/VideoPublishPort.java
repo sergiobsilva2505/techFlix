@@ -1,5 +1,7 @@
 package br.com.fiap.techFlix.application.ports;
 
+import java.util.List;
+
 public interface VideoPublishPort {
 
     String fileId();
@@ -8,5 +10,5 @@ public interface VideoPublishPort {
 
     String description();
 
-    String categoryName();
+    List<String> categoryNames();
 }

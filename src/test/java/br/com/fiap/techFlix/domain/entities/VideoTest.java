@@ -33,7 +33,7 @@ class VideoTest {
         assertNotNull(video);
         assertEquals("title", video.getTitle());
         assertEquals("description", video.getDescription());
-        assertEquals(category, video.getCategory());
+        assertEquals(category, video.getCategories());
         assertNotNull(video.getPublicationDate());
     }
 
