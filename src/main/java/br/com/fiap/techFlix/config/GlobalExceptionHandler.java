@@ -1,4 +1,4 @@
-package br.com.fiap.techFlix.config.exception;
+package br.com.fiap.techFlix.config;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;

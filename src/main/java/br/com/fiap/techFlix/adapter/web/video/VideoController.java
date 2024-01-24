@@ -42,8 +42,8 @@ public class VideoController {
     }
 
     @PostMapping("/videos/upload")
-    public Mono<FileShowDTO> fileUpload(@RequestParam("id") String id, @RequestParam("file") MultipartFile file) throws Exception {
-        return fileGateway.saveAttachment(file, id).map(FileMapper::toView);
+    public Mono<FileShowDTO> fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
+        return fileGateway.saveAttachment(file).map(FileMapper::toView);
     }
 
     @GetMapping(value = "/videos/play/{id}", produces = "video/mp4")

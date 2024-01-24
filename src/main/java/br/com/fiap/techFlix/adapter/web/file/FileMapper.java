@@ -1,7 +1,7 @@
 package br.com.fiap.techFlix.adapter.web.file;
 
-import br.com.fiap.techFlix.domain.entities.file.File;
 import br.com.fiap.techFlix.adapter.persistence.file.FileDocument;
+import br.com.fiap.techFlix.domain.entities.file.File;
 
 public class FileMapper {
 

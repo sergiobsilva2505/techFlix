@@ -22,7 +22,7 @@ public class VideoMapper {
     }
 
     public static VideoDocument toPersistence(VideoPublishPort videoPublishPort, CategoryDocument categoryDocument, LocalDateTime publicationDate) {
-        return new VideoDocument(null, videoPublishPort.title(), videoPublishPort.description(), categoryDocument, publicationDate);
+        return new VideoDocument(videoPublishPort.fileId(), videoPublishPort.title(), videoPublishPort.description(), categoryDocument, publicationDate);
     }
 
     public static VideoShowDTO toView(Video video) {

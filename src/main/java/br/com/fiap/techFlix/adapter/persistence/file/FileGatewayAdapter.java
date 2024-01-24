@@ -23,7 +23,7 @@ public class FileGatewayAdapter implements FileGateway {
         return fileRepository.findById(id).map(FileDocument::getContent);
     }
 
-    public Mono<File> saveAttachment(MultipartFile file, String id) throws Exception {
+    public Mono<File> saveAttachment(MultipartFile file) throws Exception {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
@@ -35,7 +35,7 @@ public class FileGatewayAdapter implements FileGateway {
                 throw new Exception("File size exceeds maximum limit");
             }
 
-            FileDocument attachment = new FileDocument(id, fileName, file.getContentType(), file.getSize(), file.getBytes());
+            FileDocument attachment = new FileDocument(null, fileName, file.getContentType(), file.getSize(), file.getBytes());
 
             return fileRepository.save(attachment).map(FileMapper::toDomain);
         } catch (MaxUploadSizeExceededException e) {
