@@ -1,5 +1,7 @@
 package br.com.fiap.techFlix.adapter.persistence.video;
 
+import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoRepository;
+import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.UserBookmarkedCategories;
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
 import br.com.fiap.techFlix.adapter.web.Operation;
 import br.com.fiap.techFlix.adapter.web.PageDTO;
@@ -27,10 +29,12 @@ import java.util.regex.Pattern;
 public class VideoGatewayAdapter implements VideoGateway {
 
     private final MongoTemplate mongoTemplate;
+    private final BookmarkVideoRepository bookmarkVideoRepository;
     private final VideoRepository videoRepository;
 
-    public VideoGatewayAdapter(MongoTemplate mongoTemplate, VideoRepository videoRepository) {
+    public VideoGatewayAdapter(MongoTemplate mongoTemplate, BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
         this.mongoTemplate = mongoTemplate;
+        this.bookmarkVideoRepository = bookmarkVideoRepository;
         this.videoRepository = videoRepository;
     }
 
@@ -96,8 +100,15 @@ public class VideoGatewayAdapter implements VideoGateway {
     }
 
     @Override
-    public List<Video> getRecommendations(String userId) {
-        return List.of();
+    public List<UserBookmarkedCategoriesPort> getLikedCategories(String userId) {
+        return bookmarkVideoRepository.getLikedCategories(userId);
+    }
+
+    @Override
+    public PagePort<Video> getRecommendations(String userId, List<UserBookmarkedCategoriesPort> categories) {
+        // TODO: use top 5 categories to get recommendations
+//        List<Video> list = videoRepository.getRecommendations(userId).stream().map(VideoMapper::toDomain).toList();
+        return null;
     }
 
 }

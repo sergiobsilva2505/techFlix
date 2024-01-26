@@ -36,8 +36,8 @@ public class Config {
     }
 
     @Bean
-    VideoGateway videoGateway(MongoTemplate mongoTemplate, VideoRepository videoRepository) {
-        return new VideoGatewayAdapter(mongoTemplate, videoRepository);
+    VideoGateway videoGateway(MongoTemplate mongoTemplate, BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
+        return new VideoGatewayAdapter(mongoTemplate, bookmarkVideoRepository, videoRepository);
     }
 
     @Bean

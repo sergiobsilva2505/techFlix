@@ -2,14 +2,12 @@ package br.com.fiap.techFlix.adapter.persistence.video;
 
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "videos")
-@CompoundIndex(name = "categories_views", def = "{'categories.name': 1, 'details.views': 1}")
 public class VideoDocument {
 
     @Id

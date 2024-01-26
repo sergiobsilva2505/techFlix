@@ -1,5 +1,6 @@
 package br.com.fiap.techFlix.application.gateways.video;
 
+import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.UserBookmarkedCategories;
 import br.com.fiap.techFlix.application.ports.*;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
@@ -22,5 +23,7 @@ public interface VideoGateway {
 
     Video save(VideoPublishPort videoPublishPort, List<Category> categories, LocalDateTime publicationDate);
 
-    List<Video> getRecommendations(String userId);
+    List<UserBookmarkedCategoriesPort> getLikedCategories(String userId);
+
+    PagePort<Video> getRecommendations(String userId, List<UserBookmarkedCategoriesPort> categories);
 }

@@ -1,11 +1,11 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
+import br.com.fiap.techFlix.adapter.web.file.FileMapper;
+import br.com.fiap.techFlix.adapter.web.file.FileShowDTO;
 import br.com.fiap.techFlix.application.gateways.file.FileGateway;
 import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.video.*;
 import br.com.fiap.techFlix.domain.entities.video.Video;
-import br.com.fiap.techFlix.adapter.web.file.FileShowDTO;
-import br.com.fiap.techFlix.adapter.web.file.FileMapper;
 import jakarta.validation.Valid;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -23,13 +23,15 @@ public class VideoController {
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
     private final SearchVideoUseCase searchVideoUseCase;
+    private final VideoRecommendationsUseCase videoRecommendationsUseCase;
     private final WatchVideoUseCase watchVideoUseCase;
 
-    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, WatchVideoUseCase watchVideoUseCase) {
+    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, VideoRecommendationsUseCase videoRecommendationsUseCase, WatchVideoUseCase watchVideoUseCase) {
         this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
         this.searchVideoUseCase = searchVideoUseCase;
+        this.videoRecommendationsUseCase = videoRecommendationsUseCase;
         this.watchVideoUseCase = watchVideoUseCase;
     }
 
@@ -60,5 +62,10 @@ public class VideoController {
     @GetMapping("/videos/{id}")
     public VideoShowDTO getVideoById(@PathVariable String id) {
         return VideoMapper.toView(listVideoUseCase.listVideo(id));
+    }
+
+    @GetMapping("/videos/{userId}/recommendations")
+    public PagePort<VideoShowDTO> getRecommendations(@PathVariable String userId) {
+        return videoRecommendationsUseCase.getRecommendations(userId).map(VideoMapper::toView);
     }
 }
