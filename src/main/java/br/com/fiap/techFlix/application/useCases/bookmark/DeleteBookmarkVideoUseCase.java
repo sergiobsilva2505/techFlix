@@ -12,7 +12,7 @@ public class DeleteBookmarkVideoUseCase {
     }
 
     public void deleteBookmarkVideo(String videoId, String userId) {
-        BookmarkVideo bookmarkVideo = bookmarkVideoGateway.findByVideoIdAndUserId(userId, videoId).orElseThrow(() -> new IllegalArgumentException("BookmarkVideo not found"));
+        BookmarkVideo bookmarkVideo = bookmarkVideoGateway.findByVideoIdAndUserId(videoId, userId).orElseThrow(() -> new IllegalArgumentException("BookmarkVideo not found"));
 
         bookmarkVideoGateway.deleteById(bookmarkVideo.getId());
     }
