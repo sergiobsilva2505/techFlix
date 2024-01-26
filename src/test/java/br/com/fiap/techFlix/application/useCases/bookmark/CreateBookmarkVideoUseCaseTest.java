@@ -8,8 +8,6 @@ import br.com.fiap.techFlix.domain.entities.user.User;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 

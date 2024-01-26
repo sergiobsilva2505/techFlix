@@ -4,7 +4,7 @@ import br.com.fiap.techFlix.application.gateways.video.VideoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class WatchVideoUseCaseTest {
