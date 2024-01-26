@@ -27,6 +27,7 @@ public class CreateBookmarkVideoUseCase {
             throw new IllegalArgumentException("Video already bookmarked");
         }
 
+        videoGateway.likeVideo(videoId);
         return bookmarkVideoGateway.create(user, video);
     }
 }

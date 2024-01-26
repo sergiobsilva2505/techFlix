@@ -13,18 +13,21 @@ public class Video {
     private String title;
     private String description;
     private List<Category> categories;
+    private VideoDetails details;
     private LocalDateTime publicationDate;
 
-    public Video(String id, String title, String description, List<Category> categories, LocalDateTime publicationDate) {
+    public Video(String id, String title, String description, List<Category> categories, VideoDetails details, LocalDateTime publicationDate) {
         Validator.notEmptyOrNull(id, "video id");
         Validator.notEmptyOrNull(title, "video title");
         Validator.notEmptyOrNull(description, "video description");
         Validator.notEmptyOrNull(categories, "video categories");
-        Validator.objectNotNull(publicationDate, "video publication date");
+        Validator.notNull(details, "video details");
+        Validator.notNull(publicationDate, "video publication date");
         this.id = id;
         this.title = title;
         this.description = description;
         this.categories = categories;
+        this.details = details;
         this.publicationDate = publicationDate;
     }
 
@@ -50,5 +53,13 @@ public class Video {
 
     public URI getUrl() {
         return URI.create("/videos/play/" + this.id);
+    }
+
+    public int getLikes() {
+        return details.getLikes();
+    }
+
+    public int getViews() {
+        return details.getViews();
     }
 }

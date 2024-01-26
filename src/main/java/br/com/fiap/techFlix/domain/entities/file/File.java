@@ -15,7 +15,7 @@ public class File {
         Validator.notEmptyOrNull(name, "file name");
         Validator.notEmptyOrNull(contentType, "file contentType");
         Validator.greaterThan(size, 0, "file size");
-        Validator.objectNotNull(content, "file content");
+        Validator.notNull(content, "file content");
         this.id = id;
         this.name = name;
         this.contentType = contentType;

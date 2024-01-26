@@ -15,15 +15,15 @@ public class VideoDocument {
     private String title;
     private String description;
     private List<CategoryDocument> categories;
-    private VideoDetails details;
+    private VideoDetailsDocument details;
     private LocalDateTime publicationDate;
 
-    public VideoDocument(String id, String title, String description, List<CategoryDocument> categories, LocalDateTime publicationDate) {
+    public VideoDocument(String id, String title, String description, List<CategoryDocument> categories, VideoDetailsDocument details, LocalDateTime publicationDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.categories = categories;
-        this.details = new VideoDetails(0);
+        this.details = details;
         this.publicationDate = publicationDate;
     }
 
@@ -41,6 +41,14 @@ public class VideoDocument {
 
     public List<CategoryDocument> getCategories() {
         return categories;
+    }
+
+    public int getLikes() {
+        return details.getLikes();
+    }
+
+    public int getViews() {
+        return details.getViews();
     }
 
     public LocalDateTime getPublicationDate() {

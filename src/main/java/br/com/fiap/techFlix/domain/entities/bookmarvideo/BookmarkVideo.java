@@ -11,9 +11,9 @@ public class BookmarkVideo {
     private Video video;
 
     public BookmarkVideo(String id, User user, Video video) {
-        Validator.objectNotNull(id, "bookmark video id");
-        Validator.objectNotNull(user, "bookmark video user");
-        Validator.objectNotNull(video, "bookmark user");
+        Validator.notNull(id, "bookmark video id");
+        Validator.notNull(user, "bookmark video user");
+        Validator.notNull(video, "bookmark user");
         this.id = id;
         this.user = user;
         this.video = video;

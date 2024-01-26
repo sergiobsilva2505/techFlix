@@ -42,6 +42,16 @@ public class VideoGatewayAdapter implements VideoGateway {
     }
 
     @Override
+    public void likeVideo(String id) {
+        videoRepository.addLike(id);
+    }
+
+    @Override
+    public void unlikeVideo(String id) {
+        videoRepository.removeLike(id);
+    }
+
+    @Override
     public boolean existsById(String id) {
         return videoRepository.existsById(id);
     }

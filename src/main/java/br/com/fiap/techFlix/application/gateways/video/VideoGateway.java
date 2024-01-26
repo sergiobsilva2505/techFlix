@@ -12,6 +12,10 @@ public interface VideoGateway {
 
     void watchVideo(String id);
 
+    void likeVideo(String id);
+
+    void unlikeVideo(String id);
+
     boolean existsById(String id);
 
     Optional<Video> findById(String id);

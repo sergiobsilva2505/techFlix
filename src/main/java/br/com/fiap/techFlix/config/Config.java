@@ -61,8 +61,8 @@ public class Config {
     }
 
     @Bean
-    DeleteBookmarkVideoUseCase deleteBookmarkVideoUseCase(BookmarkVideoGateway bookmarkVideoGateway) {
-        return new DeleteBookmarkVideoUseCase(bookmarkVideoGateway);
+    DeleteBookmarkVideoUseCase deleteBookmarkVideoUseCase(BookmarkVideoGateway bookmarkVideoGateway, VideoGateway videoGateway) {
+        return new DeleteBookmarkVideoUseCase(bookmarkVideoGateway, videoGateway);
     }
 
     @Bean
