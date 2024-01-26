@@ -18,10 +18,17 @@ public interface VideoRepository extends MongoRepository<VideoDocument, String> 
     @Update("{ $inc: { 'details.likes': -1 } }")
     void removeLike(String id);
 
+    List<VideoDocument> findAllByOrderByDetails_LikesDescDetails_ViewsDesc();
+
+    default List<VideoDocument> getRecommendations() {
+        return findAllByOrderByDetails_LikesDescDetails_ViewsDesc();
+    }
+
     @Aggregation(pipeline = {
             "{ $match: { 'categories.name': { $in: ?1 } } }",
             "{ $project: { '_id': 1, 'title': 1, 'description': 1, 'categories': 1, 'details': 1, 'publicationDate': 1, 'score': { $size: { $setIntersection: [ '$categories.name', ?1 ] } } } }",
             "{ $sort: { 'score': -1, 'details.likes': -1, 'details.views': -1 } }",
+            "{ $limit: 10 }"
     })
-    List<VideoDocument> getRecommendations(String userId, List<String> categoriesNames);
+    List<VideoDocument> getRecommendations(List<String> categoriesNames);
 }

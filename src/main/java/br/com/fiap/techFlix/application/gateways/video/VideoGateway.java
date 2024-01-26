@@ -28,5 +28,7 @@ public interface VideoGateway {
 
     List<UserBookmarkedCategoriesPort> getLikedCategories(String userId);
 
-    List<Video> getRecommendations(String userId, List<UserBookmarkedCategoriesPort> categories);
+    List<Video> getRecommendations();
+
+    List<Video> getRecommendations(List<UserBookmarkedCategoriesPort> categories);
 }

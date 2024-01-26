@@ -31,4 +31,9 @@ public class CategoryGatewayAdapter implements CategoryGateway {
     public List<Category> findAllByNameIn(List<String> strings) {
         return categoryRepository.findByNameIn(strings).stream().map(CategoryMapper::toDomain).toList();
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
+    }
 }

@@ -34,4 +34,9 @@ public class UserGatewayAdapter implements UserGateway {
     public Optional<User> findById(String id) {
         return userRepository.findById(id).map(UserMapper::toDomain);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

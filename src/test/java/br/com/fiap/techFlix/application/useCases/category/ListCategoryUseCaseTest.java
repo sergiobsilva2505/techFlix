@@ -2,7 +2,6 @@ package br.com.fiap.techFlix.application.useCases.category;
 
 import br.com.fiap.techFlix.application.gateways.category.CategoryGateway;
 import br.com.fiap.techFlix.domain.entities.category.Category;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class ListCategoryUseCaseTest {
@@ -20,36 +20,33 @@ class ListCategoryUseCaseTest {
 
     AutoCloseable openMocks;
 
+    private ListCategoryUseCase listCategoryUseCase;
+
     @BeforeEach
     void setUp() {
         openMocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        openMocks.close();
+        listCategoryUseCase = new ListCategoryUseCase(categoryGateway);
     }
 
     @Test
-    void listCategory__should_return_a_category_by_name() {
-        String categoryName = "Categoria Alura";
-        Category categoryAlura = new Category("Categoria Alura");
+    void shouldReturnCategoryWhenIdExists() {
+        Category category = mock(Category.class);
+        String id = "existingId";
+        when(categoryGateway.findById(id)).thenReturn(Optional.of(category));
 
-        when(categoryGateway.findByName(categoryName)).thenReturn(Optional.of(categoryAlura));
-        Optional<Category> optionalCategory = categoryGateway.findByName(categoryName);
+        Category result = listCategoryUseCase.listCategory(id);
 
-        verify(categoryGateway, times(1)).findByName(categoryName);
-        assertThat(optionalCategory).isPresent().contains(optionalCategory.get());
-        optionalCategory.ifPresent(category -> {
-            assertThat(category).isEqualTo(categoryAlura);
-        });
+        assertThat(result).isEqualTo(category);
+        verify(categoryGateway, times(1)).findById(id);
+    }
 
-        categoryName = "";
-        when(categoryGateway.findByName(categoryName)).thenReturn(Optional.empty());
+    @Test
+    void shouldThrowExceptionWhenIdDoesNotExist() {
+        String id = "nonExistingId";
+        when(categoryGateway.findById(id)).thenReturn(Optional.empty());
 
-        optionalCategory = categoryGateway.findByName(categoryName);
-
-        verify(categoryGateway, times(1)).findByName(categoryName);
-        assertThat(optionalCategory).isEmpty();
+        assertThatThrownBy(() -> listCategoryUseCase.listCategory(id))
+                .isInstanceOf(IllegalArgumentException.class);
+        verify(categoryGateway, times(1)).findById(id);
     }
 }

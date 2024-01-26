@@ -13,4 +13,6 @@ public interface CategoryGateway {
     Optional<Category> findById(String id);
 
     List<Category> findAllByNameIn(List<String> strings);
+
+    boolean existsByName(String name);
 }

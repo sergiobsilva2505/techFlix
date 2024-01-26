@@ -2,78 +2,73 @@ package br.com.fiap.techFlix.domain.entities;
 
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import br.com.fiap.techFlix.domain.entities.video.VideoDetails;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class VideoTest {
 
-    @Mock
-    private Category category;
-
-    AutoCloseable openMocks;
-
-    @BeforeEach
-    void setUp() {
-        openMocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        openMocks.close();
-    }
-
     @Test
-    void createVideoWithValidParameters() {
-        Video video = new Video("title", "description", category, LocalDateTime.now());
-        assertNotNull(video);
-        assertEquals("title", video.getTitle());
-        assertEquals("description", video.getDescription());
-        assertEquals(category, video.getCategories());
+    void shouldCreateVideoWithValidParameters() {
+        VideoDetails details = new VideoDetails(100, 10);
+        Category category = new Category("1", "Action");
+        Video video = new Video("1", "Title", "Description", List.of(category), details, LocalDateTime.now());
+
+        assertEquals("1", video.getId());
+        assertEquals("Title", video.getTitle());
+        assertEquals("Description", video.getDescription());
+        assertEquals(List.of(category), video.getCategories());
+        assertEquals(details, video.getDetails());
         assertNotNull(video.getPublicationDate());
     }
 
     @Test
-    void createVideoWithEmptyTitleShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Video("", "description", category, LocalDateTime.now());
-        });
+    void shouldThrowExceptionWhenIdIsNull() {
+        VideoDetails details = new VideoDetails(100, 10);
+        Category category = new Category("1", "Action");
+
+        assertThrows(IllegalArgumentException.class, () -> new Video(null, "Title", "Description", List.of(category), details, LocalDateTime.now()));
     }
 
     @Test
-    void createVideoWithEmptyDescriptionShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Video("title", "", category, LocalDateTime.now());
-        });
+    void shouldThrowExceptionWhenTitleIsNull() {
+        VideoDetails details = new VideoDetails(100, 10);
+        Category category = new Category("1", "Action");
+
+        assertThrows(IllegalArgumentException.class, () -> new Video("1", null, "Description", List.of(category), details, LocalDateTime.now()));
     }
 
     @Test
-    void createVideoWithNullCategoryShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Video("title", "description", null, LocalDateTime.now());
-        });
+    void shouldThrowExceptionWhenDescriptionIsNull() {
+        VideoDetails details = new VideoDetails(100, 10);
+        Category category = new Category("1", "Action");
+
+        assertThrows(IllegalArgumentException.class, () -> new Video("1", "Title", null, List.of(category), details, LocalDateTime.now()));
     }
 
     @Test
-    void createVideoWithNullPublicationDateShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Video("title", "description", category, null);
-        });
+    void shouldThrowExceptionWhenCategoriesIsNull() {
+        VideoDetails details = new VideoDetails(100, 10);
+
+        assertThrows(IllegalArgumentException.class, () -> new Video("1", "Title", "Description", null, details, LocalDateTime.now()));
     }
 
     @Test
-    void getUrlShouldReturnCorrectUrl() {
-        Video video = new Video("1", "title", "description", category, LocalDateTime.now());
-        assertEquals("/videos/play/1", video.getUrl().toString());
+    void shouldThrowExceptionWhenDetailsIsNull() {
+        Category category = new Category("1", "Action");
+
+        assertThrows(IllegalArgumentException.class, () -> new Video("1", "Title", "Description", List.of(category), null, LocalDateTime.now()));
     }
 
     @Test
-    void getUrlWithEmptyIdShouldThrowException() {
-        Video video = new Video("title", "description", category, LocalDateTime.now());
-        assertThrows(IllegalArgumentException.class, video::getUrl);
+    void shouldThrowExceptionWhenPublicationDateIsNull() {
+        VideoDetails details = new VideoDetails(100, 10);
+        Category category = new Category("1", "Action");
+
+        assertThrows(IllegalArgumentException.class, () -> new Video("1", "Title", "Description", List.of(category), details, null));
     }
 }
