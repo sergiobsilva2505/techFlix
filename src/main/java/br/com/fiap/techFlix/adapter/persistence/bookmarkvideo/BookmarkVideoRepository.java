@@ -20,5 +20,5 @@ public interface BookmarkVideoRepository extends MongoRepository<BookmarkVideoDo
             "{ $sort: { count: -1 } }",
             "{ $limit: 5 }"
     })
-    List<UserBookmarkedCategories> getLikedCategories(String userId);
+    List<UserBookmarkedCategories> getTop5LikedCategories(String userId);
 }

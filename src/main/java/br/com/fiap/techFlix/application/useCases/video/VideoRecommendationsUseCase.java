@@ -15,7 +15,7 @@ public class VideoRecommendationsUseCase {
         this.videoGateway = videoGateway;
     }
 
-    public PagePort<Video> getRecommendations(String userId) {
+    public List<Video> getRecommendations(String userId) {
         List<UserBookmarkedCategoriesPort> categories = videoGateway.getLikedCategories(userId);
         return videoGateway.getRecommendations(userId, categories);
     }

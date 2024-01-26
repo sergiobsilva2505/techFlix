@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class VideoController {
@@ -65,7 +66,7 @@ public class VideoController {
     }
 
     @GetMapping("/videos/{userId}/recommendations")
-    public PagePort<VideoShowDTO> getRecommendations(@PathVariable String userId) {
-        return videoRecommendationsUseCase.getRecommendations(userId).map(VideoMapper::toView);
+    public List<VideoShowDTO> getRecommendations(@PathVariable String userId) {
+        return videoRecommendationsUseCase.getRecommendations(userId).stream().map(VideoMapper::toView).toList();
     }
 }

@@ -1,7 +1,6 @@
 package br.com.fiap.techFlix.adapter.persistence.video;
 
 import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoRepository;
-import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.UserBookmarkedCategories;
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
 import br.com.fiap.techFlix.adapter.web.Operation;
 import br.com.fiap.techFlix.adapter.web.PageDTO;
@@ -21,8 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Component
@@ -101,14 +99,13 @@ public class VideoGatewayAdapter implements VideoGateway {
 
     @Override
     public List<UserBookmarkedCategoriesPort> getLikedCategories(String userId) {
-        return bookmarkVideoRepository.getLikedCategories(userId);
+        return new ArrayList<>(bookmarkVideoRepository.getTop5LikedCategories(userId));
     }
 
     @Override
-    public PagePort<Video> getRecommendations(String userId, List<UserBookmarkedCategoriesPort> categories) {
-        // TODO: use top 5 categories to get recommendations
-//        List<Video> list = videoRepository.getRecommendations(userId).stream().map(VideoMapper::toDomain).toList();
-        return null;
+    public List<Video> getRecommendations(String userId, List<UserBookmarkedCategoriesPort> categories) {
+        List<String> categoriesNames = categories.stream().map(UserBookmarkedCategoriesPort::getName).toList();
+        return videoRepository.getRecommendations(userId, categoriesNames).stream().map(VideoMapper::toDomain).toList();
     }
 
 }
