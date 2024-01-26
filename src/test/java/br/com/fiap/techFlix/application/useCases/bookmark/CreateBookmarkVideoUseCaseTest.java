@@ -19,20 +19,16 @@ import static org.mockito.Mockito.*;
 
 class CreateBookmarkVideoUseCaseTest {
 
-    @Mock
     private BookmarkVideoGateway bookmarkVideoGateway;
-    @Mock
     private UserGateway userGateway;
-    @Mock
     private VideoGateway videoGateway;
-
-    AutoCloseable openMocks;
-
     private CreateBookmarkVideoUseCase createBookmarkVideoUseCase;
 
     @BeforeEach
     void setUp() {
-        openMocks = MockitoAnnotations.openMocks(this);
+        bookmarkVideoGateway = mock(BookmarkVideoGateway.class);
+        userGateway = mock(UserGateway.class);
+        videoGateway = mock(VideoGateway.class);
         createBookmarkVideoUseCase = new CreateBookmarkVideoUseCase(bookmarkVideoGateway, userGateway, videoGateway);
     }
 

@@ -4,8 +4,6 @@ import br.com.fiap.techFlix.application.gateways.category.CategoryGateway;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
@@ -15,16 +13,12 @@ import static org.mockito.Mockito.*;
 
 class ListCategoryUseCaseTest {
 
-    @Mock
     private CategoryGateway categoryGateway;
-
-    AutoCloseable openMocks;
-
     private ListCategoryUseCase listCategoryUseCase;
 
     @BeforeEach
     void setUp() {
-        openMocks = MockitoAnnotations.openMocks(this);
+        categoryGateway = mock(CategoryGateway.class);
         listCategoryUseCase = new ListCategoryUseCase(categoryGateway);
     }
 
