@@ -81,26 +81,26 @@
              {
                 "content": [
                     {
-                    "id": "65abbc3b252b6124cbb4c9fc",
-                    "name": "Sérgio",
-                    "email": "mail@m.com"
+                        "id": "65abbc3b252b6124cbb4c9fc",
+                        "name": "Sérgio",
+                        "email": "mail@m.com"
                     },
                     {
-                    "id": "65adc8285620df7cbd75b7fe",
-                    "name": "Sérgio",
-                    "email": "mail2@m.com"
+                        "id": "65adc8285620df7cbd75b7fe",
+                        "name": "Sérgio",
+                        "email": "mail2@m.com"
                     },
                     {
-                    "id": "65adc84c5620df7cbd75b7ff",
-                    "name": "Sérgio",
-                    "email": "mail2@m.com"
+                        "id": "65adc84c5620df7cbd75b7ff",
+                        "name": "Sérgio",
+                        "email": "mail2@m.com"
                     }
                 ],
                 "totalPages": 1,
                 "totalElements": 3,
                 "currentPage": 0,
                 "elementsPerPage": 10
-                }
+             }
             ```
   </details>
 
@@ -128,9 +128,10 @@
                     "detail": "Category not found",
                     "instance": "/categories/animation23"
                 }
-              ```
+                ```
               
               - Response 400
+                ```json
                 {
                     "type": "about:blank",
                     "title": "Bad Request",
@@ -138,6 +139,7 @@
                     "detail": "Category name can't be empty or null.",
                     "instance": "/categories"
                 }
+                ```
 
     </details>
 
@@ -169,11 +171,13 @@
             curl -X POST 'localhost:8080/videos' \
             -H 'Content-Type: application/json' \
             --data '{
+                "fileId": "65abbc65252b6124cbb4c9fe",
                 "title": "Dumbo 2",
                 "description": "Dumbo video 2",
                 "categoryName": "animation",
             }'
           ```
+          
         - Response 400
           ```json
             {
@@ -203,7 +207,7 @@
                 "uri": "/videos/play/65abbc65252b6124cbb4c9fe",
                 "publicationDate": "2024-01-20T09:28:21.754"
             }
-          ```
+            ```
           
           - Response 400
             ```json
@@ -214,7 +218,7 @@
                     "detail": "Video not found",
                     "instance": "/videos/65abbc65252b6124cbb4c9fe4"
             }
-          ```
+            ```
   </details>
   <details>
     <summary>Buscar todos os videos</summary>
