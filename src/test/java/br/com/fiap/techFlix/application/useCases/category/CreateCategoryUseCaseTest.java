@@ -5,24 +5,18 @@ import br.com.fiap.techFlix.application.ports.CategoryCreatePort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CreateCategoryUseCaseTest {
 
-    @Mock
     private CategoryGateway categoryGateway;
-
-    AutoCloseable openMocks;
-
     private CreateCategoryUseCase createCategoryUseCase;
 
     @BeforeEach
     void setUp() {
-        openMocks = MockitoAnnotations.openMocks(this);
+        categoryGateway = mock(CategoryGateway.class);
         createCategoryUseCase = new CreateCategoryUseCase(categoryGateway);
     }
 

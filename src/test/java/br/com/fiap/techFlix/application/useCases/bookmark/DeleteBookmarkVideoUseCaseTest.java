@@ -5,8 +5,6 @@ import br.com.fiap.techFlix.application.gateways.video.VideoGateway;
 import br.com.fiap.techFlix.domain.entities.bookmarvideo.BookmarkVideo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
@@ -15,16 +13,14 @@ import static org.mockito.Mockito.*;
 
 class DeleteBookmarkVideoUseCaseTest {
 
-    @Mock
     private BookmarkVideoGateway bookmarkVideoGateway;
-    @Mock
     private VideoGateway videoGateway;
-
     private DeleteBookmarkVideoUseCase deleteBookmarkVideoUseCase;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        bookmarkVideoGateway = mock(BookmarkVideoGateway.class);
+        videoGateway = mock(VideoGateway.class);
         deleteBookmarkVideoUseCase = new DeleteBookmarkVideoUseCase(bookmarkVideoGateway, videoGateway);
     }
 
