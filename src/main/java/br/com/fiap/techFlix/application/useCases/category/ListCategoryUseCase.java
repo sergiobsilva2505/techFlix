@@ -11,7 +11,7 @@ public class ListCategoryUseCase {
         this.categoryGateway = categoryGateway;
     }
 
-    public Category listCategory(String name) {
-        return categoryGateway.findByName(name).orElseThrow(() -> new IllegalArgumentException("Category not found"));
+    public Category listCategory(String id) {
+        return categoryGateway.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found"));
     }
 }

@@ -23,8 +23,8 @@ public class CategoryGatewayAdapter implements CategoryGateway {
     }
 
     @Override
-    public Optional<Category> findByName(String name) {
-        return categoryRepository.findByName(name).map(CategoryMapper::toDomain);
+    public Optional<Category> findById(String id) {
+        return categoryRepository.findById(id).map(CategoryMapper::toDomain);
     }
 
     @Override

@@ -9,12 +9,11 @@
     - O Spring Validation foi utilizado para validar os dados de entrada da API, para assegurar a integridade dos dados.
     - O Spring Data MongoDB foi utilizado para facilitar a persistência dos dados.
     - O Spring Data Reactive MongoDB foi utilizado para facilitar a criação e gerenciamento dos dados de forma não bloqueante.
-- A biblioteca Springdoc OpenAPI foi utilizada para facilitar a geração da documentação do projeto.
 
 ## Ferramentas
 
 - IntelliJ IDEA
-- Postman
+- Insonmia
 - Git
 - Maven
 - Copilot

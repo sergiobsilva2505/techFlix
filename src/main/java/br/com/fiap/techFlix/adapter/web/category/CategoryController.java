@@ -24,12 +24,12 @@ public class CategoryController {
     public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryCreateDTO categoryDTO) {
         Category category = createCategoryUseCase.createCategory(categoryDTO);
 
-        URI uri = URI.create("/categories/" + category.getName());
+        URI uri = URI.create("/categories/" + category.getId());
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/categories/{name}")
-    public CategoryShowDTO getCategoryByName(@PathVariable String name) {
-        return CategoryMapper.toView(listCategoryUseCase.listCategory(name));
+    @GetMapping("/categories/{id}")
+    public CategoryShowDTO getCategoryById(@PathVariable String id) {
+        return CategoryMapper.toView(listCategoryUseCase.listCategory(id));
     }
 }
