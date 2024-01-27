@@ -18,6 +18,9 @@ public class VideoDocument {
     private VideoDetailsDocument details;
     private LocalDateTime publicationDate;
 
+    public VideoDocument() {
+    }
+
     public VideoDocument(String id, String title, String description, List<CategoryDocument> categories, VideoDetailsDocument details, LocalDateTime publicationDate) {
         this.id = id;
         this.title = title;
@@ -45,6 +48,10 @@ public class VideoDocument {
 
     public int getLikes() {
         return details.getLikes();
+    }
+
+    public VideoDetailsDocument getDetails() {
+        return details;
     }
 
     public int getViews() {

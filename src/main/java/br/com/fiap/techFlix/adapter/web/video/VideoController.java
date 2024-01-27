@@ -62,7 +62,8 @@ public class VideoController {
 
     @GetMapping("/videos/{id}")
     public VideoShowDTO getVideoById(@PathVariable String id) {
-        return VideoMapper.toView(listVideoUseCase.listVideo(id));
+        Video video = listVideoUseCase.listVideo(id);
+        return VideoMapper.toView(video);
     }
 
     @GetMapping("/videos/{userId}/recommendations")

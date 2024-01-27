@@ -10,6 +10,9 @@ public class CategoryDocument {
     private String id;
     private String name;
 
+    public CategoryDocument() {
+    }
+
     public CategoryDocument(String id, String name) {
         this.id = id;
         this.name = name;
