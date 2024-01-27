@@ -34,10 +34,11 @@
             curl -X POST 'localhost:8080/users' -H 'Content-Type: application/json' \
             --data '{
                 "name": "João Augusto de Oliveira",
-                "email": "password",
+                "email": "joaoaugusto@gmail.com",
+                "password": "12345678"
             }'
           ```
-        - Response 201:
+          - Response 201:
             No body returned for response
   </details>
 
@@ -47,12 +48,11 @@
     - GET: http://localhost:8080/users/{id} *(id do usuário buscado)*
         - Request:
           ```bash
-            curl -X GET 'http://localhost:8080/users/65abbc3b252b6124cbb4c9fc'
+            curl -X GET 'http://localhost:8080/users/65b56126f46a7a218eb91131'
           ```
         - Response 200:
           ```json
             {
-              "id": "65abbc3b252b6124cbb4c9fc",
               "name": "Sérgio",
               "email": "mail@m.com"
             }
@@ -64,7 +64,7 @@
               "title": "Bad Request",
               "status": 400,
               "detail": "User not found",
-              "instance": "/users/65abbc3b252b6124cbb4c9f3c"
+              "instance": "/users/65b56126f46a7a218eb91131"
             }
           ```
   </details>
@@ -105,46 +105,35 @@
             ```
   </details>
 
-  - ### API de Categoria:
+- ### API de Categoria:
+  <details>
+   <summary>Cadastrar uma Categoria</summary>
 
-    <details>
-     <summary>Cadastrar uma Categoria</summary>
-
-      - POST: http://localhost:8080/categories
-          - Request:
-            ```bash
-              curl -X POST 'localhost:8080/categories' \
-              -H 'Content-Type: application/json' \
-              --data '{
-                  "name": "animation",
+    - POST: http://localhost:8080/categories
+        - Request:
+          ```bash
+            curl -X POST 'localhost:8080/categories' \
+            -H 'Content-Type: application/json' \
+            --data '{
+                "name": "animation"
               }'
-            ```
-            
-              - Response 404:
-                ```json
-                  {
-                    "type": "about:blank",
-                    "title": "Bad Request",
-                    "status": 400,
-                    "detail": "Category not found",
-                    "instance": "/categories/animation23"
-                }
-              ```
-              
-              - Response 400
-                {
-                    "type": "about:blank",
-                    "title": "Bad Request",
-                    "status": 400,
-                    "detail": "Category name can't be empty or null.",
-                    "instance": "/categories"
-                }
-
-    </details>
+          ```
+             
+      - Response 400
+          ```json
+               {
+                  "type": "about:blank",
+                  "title": "Bad Request",
+                  "status": 400,
+                  "detail": "Category name can't be empty or null.",
+                  "instance": "/categories"
+               }
+          ```
+  </details>
 
   <details>
     <summary>Buscar uma categoria</summary>
-
+    
     - GET: http://localhost:8080/categories/{name} *(nome da categoria buscada)*
         - Request:
           ```bash
@@ -156,12 +145,48 @@
               "name" : "animation"
             }
           ```
-  </details>
+    
+           - Response 404:
+                ```json
+                  {
+                    "type": "about:blank",
+                    "title": "Bad Request",
+                    "status": 400,
+                    "detail": "Category not found",
+                    "instance": "/categories/animation23"
+                    }
+              ```
+    </details>
 
 
 - ### API de Vídeo:
 
   <details>
+    <summary>Fazer o upload do vídeo</summary>
+
+  - POST: http://localhost:8080/videos/upload
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/videos/upload' \
+          -H 'Content-Type: multipart/form-data' \
+          --data '{
+              "file": "underfined"
+          }'
+        ```
+        Obs: Fazer a requisição no postman ou insomnia para conseguir setar o arquivo
+      - Response 400
+        ```json
+          {
+            "type": "about:blank",
+            "title": "Bad Request",
+            "status": 400,
+            "detail": "Video not found",
+            "instance": "/videos/1"
+          }
+        ```
+  </details>
+
+    <details>
     <summary>Cadastrar um video</summary>
 
     - POST: http://localhost:8080/videos/
@@ -170,23 +195,25 @@
             curl -X POST 'localhost:8080/videos' \
             -H 'Content-Type: application/json' \
             --data '{
-                "title": "Dumbo 2",
-                "description": "Dumbo video 2",
-                "categoryName": "animation",
+                "fileId": "65b3bd864d06ff4adef6d2a1",
+                "title": "Fish king 2 - making of",
+                "description": "The king of fish production",
+                 "categoryNames": ["animation"]
             }'
           ```
-        - Response 400
+            - Response 201
           ```json
             {
-              "type": "about:blank",
-              "title": "Bad Request",
-              "status": 400,
-              "detail": "Video not found",
-              "instance": "/videos/1"
+                "fileId": "65b3bd864d06ff4adef6d2a1",
+                "title": "Fish king 2 - making of",
+                "description": "The king of fish production",
+                "categoryNames": ["animation"]
+
             }
           ```
-  </details>
-  <details>
+          
+    </details>
+    <details>
     <summary>Buscar um Video</summary>
 
     - GET: http://localhost:8080/videos/{id} *(id do vídeo buscado)*
@@ -216,8 +243,8 @@
                     "instance": "/videos/65abbc65252b6124cbb4c9fe4"
             }
           ```
-  </details>
-  <details>
+    </details>
+    <details>
     <summary>Buscar todos os videos</summary>
 
     - GET: http://localhost:8080/videos
@@ -252,7 +279,7 @@
               "elementsPerPage": 10
               }
           ```
-  </details>
+    </details>
 
 - ### API de Bookmark:
 
