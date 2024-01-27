@@ -62,4 +62,8 @@ public class Video {
     public int getViews() {
         return details.getViews();
     }
+
+    public VideoDetails getDetails() {
+        return details;
+    }
 }

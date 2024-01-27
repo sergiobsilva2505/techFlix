@@ -13,6 +13,10 @@ public class CreateCategoryUseCase {
     }
 
     public Category createCategory(CategoryCreatePort categoryCreatePort) {
+        if (categoryGateway.existsByName(categoryCreatePort.name())) {
+            throw new IllegalArgumentException("Category already exists");
+        }
+
         return categoryGateway.save(categoryCreatePort);
     }
 }

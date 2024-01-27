@@ -13,4 +13,6 @@ public interface UserGateway {
     PagePort<User> findAll(int page, int size);
 
     Optional<User> findById(String id);
+
+    boolean existsByEmail(String email);
 }

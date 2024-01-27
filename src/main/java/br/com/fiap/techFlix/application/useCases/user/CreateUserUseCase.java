@@ -15,6 +15,10 @@ public class CreateUserUseCase {
     }
 
     public User createUser(UserCreatePort userCreatePort) {
+        if (userGateway.existsByEmail(userCreatePort.email())) {
+            throw new IllegalArgumentException("User already exists");
+        }
+
         UUID uuid = UUID.randomUUID();
         return userGateway.save(userCreatePort, uuid.toString());
     }

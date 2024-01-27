@@ -1,7 +1,6 @@
 package br.com.fiap.techFlix.application.useCases.video;
 
 import br.com.fiap.techFlix.application.gateways.video.VideoGateway;
-import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.ports.UserBookmarkedCategoriesPort;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 
@@ -17,6 +16,11 @@ public class VideoRecommendationsUseCase {
 
     public List<Video> getRecommendations(String userId) {
         List<UserBookmarkedCategoriesPort> categories = videoGateway.getLikedCategories(userId);
-        return videoGateway.getRecommendations(userId, categories);
+
+        if (categories.isEmpty()) {
+            return videoGateway.getRecommendations();
+        }
+
+        return videoGateway.getRecommendations(categories);
     }
 }

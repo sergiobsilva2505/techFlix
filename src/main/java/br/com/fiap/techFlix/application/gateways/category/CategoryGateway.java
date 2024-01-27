@@ -10,7 +10,9 @@ public interface CategoryGateway {
 
     Category save(CategoryCreatePort categoryCreatePort);
 
-    Optional<Category> findByName(String name);
+    Optional<Category> findById(String id);
 
     List<Category> findAllByNameIn(List<String> strings);
+
+    boolean existsByName(String name);
 }

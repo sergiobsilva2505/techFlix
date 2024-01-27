@@ -1,53 +1,56 @@
 package br.com.fiap.techFlix.application.useCases.video;
 
-import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.gateways.video.VideoGateway;
+import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.domain.entities.video.Video;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class ListVideoUseCaseTest {
 
-    @Mock
     private VideoGateway videoGateway;
-
-    AutoCloseable openMocks;
+    private ListVideoUseCase listVideoUseCase;
 
     @BeforeEach
     void setUp() {
-        openMocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        openMocks.close();
+        videoGateway = mock(VideoGateway.class);
+        listVideoUseCase = new ListVideoUseCase(videoGateway);
     }
 
     @Test
-    void listVideosReturnsPagePort() {
-        when(videoGateway.findAll(anyInt(), anyInt())).thenReturn(mock(PagePort.class));
-        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
-        assertNotNull(useCase.listVideos(1, 10));
+    void shouldReturnPagePortWhenVideosExist() {
+        PagePort<Video> pagePort = mock(PagePort.class);
+        when(videoGateway.findAll(anyInt(), anyInt())).thenReturn(pagePort);
+
+        PagePort<Video> result = listVideoUseCase.listVideos(1, 10);
+
+        assertEquals(pagePort, result);
+        verify(videoGateway).findAll(1, 10);
     }
 
     @Test
-    void listVideoReturnsVideo() {
-        when(videoGateway.findById(anyString())).thenReturn(Optional.of(mock(Video.class)));
-        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
-        assertNotNull(useCase.listVideo("1"));
+    void shouldReturnVideoWhenIdExists() {
+        Video video = mock(Video.class);
+        String id = "existingId";
+        when(videoGateway.findById(id)).thenReturn(Optional.of(video));
+
+        Video result = listVideoUseCase.listVideo(id);
+
+        assertEquals(video, result);
+        verify(videoGateway).findById(id);
     }
 
     @Test
-    void listVideoThrowsExceptionWhenVideoNotFound() {
-        when(videoGateway.findById(anyString())).thenReturn(Optional.empty());
-        ListVideoUseCase useCase = new ListVideoUseCase(videoGateway);
-        assertThrows(IllegalArgumentException.class, () -> useCase.listVideo("1"));
+    void shouldThrowExceptionWhenIdDoesNotExist() {
+        String id = "nonExistingId";
+        when(videoGateway.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () -> listVideoUseCase.listVideo(id));
     }
 }

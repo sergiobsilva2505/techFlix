@@ -9,12 +9,11 @@
     - O Spring Validation foi utilizado para validar os dados de entrada da API, para assegurar a integridade dos dados.
     - O Spring Data MongoDB foi utilizado para facilitar a persistência dos dados.
     - O Spring Data Reactive MongoDB foi utilizado para facilitar a criação e gerenciamento dos dados de forma não bloqueante.
-- A biblioteca Springdoc OpenAPI foi utilizada para facilitar a geração da documentação do projeto.
 
 ## Ferramentas
 
 - IntelliJ IDEA
-- Postman
+- Insonmia
 - Git
 - Maven
 - Copilot
@@ -82,26 +81,26 @@
              {
                 "content": [
                     {
-                    "id": "65abbc3b252b6124cbb4c9fc",
-                    "name": "Sérgio",
-                    "email": "mail@m.com"
+                        "id": "65abbc3b252b6124cbb4c9fc",
+                        "name": "Sérgio",
+                        "email": "mail@m.com"
                     },
                     {
-                    "id": "65adc8285620df7cbd75b7fe",
-                    "name": "Sérgio",
-                    "email": "mail2@m.com"
+                        "id": "65adc8285620df7cbd75b7fe",
+                        "name": "Sérgio",
+                        "email": "mail2@m.com"
                     },
                     {
-                    "id": "65adc84c5620df7cbd75b7ff",
-                    "name": "Sérgio",
-                    "email": "mail2@m.com"
+                        "id": "65adc84c5620df7cbd75b7ff",
+                        "name": "Sérgio",
+                        "email": "mail2@m.com"
                     }
                 ],
                 "totalPages": 1,
                 "totalElements": 3,
                 "currentPage": 0,
                 "elementsPerPage": 10
-                }
+             }
             ```
   </details>
 
@@ -130,6 +129,31 @@
                }
           ```
   </details>
+            ```
+            
+              - Response 404:
+                ```json
+                  {
+                    "type": "about:blank",
+                    "title": "Bad Request",
+                    "status": 400,
+                    "detail": "Category not found",
+                    "instance": "/categories/animation23"
+                }
+                ```
+              
+              - Response 400
+                ```json
+                {
+                    "type": "about:blank",
+                    "title": "Bad Request",
+                    "status": 400,
+                    "detail": "Category name can't be empty or null.",
+                    "instance": "/categories"
+                }
+                ```
+
+    </details>
 
   <details>
     <summary>Buscar uma categoria</summary>
@@ -231,7 +255,7 @@
                 "uri": "/videos/play/65abbc65252b6124cbb4c9fe",
                 "publicationDate": "2024-01-20T09:28:21.754"
             }
-          ```
+            ```
           
           - Response 400
             ```json
