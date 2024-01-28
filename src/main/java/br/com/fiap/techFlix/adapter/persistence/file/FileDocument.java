@@ -16,13 +16,6 @@ public class FileDocument {
     public FileDocument() {
     }
 
-    public FileDocument(String name, String contentType, long size, byte[] content) {
-        this.name = name;
-        this.contentType = contentType;
-        this.size = size;
-        this.content = content;
-    }
-
     public FileDocument(String id, String name, String contentType, long size, byte[] content) {
         this.id = id;
         this.name = name;

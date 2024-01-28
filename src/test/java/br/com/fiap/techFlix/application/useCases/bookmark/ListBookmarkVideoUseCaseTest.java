@@ -28,7 +28,7 @@ class ListBookmarkVideoUseCaseTest {
     @Test
     void shouldListBookmarkVideoWhenBookmarkExistsForUser() {
         BookmarkVideo bookmarkVideo = mock(BookmarkVideo.class);
-        when(bookmarkVideoGateway.findByUserId("2")).thenReturn(Optional.of(bookmarkVideo));
+        when(bookmarkVideoGateway.findById("2")).thenReturn(Optional.of(bookmarkVideo));
 
         BookmarkVideo result = listBookmarkVideoUseCase.listBookmarkVideo("2");
 
@@ -38,7 +38,7 @@ class ListBookmarkVideoUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenBookmarkDoesNotExistForUser() {
-        when(bookmarkVideoGateway.findByUserId("2")).thenReturn(Optional.empty());
+        when(bookmarkVideoGateway.findById("2")).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> listBookmarkVideoUseCase.listBookmarkVideo("2"));
     }
