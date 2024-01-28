@@ -20,18 +20,22 @@ import java.util.List;
 @RestController
 public class VideoController {
 
+    private final DeleteVideoUseCase deleteVideoUseCase;
     private final FileGateway fileGateway;
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
     private final SearchVideoUseCase searchVideoUseCase;
+    private final UpdateVideoUseCase updateVideoUseCase;
     private final VideoRecommendationsUseCase videoRecommendationsUseCase;
     private final WatchVideoUseCase watchVideoUseCase;
 
-    public VideoController(FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, VideoRecommendationsUseCase videoRecommendationsUseCase, WatchVideoUseCase watchVideoUseCase) {
+    public VideoController(DeleteVideoUseCase deleteVideoUseCase, FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, UpdateVideoUseCase updateVideoUseCase, VideoRecommendationsUseCase videoRecommendationsUseCase, WatchVideoUseCase watchVideoUseCase) {
+        this.deleteVideoUseCase = deleteVideoUseCase;
         this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
         this.searchVideoUseCase = searchVideoUseCase;
+        this.updateVideoUseCase = updateVideoUseCase;
         this.videoRecommendationsUseCase = videoRecommendationsUseCase;
         this.watchVideoUseCase = watchVideoUseCase;
     }
@@ -61,9 +65,21 @@ public class VideoController {
     }
 
     @GetMapping("/videos/{id}")
-    public VideoShowDTO getVideoById(@PathVariable String id) {
+    public ResponseEntity<VideoShowDTO> getVideoById(@PathVariable String id) {
         Video video = listVideoUseCase.listVideo(id);
-        return VideoMapper.toView(video);
+        return ResponseEntity.ok(VideoMapper.toView(video));
+    }
+
+    @PutMapping("/videos/{id}")
+    public ResponseEntity<VideoShowDTO> updateVideo(@PathVariable String id, @Valid @RequestBody VideoUpdateDTO videoUpdateDTO) {
+        Video video = updateVideoUseCase.updateVideo(id, videoUpdateDTO);
+        return ResponseEntity.ok(VideoMapper.toView(video));
+    }
+
+    @DeleteMapping("/videos/{id}")
+    public ResponseEntity<Void> deleteVideo(@PathVariable String id) {
+        deleteVideoUseCase.deleteVideo(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/videos/{userId}/recommendations")

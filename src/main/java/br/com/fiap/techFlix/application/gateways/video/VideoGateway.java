@@ -26,6 +26,10 @@ public interface VideoGateway {
 
     Video save(VideoPublishPort videoPublishPort, List<Category> categories, LocalDateTime publicationDate);
 
+    Video update(Video video, VideoUpdatePort videoUpdatePort, List<Category> categories);
+
+    void deleteVideo(String id);
+
     List<UserBookmarkedCategoriesPort> getLikedCategories(String userId);
 
     List<Video> getRecommendations();

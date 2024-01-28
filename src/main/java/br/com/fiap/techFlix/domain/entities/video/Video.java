@@ -1,5 +1,6 @@
 package br.com.fiap.techFlix.domain.entities.video;
 
+import br.com.fiap.techFlix.application.ports.VideoUpdatePort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.validation.Validator;
 
@@ -35,6 +36,10 @@ public class Video {
         return id;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -43,8 +48,16 @@ public class Video {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public LocalDateTime getPublicationDate() {

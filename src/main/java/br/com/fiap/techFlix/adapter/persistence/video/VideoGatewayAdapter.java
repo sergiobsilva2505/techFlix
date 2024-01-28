@@ -108,6 +108,21 @@ public class VideoGatewayAdapter implements VideoGateway {
     }
 
     @Override
+    public Video update(Video video, VideoUpdatePort videoUpdatePort, List<Category> categories) {
+        video.setTitle(videoUpdatePort.title());
+        video.setDescription(videoUpdatePort.description());
+        video.setCategories(categories);
+
+        VideoDocument saved = videoRepository.save(VideoMapper.toPersistence(video));
+        return VideoMapper.toDomain(saved);
+    }
+
+    @Override
+    public void deleteVideo(String id) {
+        videoRepository.deleteById(id);
+    }
+
+    @Override
     public List<UserBookmarkedCategoriesPort> getLikedCategories(String userId) {
         return new ArrayList<>(bookmarkVideoRepository.getTop5LikedCategories(userId));
     }
@@ -122,5 +137,4 @@ public class VideoGatewayAdapter implements VideoGateway {
         List<String> categoriesNames = categories.stream().map(UserBookmarkedCategoriesPort::getName).toList();
         return videoRepository.getRecommendations(categoriesNames).stream().map(VideoMapper::toDomain).toList();
     }
-
 }
