@@ -36,8 +36,8 @@ public class Config {
     }
 
     @Bean
-    VideoGateway videoGateway(MongoTemplate mongoTemplate, BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
-        return new VideoGatewayAdapter(mongoTemplate, bookmarkVideoRepository, videoRepository);
+    VideoGateway videoGateway(BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
+        return new VideoGatewayAdapter(bookmarkVideoRepository, videoRepository);
     }
 
     @Bean
@@ -78,6 +78,16 @@ public class Config {
     @Bean
     PublishVideoUseCase publishVideoUseCase(CategoryGateway categoryGateway, VideoGateway videoGateway) {
         return new PublishVideoUseCase(categoryGateway, videoGateway);
+    }
+
+    @Bean
+    UpdateVideoUseCase updateVideoUseCase(CategoryGateway categoryGateway, VideoGateway videoGateway) {
+        return new UpdateVideoUseCase(categoryGateway, videoGateway);
+    }
+
+    @Bean
+    DeleteVideoUseCase deleteVideoUseCase(VideoGateway videoGateway) {
+        return new DeleteVideoUseCase(videoGateway);
     }
 
     @Bean

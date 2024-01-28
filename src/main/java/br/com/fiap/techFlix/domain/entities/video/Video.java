@@ -1,6 +1,5 @@
 package br.com.fiap.techFlix.domain.entities.video;
 
-import br.com.fiap.techFlix.application.ports.VideoUpdatePort;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.validation.Validator;
 

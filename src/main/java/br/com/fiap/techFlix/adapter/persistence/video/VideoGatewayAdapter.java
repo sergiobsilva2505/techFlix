@@ -2,7 +2,6 @@ package br.com.fiap.techFlix.adapter.persistence.video;
 
 import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoRepository;
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
-import br.com.fiap.techFlix.adapter.web.Operation;
 import br.com.fiap.techFlix.adapter.web.PageDTO;
 import br.com.fiap.techFlix.adapter.web.category.CategoryMapper;
 import br.com.fiap.techFlix.adapter.web.video.VideoMapper;
@@ -12,26 +11,18 @@ import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Component
 public class VideoGatewayAdapter implements VideoGateway {
 
-    private final MongoTemplate mongoTemplate;
     private final BookmarkVideoRepository bookmarkVideoRepository;
     private final VideoRepository videoRepository;
 
-    public VideoGatewayAdapter(MongoTemplate mongoTemplate, BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
-        this.mongoTemplate = mongoTemplate;
+    public VideoGatewayAdapter(BookmarkVideoRepository bookmarkVideoRepository, VideoRepository videoRepository) {
         this.bookmarkVideoRepository = bookmarkVideoRepository;
         this.videoRepository = videoRepository;
     }
@@ -69,35 +60,9 @@ public class VideoGatewayAdapter implements VideoGateway {
 
     @Override
     public PagePort<Video> searchVideos(VideoSearchPort videoSearchPort) {
-        Query query = new Query();
+        Page<VideoDocument> search = videoRepository.search(videoSearchPort);
 
-        if (videoSearchPort.hasTitle()) {
-            Pattern pattern = Pattern.compile(".*%s.*".formatted(videoSearchPort.title()), Pattern.CASE_INSENSITIVE);
-            query.addCriteria(Criteria.where("title").regex(pattern));
-        }
-
-        if (videoSearchPort.hasCategoryName()) {
-            Pattern pattern = Pattern.compile(".*%s.*".formatted(videoSearchPort.categoryName()), Pattern.CASE_INSENSITIVE);
-            query.addCriteria(Criteria.where("category.name").regex(pattern));
-        }
-
-        if (videoSearchPort.hasPublicationDate()) {
-            if (Operation.GTE.equals(videoSearchPort.publicationDateOperation())) {
-                query.addCriteria(Criteria.where("publicationDate").gte(videoSearchPort.publicationDate()));
-            } else if (Operation.LTE.equals(videoSearchPort.publicationDateOperation())) {
-                query.addCriteria(Criteria.where("publicationDate").lte(videoSearchPort.publicationDate().atTime(LocalTime.MAX)));
-            }
-        }
-
-        long count = mongoTemplate.count(query, VideoDocument.class);
-
-        PageRequest pageable = PageRequest.of(videoSearchPort.page(), videoSearchPort.size());
-        query.with(pageable);
-
-        List<VideoDocument> videoDocuments = mongoTemplate.find(query, VideoDocument.class);
-        Page<VideoDocument> page = PageableExecutionUtils.getPage(videoDocuments, pageable, () -> count);
-
-        return new PageDTO<>(page).map(VideoMapper::toDomain);
+        return new PageDTO<>(search).map(VideoMapper::toDomain);
     }
 
     @Override

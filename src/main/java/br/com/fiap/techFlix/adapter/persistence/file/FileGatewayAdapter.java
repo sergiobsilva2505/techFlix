@@ -26,20 +26,16 @@ public class FileGatewayAdapter implements FileGateway {
     public Mono<File> saveAttachment(MultipartFile file) throws Exception {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
-        try {
-            if (fileName.contains("..")) {
-                throw new Exception("Filename contains invalid path sequence " + fileName);
-            }
-
-            if (file.getBytes().length > (1024 * 1024 * 15)) {
-                throw new Exception("File size exceeds maximum limit");
-            }
-
-            FileDocument attachment = new FileDocument(null, fileName, file.getContentType(), file.getSize(), file.getBytes());
-
-            return fileRepository.save(attachment).map(FileMapper::toDomain);
-        } catch (MaxUploadSizeExceededException e) {
-            throw new MaxUploadSizeExceededException(file.getSize());
+        if (fileName.contains("..")) {
+            throw new Exception("Filename contains invalid path sequence " + fileName);
         }
+
+        if (file.getBytes().length > (1024 * 1024 * 15)) {
+            throw new Exception("File size exceeds maximum limit");
+        }
+
+        FileDocument attachment = new FileDocument(null, fileName, file.getContentType(), file.getSize(), file.getBytes());
+
+        return fileRepository.save(attachment).map(FileMapper::toDomain);
     }
 }

@@ -1,4 +1,4 @@
-package br.com.fiap.techFlix;
+package br.com.fiap.techFlix.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

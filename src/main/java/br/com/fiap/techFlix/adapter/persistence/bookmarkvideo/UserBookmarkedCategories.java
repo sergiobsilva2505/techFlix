@@ -7,6 +7,14 @@ public class UserBookmarkedCategories implements UserBookmarkedCategoriesPort {
     private String name;
     private int count;
 
+    public UserBookmarkedCategories() {
+    }
+
+    public UserBookmarkedCategories(String name, int count) {
+        this.name = name;
+        this.count = count;
+    }
+
     public String getName() {
         return name;
     }
