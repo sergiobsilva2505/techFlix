@@ -14,8 +14,8 @@ public class ListBookmarkVideoUseCase {
         this.bookmarkVideoGateway = bookmarkVideoGateway;
     }
 
-    public BookmarkVideo listBookmarkVideo(String userId) {
-        return bookmarkVideoGateway.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("Bookmark not found"));
+    public BookmarkVideo listBookmarkVideo(String bookmarkId) {
+        return bookmarkVideoGateway.findById(bookmarkId).orElseThrow(() -> new IllegalArgumentException("Bookmark not found"));
     }
 
     public PagePort<BookmarkVideoShowDTO> listAllBookmarkVideo(int page, int size) {

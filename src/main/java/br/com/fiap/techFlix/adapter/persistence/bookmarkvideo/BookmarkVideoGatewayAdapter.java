@@ -27,8 +27,8 @@ public class BookmarkVideoGatewayAdapter implements BookmarkVideoGateway {
     }
 
     @Override
-    public Optional<BookmarkVideo> findByUserId(String userId) {
-        return Optional.empty();
+    public Optional<BookmarkVideo> findById(String bookmarkId) {
+        return bookmarkVideoRepository.findById(bookmarkId).map(BookmarkVideoMapper::toDomain);
     }
 
     @Override

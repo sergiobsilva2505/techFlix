@@ -11,7 +11,7 @@ public interface BookmarkVideoGateway {
 
     BookmarkVideo create(User user, Video video);
 
-    Optional<BookmarkVideo> findByUserId(String userId);
+    Optional<BookmarkVideo> findById(String bookmarkId);
 
     PagePort<BookmarkVideo> allBookmarkVideo(int page, int size);
 
