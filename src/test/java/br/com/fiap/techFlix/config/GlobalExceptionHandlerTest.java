@@ -3,11 +3,19 @@ package br.com.fiap.techFlix.config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GlobalExceptionHandlerTest {
 
@@ -18,6 +26,25 @@ class GlobalExceptionHandlerTest {
     void setUp() {
         messageSource = mock(MessageSource.class);
         globalExceptionHandler = new GlobalExceptionHandler(messageSource);
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenValidationErrorIsThrown() {
+        MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+        when(exception.getLocalizedMessage()).thenReturn("Validation error");
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(exception.getBindingResult()).thenReturn(bindingResult);
+        FieldError fieldError = new FieldError("objectName", "field", "defaultMessage");
+        List<FieldError> fieldErrors = Collections.singletonList(fieldError);
+        when(bindingResult.getFieldErrors()).thenReturn(fieldErrors);
+        when(messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).thenReturn("Validation error message");
+
+        ResponseEntity<ProblemDetail> response = globalExceptionHandler.validationError(exception);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Validation error", response.getBody().getTitle());
+        assertEquals("One or more fields have incorrect data or the data already exists", response.getBody().getDetail());
+        assertEquals(1, ((List<?>) response.getBody().getProperties().get("invalidParams")).size());
     }
 
     @Test
