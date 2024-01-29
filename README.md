@@ -85,8 +85,9 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
       - Request:
         ```bash
           curl --request GET \
-          --url http://localhost:8080/users \
+          --url http://localhost:8080/users
         ```
+        
       - Response 200:
         ```json
           {
@@ -125,39 +126,19 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
               "name": "animation"
             }'
         ```
-           
-        - Response 400
-          ```json
-            {
-              "type": "about:blank",
-              "title": "Bad Request",
-              "status": 400,
-              "detail": "Category name can't be empty or null.",
-              "instance": "/categories"
-            }
-          ```
-
-        - Response 404:
-          ```json
-            {
-              "type": "about:blank",
-              "title": "Bad Request",
-              "status": 400,
-              "detail": "Category not found",
-              "instance": "/categories/animation23"
-            }
-          ```
+      - Response 201:
+          No body returned for response
           
-        - Response 400
-          ```json
-            {
-              "type": "about:blank",
-              "title": "Bad Request",
-              "status": 400,
-              "detail": "Category name can't be empty or null.",
-              "instance": "/categories"
-            }
-          ```
+      - Response 400
+        ```json
+          {
+            "type": "about:blank",
+            "title": "Bad Request",
+            "status": 400,
+            "detail": "Category name can't be empty or null.",
+            "instance": "/categories"
+          }
+        ```
     </details>
 
   <details>
@@ -187,7 +168,6 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
           ```
   </details>
 
-
 - ### API de Vídeo:
 
   <details>
@@ -198,11 +178,17 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
           ```bash
             curl -X POST 'localhost:8080/videos/upload' \
             -H 'Content-Type: multipart/form-data' \
-            --data '{
-                "file": "underfined"
-            }'
+            -F file="@/path/to/file.mp4"
           ```
-          Obs: Fazer a requisição no postman ou insomnia para conseguir setar o arquivo
+        - Response 200:
+          ```json
+            {
+              "id": "65b3bd864d06ff4adef6d2a1",
+              "name": "file.mp4",
+              "contentType": "video/mp4",
+              "size": 2107842
+            }
+          ```
         - Response 400
           ```json
             {
@@ -216,7 +202,7 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
   </details>
 
   <details>
-  <summary>Cadastrar um video</summary>
+  <summary>Publicar um video</summary>
 
   - POST: http://localhost:8080/videos/
       - Request:
@@ -230,16 +216,8 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
                 "categoryNames": ["animation"]
           }'
         ```
-          - Response 201
-        ```json
-          {
-              "fileId": "65b3bd864d06ff4adef6d2a1",
-              "title": "Fish king 2 - making of",
-              "description": "The king of fish production",
-              "categoryNames": ["animation"]
-
-          }
-        ```
+      - Response 201
+        No body returned for response
   </details>
 
   <details>
@@ -256,20 +234,20 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
                 "categoryNames": ["animation"]
           }'
         ```
-          - Response 201
+      - Response 201
         ```json
-          {
-            "id": "65b3bd864d06ff4adef6d2a1",
-            "title": "Fish king 2 - making of",
-            "description": "The king of fish production",
-            "categories": [
-              "animation"
-            ],
-            "likes": 0,
-            "views": 0,
-            "uri": "/videos/play/65b705f190b63d64994e1794",
-            "publicationDate": "2024-01-29T14:35:29.458Z"
-          }
+        {
+          "id": "65b3bd864d06ff4adef6d2a1",
+          "title": "Fish king 2 - making of",
+          "description": "The king of fish production",
+          "categories": [
+            "animation"
+          ],
+          "likes": 0,
+          "views": 0,
+          "uri": "/videos/play/65b705f190b63d64994e1794",
+          "publicationDate": "2024-01-29T14:35:29.458Z"
+        }
         ```
   </details>
 
@@ -281,32 +259,32 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
         ```bash
           curl -X GET 'localhost:8080/videos/65abbc65252b6124cbb4c9fe'
         ```
-        - Response 200
-          ```json
-              {
-                "id": "65b3bd864d06ff4adef6d2a1",
-                "title": "Fish king 2 - making of",
-                "description": "The king of fish production",
-                "categories": [
-                "animation"
-                ],
-                "likes": 0,
-                "views": 0,
-                "uri": "/videos/play/65b3bd864d06ff4adef6d2a1",
-                "publicationDate": "2024-01-27T18:57:13.805"
-              }
-          ```
-        
-        - Response 400
-          ```json
+      - Response 200
+        ```json
             {
-                  "type": "about:blank",
-                  "title": "Bad Request",
-                  "status": 400,
-                  "detail": "Video not found",
-                  "instance": "/videos/65abbc65252b6124cbb4c9fe4"
+              "id": "65b3bd864d06ff4adef6d2a1",
+              "title": "Fish king 2 - making of",
+              "description": "The king of fish production",
+              "categories": [
+              "animation"
+              ],
+              "likes": 0,
+              "views": 0,
+              "uri": "/videos/play/65b3bd864d06ff4adef6d2a1",
+              "publicationDate": "2024-01-27T18:57:13.805"
             }
-          ```
+        ```
+        
+      - Response 400
+        ```json
+          {
+                "type": "about:blank",
+                "title": "Bad Request",
+                "status": 400,
+                "detail": "Video not found",
+                "instance": "/videos/65abbc65252b6124cbb4c9fe4"
+          }
+        ```
   </details>
 
   <details>
@@ -357,34 +335,11 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
           -H 'accept: */*'
       ```
 
-      - Response 204:
-        OK
+    - Response 204:
+        No body returned for response
   </details>
 
-    <details>
-      <summary>Upload do vídeo</summary>
-
-      - POST: http://localhost:8080/videos/upload
-        - Request:
-          ```bash
-            curl --request POST \
-              --url http://localhost:8080/videos/upload \
-              --header 'Content-Type: multipart/form-data' \
-              --form 'file=@/home/videos/pexels-thirdman-5538262(720p).mp4'
-          ```
-
-          - Response 200:
-          ```json 
-          {
-              "id": "65b3bd864d06ff4adef6d2a1",
-              "name": "pexels-thirdman-5538262(720p).mp4",
-              "contentType": "video/mp4",
-              "size": 2107842
-          }
-          ```
-    </details>
-
-    <details>
+  <details>
     <summary>Recomendações</summary>
 
     - GET: http://localhost:8080/{userId}/recomendations
@@ -394,7 +349,7 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
             --url http://localhost:8080/videos/65b317223da0ad4a44b1978f/recommendations
         ```
 
-        - Response 200:
+      - Response 200:
         ```json 
         [
           {
@@ -455,27 +410,30 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
               "uri": "/videos/play/65b318453da0ad4a44b1979b",
               "publicationDate": "2024-01-25T23:28:54.21"
           }
-      ]
+        ]
         ```
-    </details>
+  </details>
 
-    <details>
-      <summary>Assistir Vídeo</summary>
-
-      - POST: http://localhost:8080/play/{id}
-        - Request:
-          ```bash
-              curl --request GET \
-              --url http://localhost:8080/videos/play/65b318ce3da0ad4a44b1979d \
-              --header 'Range: bytes=0-500'
-          ```
-
-        - Response 200: OK - Media type: video/mp4
-      </details>
+  <details>
+    <summary>Assistir Vídeo</summary>
+  
+    - POST: http://localhost:8080/play/{id}
+      - Request:
+        ```bash
+            curl --request GET \
+            --url http://localhost:8080/videos/play/65b318ce3da0ad4a44b1979d \
+            --header 'Range: bytes=0-500'
+        ```
+      - Response 200:
+        ```
+          ftypmp42mp42mp41isomavc1�moovlmvhdۡ�ۡ��@!iods���O�������trak\tkhdۡ�ۡ��@�8$edtselst��mdia mdhdۡ�ۡ��U�6hdlrvideL-SMASH Video Handler-minfvmhd$dinfdrefurl �stbl�stsd
+        ```
+  </details>
 
 - ### API de Bookmark:
+  
   <details>
-    <summary>Fazer um Bookmark</summary>
+    <summary>Criar um Bookmark</summary>
 
     - POST: http://localhost:8080/bookmarks/video/{videoId}/user/{userId}
         - Request:
