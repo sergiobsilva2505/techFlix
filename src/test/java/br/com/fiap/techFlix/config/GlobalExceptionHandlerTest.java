@@ -2,18 +2,22 @@ package br.com.fiap.techFlix.config;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.MessageSource;
 import org.springframework.http.*;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class GlobalExceptionHandlerTest {
 
+    private MessageSource messageSource;
     private GlobalExceptionHandler globalExceptionHandler;
 
     @BeforeEach
     void setUp() {
-        globalExceptionHandler = new GlobalExceptionHandler();
+        messageSource = mock(MessageSource.class);
+        globalExceptionHandler = new GlobalExceptionHandler(messageSource);
     }
 
     @Test
