@@ -2,7 +2,7 @@
 
 ## Arquitetura e decisões técnicas
 
-O projeto foi feito seguindo principalmente a clean architecture com um pouco de DDD. No código temos 3 camadas principais representadas pelos pacotes domain, application e adapter, cada um funcionando como uma camada da clean architecture e mantendo dependências apenas de camadas mais internas. Internamente em cada pacote os arquivos são separados por domínio, agrupando por exemplo todos os UseCases relacionados a vídeo em um único pacote.
+O projeto foi feito seguindo principalmente a clean architecture com alguns conceitos de DDD. No código temos 3 camadas principais representadas pelos pacotes domain, application e adapter, cada um funcionando como uma camada da clean architecture e mantendo dependências apenas de camadas mais internas. Internamente em cada pacote os arquivos são separados por domínio, agrupando por exemplo todos os UseCases relacionados a vídeo em um único pacote.
 
 A aplicação da clean architecture foi feita baseada em nossa interpretação, e assim decidimos aplicar uma forma simplificada, sem a criação de todas as interfaces presentes em uma aplicação mais completa, o nosso foco foi no que vimos como mais importante para o projeto atual, como as interfaces de gateways e ports de entrada e a separação em camadas evitando dependências de camadas externas.
 
