@@ -440,27 +440,34 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
           ```bash
             curl --request POST \
             --url http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65abbc3b252b6124cbb4c9fc \
-            --header 'Content-Type: application/json' \
+            --header 'Content-Type: application/json'
           ```
-        - Response 200: OK
+        - Response 200:
+          No body returned for response
 
+  </details>
+  
+  <details>
+    <summary>Deletar um Bookmark</summary>
+  
     - DELETE: http://localhost:8080//bookmarks/video/{videoId}/user/{userId}
         - Request:
           ```bash
             curl -X 'DELETE' \
-            'http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65b7ce27b018d560abdfdce5' \
-            -H 'accept: */*'
+            'http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65b7ce27b018d560abdfdce5'
           ```
-        - Response 200: OK
+        - Response 200:
+          No body returned for response
+  </details>
   
-    <summary>Retornar todos os bookmarks/summary>
+  <details>
+    <summary>Retornar todos os bookmarks</summary>
 
     - GET: http://localhost:8080/bookmarks?page=0&size=10
         - Request:
           ```bash
             curl -X 'GET' \
-            'http://localhost:8080/bookmarks?page=0&size=10' \
-            -H 'accept: */*'
+            'http://localhost:8080/bookmarks?page=0&size=10'
           ```
         - Response 200: 
           ```json
@@ -511,7 +518,9 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
               "elementsPerPage": 10
             }
           ```
+  </details>
 
+  <details>
     <summary>Retornar um bookmark por id</summary>
 
     - GET: http://localhost:8080/bookmarks/{bookmarkId}}
@@ -521,5 +530,36 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
               'http://localhost:8080/bookmarks/65b7cef2b018d560abdfdce7' \
               -H 'accept: */*'
           ```
-        - Response 200: OK
+        - Response 200:
+          ```json
+          {
+              "id": "65b80f9e8de393589f45668f",
+              "user": {
+                  "name": "Carlos Antônio",
+                  "email": "carlos.antonio@email.com"
+              },
+              "video": {
+                  "id": "65b2e25dce52802e61c0e322",
+                  "title": "Entre as arvores",
+                  "description": "Visão do sol por entre as arvores da floresta",
+                  "categories": [
+                      "nature"
+                  ],
+                  "likes": 0,
+                  "views": 0,
+                  "uri": "/videos/play/65b2e25dce52802e61c0e322",
+                  "publicationDate": "2024-01-25T19:37:18.536"
+              }
+          }
+          ```
+        - Response 400:
+          ```json
+            {
+              "type": "about:blank",
+              "title": "Bad Request",
+              "status": 400,
+              "detail": "Bookmark not found",
+              "instance": "/bookmarks/65b7cef2b018d560abdfdce7"
+            }
+          ```
   </details>
