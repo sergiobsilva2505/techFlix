@@ -477,15 +477,83 @@
             --header 'Content-Type: application/json' \
           ```
         - Response 200: OK
-        - 
-    <summary>Retornar todos os bookmarks/summary>
 
-    - POST: http://localhost:8080/bookmarks/video/{videoId}/user/{userId}
+    - POST: http://localhost:8080//bookmarks/video/{videoId}/user/{userId}
         - Request:
           ```bash
-            curl --request POST \
-            --url http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65abbc3b252b6124cbb4c9fc \
-            --header 'Content-Type: application/json' \
+            curl -X 'DELETE' \
+            'http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65b7ce27b018d560abdfdce5' \
+            -H 'accept: */*'
+          ```
+        - Response 200: OK
+  
+    <summary>Retornar todos os bookmarks/summary>
+
+    - POST: http://localhost:8080/bookmarks?page=0&size=10
+        - Request:
+          ```bash
+            curl -X 'GET' \
+            'http://localhost:8080/bookmarks?page=0&size=10' \
+            -H 'accept: */*'
+          ```
+        - Response 200: 
+          ```json
+          {
+              "content": [
+                {
+                  "id": "65b7cef2b018d560abdfdce7",
+                  "user": {
+                    "name": "Camilo",
+                    "email": "camilo@m.com"
+                  },
+                  "video": {
+                    "id": "65b3bd864d06ff4adef6d2a1",
+                    "title": "Fish king 2 - making of",
+                    "description": "The king of fish production",
+                    "categories": [
+                      "anime2"
+                    ],
+                    "likes": 5,
+                    "views": 0,
+                    "uri": "/videos/play/65b3bd864d06ff4adef6d2a1",
+                    "publicationDate": "2024-01-29T13:01:15.487"
+                  }
+                },
+                {
+                  "id": "65b7cf21b018d560abdfdce8",
+                  "user": {
+                    "name": "Sérgio",
+                    "email": "mail@m.com"
+                  },
+                  "video": {
+                    "id": "65b3bd864d06ff4adef6d2a1",
+                    "title": "Fish king 2 - making of",
+                    "description": "The king of fish production",
+                    "categories": [
+                      "anime2"
+                    ],
+                    "likes": 6,
+                    "views": 0,
+                    "uri": "/videos/play/65b3bd864d06ff4adef6d2a1",
+                    "publicationDate": "2024-01-29T13:01:15.487"
+                  }
+                }
+              ],
+              "totalPages": 1,
+              "totalElements": 2,
+              "currentPage": 0,
+              "elementsPerPage": 10
+            }
+          ```
+
+    <summary>Retornar um bookmark por id</summary>
+
+    - GET: http://localhost:8080/bookmarks/{bookmarkId}}
+        - Request:
+          ```bash
+            curl -X 'GET' \
+              'http://localhost:8080/bookmarks/65b7cef2b018d560abdfdce7' \
+              -H 'accept: */*'
           ```
         - Response 200: OK
   </details>
