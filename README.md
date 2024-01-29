@@ -2,6 +2,14 @@
 
 ## Arquitetura e decisões técnicas
 
+O projeto foi feito seguindo principalmente a clean architecture com um pouco de DDD. No código temos 3 camadas principais representadas pelos pacotes domain, application e adapter, cada um funcionando como uma camada da clean architecture e mantendo dependências apenas de camadas mais internas. Internamente em cada pacote os arquivos são separados por domínio, agrupando por exemplo todos os UseCases relacionados a vídeo em um único pacote.
+
+A aplicação da clean architecture foi feita baseada em nossa interpretação, e assim decidimos aplicar uma forma simplificada, sem a criação de todas as interfaces presentes em uma aplicação mais completa, o nosso foco foi no que vimos como mais importante para o projeto atual, como as interfaces de gateways e ports de entrada e a separação em camadas evitando dependências de camadas externas.
+
+Durante o desenvolvimento a primeira decisão técnica maior que surgiu foi como faríamos para armazenar os arquivos de vídeo, depois de pequenos testes fazendo o upload direto para o servidor da aplicação e também para o S3 usando um simulador no docker acabamos decidindo salvar o arquivo direto no banco de dados, assim poderíamos utilizar da capacidade do MongoDB de acessar o arquivo de forma reativa e fazer o streaming direto para o cliente.
+
+Outro desafio técnico que surgiu foi como implementar os testes de integração, começamos usando um banco integrado em memória, mas logo depois decidimos trocar por uma representação mais próxima da realidade da aplicação. A decisão final foi criar os testes com a ajuda do framework Testcontaines, assim conseguimos chegar mais próximo da infraestrutura de produção do banco.
+
 ## Tecnologias
 
 - Como linguagem base usamos Java na versão 21 LTS.
