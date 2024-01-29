@@ -341,7 +341,7 @@
   <details>
   <summary>Deletar um vídeo</summary>
 
-  - POST: http://localhost:8080/videos/{videoId}
+  - DELETE: http://localhost:8080/videos/{videoId}
     - Request:
       ```bash
         curl -X 'DELETE' \
@@ -478,7 +478,7 @@
           ```
         - Response 200: OK
 
-    - POST: http://localhost:8080//bookmarks/video/{videoId}/user/{userId}
+    - DELETE: http://localhost:8080//bookmarks/video/{videoId}/user/{userId}
         - Request:
           ```bash
             curl -X 'DELETE' \
@@ -489,7 +489,7 @@
   
     <summary>Retornar todos os bookmarks/summary>
 
-    - POST: http://localhost:8080/bookmarks?page=0&size=10
+    - GET: http://localhost:8080/bookmarks?page=0&size=10
         - Request:
           ```bash
             curl -X 'GET' \
