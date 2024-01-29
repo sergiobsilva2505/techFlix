@@ -29,7 +29,8 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
-    public CategoryShowDTO getCategoryById(@PathVariable String id) {
-        return CategoryMapper.toView(listCategoryUseCase.listCategory(id));
+    public ResponseEntity<CategoryShowDTO> getCategoryById(@PathVariable String id) {
+        CategoryShowDTO view = CategoryMapper.toView(listCategoryUseCase.listCategory(id));
+        return ResponseEntity.ok(view);
     }
 }
