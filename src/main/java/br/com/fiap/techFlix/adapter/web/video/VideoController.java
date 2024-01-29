@@ -21,23 +21,19 @@ import java.util.List;
 public class VideoController {
 
     private final DeleteVideoUseCase deleteVideoUseCase;
-    private final FileGateway fileGateway;
     private final ListVideoUseCase listVideoUseCase;
     private final PublishVideoUseCase publishVideoUseCase;
     private final SearchVideoUseCase searchVideoUseCase;
     private final UpdateVideoUseCase updateVideoUseCase;
     private final VideoRecommendationsUseCase videoRecommendationsUseCase;
-    private final WatchVideoUseCase watchVideoUseCase;
 
-    public VideoController(DeleteVideoUseCase deleteVideoUseCase, FileGateway fileGateway, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, UpdateVideoUseCase updateVideoUseCase, VideoRecommendationsUseCase videoRecommendationsUseCase, WatchVideoUseCase watchVideoUseCase) {
+    public VideoController(DeleteVideoUseCase deleteVideoUseCase, ListVideoUseCase listVideoUseCase, PublishVideoUseCase publishVideoUseCase, SearchVideoUseCase searchVideoUseCase, UpdateVideoUseCase updateVideoUseCase, VideoRecommendationsUseCase videoRecommendationsUseCase) {
         this.deleteVideoUseCase = deleteVideoUseCase;
-        this.fileGateway = fileGateway;
         this.listVideoUseCase = listVideoUseCase;
         this.publishVideoUseCase = publishVideoUseCase;
         this.searchVideoUseCase = searchVideoUseCase;
         this.updateVideoUseCase = updateVideoUseCase;
         this.videoRecommendationsUseCase = videoRecommendationsUseCase;
-        this.watchVideoUseCase = watchVideoUseCase;
     }
 
     @PostMapping("/videos")
@@ -46,17 +42,6 @@ public class VideoController {
 
         URI uri = URI.create("/videos/" + video.getId());
         return ResponseEntity.created(uri).build();
-    }
-
-    @PostMapping("/videos/upload")
-    public Mono<FileShowDTO> fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
-        return fileGateway.saveAttachment(file).map(FileMapper::toView);
-    }
-
-    @GetMapping(value = "/videos/play/{id}", produces = "video/mp4")
-    public Mono<Resource> playVideo(@PathVariable String id, @RequestHeader("Range") String range) {
-        watchVideoUseCase.watchVideo(id);
-        return fileGateway.findById(id).map(ByteArrayResource::new);
     }
 
     @GetMapping("/videos")

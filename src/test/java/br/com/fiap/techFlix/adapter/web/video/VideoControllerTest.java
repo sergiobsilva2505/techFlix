@@ -1,22 +1,14 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
 import br.com.fiap.techFlix.adapter.web.PageDTO;
-import br.com.fiap.techFlix.adapter.web.file.FileMapper;
-import br.com.fiap.techFlix.adapter.web.file.FileShowDTO;
-import br.com.fiap.techFlix.application.gateways.file.FileGateway;
 import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.video.*;
-import br.com.fiap.techFlix.domain.entities.file.File;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -27,9 +19,6 @@ class VideoControllerTest {
 
     @Mock
     DeleteVideoUseCase deleteVideoUseCase;
-
-    @Mock
-    FileGateway fileGateway;
 
     @Mock
     ListVideoUseCase listVideoUseCase;
@@ -45,12 +34,6 @@ class VideoControllerTest {
 
     @Mock
     VideoRecommendationsUseCase videoRecommendationsUseCase;
-
-    @Mock
-    WatchVideoUseCase watchVideoUseCase;
-
-    @Mock
-    MultipartFile multipartFile;
 
     @InjectMocks
     VideoController videoController;
@@ -102,31 +85,6 @@ class VideoControllerTest {
 
         assertEquals(204, response.getStatusCodeValue());
         verify(deleteVideoUseCase).deleteVideo(anyString());
-    }
-
-    @Test
-    void shouldUploadFile() throws Exception {
-        File file = mock(File.class);
-        FileShowDTO fileShowDTO = FileMapper.toView(file);
-        when(fileGateway.saveAttachment(any(MultipartFile.class))).thenReturn(Mono.just(file));
-
-        Mono<FileShowDTO> response = videoController.fileUpload(multipartFile);
-
-        assertEquals(fileShowDTO, response.block());
-        verify(fileGateway).saveAttachment(any(MultipartFile.class));
-    }
-
-    @Test
-    void shouldPlayVideo() {
-        byte[] byteArray = new byte[0];
-        ByteArrayResource resource = new ByteArrayResource(byteArray);
-        when(fileGateway.findById(anyString())).thenReturn(Mono.just(byteArray));
-
-        Mono<Resource> response = videoController.playVideo("id", "bytes=0-");
-
-        assertEquals(resource, response.block());
-        verify(fileGateway).findById(anyString());
-        verify(watchVideoUseCase).watchVideo(anyString());
     }
 
     @Test

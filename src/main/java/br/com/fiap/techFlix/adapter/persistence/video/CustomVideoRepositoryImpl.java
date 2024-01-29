@@ -1,9 +1,8 @@
 package br.com.fiap.techFlix.adapter.persistence.video;
 
-import br.com.fiap.techFlix.adapter.web.Operation;
+import br.com.fiap.techFlix.application.ports.Operation;
 import br.com.fiap.techFlix.application.ports.VideoSearchPort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -32,7 +31,7 @@ public class CustomVideoRepositoryImpl implements CustomVideoRepository {
 
         if (videoSearchPort.hasCategoryName()) {
             Pattern pattern = Pattern.compile(".*%s.*".formatted(videoSearchPort.categoryName()), Pattern.CASE_INSENSITIVE);
-            query.addCriteria(Criteria.where("category.name").regex(pattern));
+            query.addCriteria(Criteria.where("categories.name").regex(pattern));
         }
 
         if (videoSearchPort.hasPublicationDate()) {
@@ -44,6 +43,10 @@ public class CustomVideoRepositoryImpl implements CustomVideoRepository {
         }
 
         long count = mongoTemplate.count(query, VideoDocument.class);
+
+        if (videoSearchPort.hasSort()) {
+            query.with(Sort.by(Sort.Direction.valueOf(videoSearchPort.sort().name()), "publicationDate"));
+        }
 
         PageRequest pageable = PageRequest.of(videoSearchPort.page(), videoSearchPort.size());
         query.with(pageable);

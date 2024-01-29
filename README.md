@@ -325,6 +325,92 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
   </details>
 
   <details>
+  <summary>Buscar videos</summary>
+
+  - GET: http://localhost:8080/videos
+    - Query Params:
+      - title: Título do vídeo
+      - categoryName: Nome da categoria
+      - page: Página atual
+      - size: Quantidade de elementos por página
+      - sort: Ordenação dos elementos por data de publicação (ASC ou DESC)
+    - Request:
+      ```bash
+        curl --request GET \
+          --url 'http://localhost:8080/videos?title=fish&categoryName=fish&page=0&size=10&sort=DESC'
+      ```
+    - Response 200
+      ```json
+        {
+          "content": [
+              {
+                  "id": "65b3180b3da0ad4a44b1979a",
+                  "title": "Kung fu Bunny",
+                  "description": "Leaving the house",
+                  "categories": [
+                      "animation",
+                      "ninja",
+                      "action"
+                  ],
+                  "likes": 0,
+                  "views": 0,
+                  "uri": "/videos/play/65b3180b3da0ad4a44b1979a",
+                  "publicationDate": "2024-01-25T23:26:02.138"
+              },
+              {
+                  "id": "65b318453da0ad4a44b1979b",
+                  "title": "Fish king",
+                  "description": "The king of fish",
+                  "categories": [
+                      "documentary",
+                      "fish",
+                      "action"
+                  ],
+                  "likes": 0,
+                  "views": 0,
+                  "uri": "/videos/play/65b318453da0ad4a44b1979b",
+                  "publicationDate": "2024-01-25T23:28:54.21"
+              },
+              {
+                  "id": "65b318ce3da0ad4a44b1979d",
+                  "title": "Fish king 2",
+                  "description": "The king of fish part 2",
+                  "categories": [
+                      "documentary",
+                      "fish",
+                      "ninja",
+                      "action"
+                  ],
+                  "likes": 0,
+                  "views": 1,
+                  "uri": "/videos/play/65b318ce3da0ad4a44b1979d",
+                  "publicationDate": "2024-01-25T23:28:41.706"
+              },
+              {
+                  "id": "65b3bd864d06ff4adef6d2a1",
+                  "title": "Fish king 2 - making of",
+                  "description": "The king of fish production",
+                  "categories": [
+                      "documentary",
+                      "fish",
+                      "ninja",
+                      "action"
+                  ],
+                  "likes": 0,
+                  "views": 0,
+                  "uri": "/videos/play/65b3bd864d06ff4adef6d2a1",
+                  "publicationDate": "2024-01-26T11:13:06.823"
+              }
+          ],
+          "totalPages": 1,
+          "totalElements": 4,
+          "currentPage": 0,
+          "elementsPerPage": 10
+      }
+      ```
+  </details>
+
+  <details>
   <summary>Deletar um vídeo</summary>
 
   - DELETE: http://localhost:8080/videos/{videoId}

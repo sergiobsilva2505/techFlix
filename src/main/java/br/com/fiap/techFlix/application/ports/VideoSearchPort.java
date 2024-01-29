@@ -1,7 +1,5 @@
 package br.com.fiap.techFlix.application.ports;
 
-import br.com.fiap.techFlix.adapter.web.Operation;
-
 import java.time.LocalDate;
 
 public interface VideoSearchPort {
@@ -23,4 +21,8 @@ public interface VideoSearchPort {
     boolean hasCategoryName();
 
     boolean hasPublicationDate();
+
+    Direction sort();
+
+    boolean hasSort();
 }
