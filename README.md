@@ -1,5 +1,7 @@
 # Techflix
 
+## Arquitetura e decisões técnicas
+
 ## Tecnologias
 
 - Como linguagem base usamos Java na versão 21 LTS.
@@ -153,10 +155,10 @@
   <details>
     <summary>Buscar uma categoria</summary>
     
-    - GET: http://localhost:8080/categories/{name} *(nome da categoria buscada)*
+    - GET: http://localhost:8080/categories/{id} *(id da categoria buscada)*
         - Request:
           ```bash
-            curl -X GET 'localhost:8080/categories/animation'
+            curl -X GET 'localhost:8080/categories/65abbc60252b6124cbb4c9fd'
           ```
         - Response 200:
           ```json
@@ -165,17 +167,17 @@
             }
           ```
     
-         - Response 404:
-              ```json
-                {
-                  "type": "about:blank",
-                  "title": "Bad Request",
-                  "status": 400,
-                  "detail": "Category not found",
-                  "instance": "/categories/animation23"
-                  }
-            ```
-    </details>
+        - Response 404:
+          ```json
+              {
+                "type": "about:blank",
+                "title": "Bad Request",
+                "status": 400,
+                "detail": "Category not found",
+                "instance": "/categories/animation23"
+              }
+          ```
+  </details>
 
 
 - ### API de Vídeo:
@@ -467,11 +469,23 @@
   <details>
     <summary>Fazer um Bookmark</summary>
 
-    - POST: http://localhost:8080/video/{videoId}/user/{userId}
+    - POST: http://localhost:8080/bookmarks/video/{videoId}/user/{userId}
         - Request:
           ```bash
-            curl -X 'DELETE' \
-              'http://localhost:8080/videos/65b3bd864d06ff4adef6d2a1' \
-              -H 'accept: */*'
+            curl --request POST \
+            --url http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65abbc3b252b6124cbb4c9fc \
+            --header 'Content-Type: application/json' \
           ```
+        - Response 200: OK
+        - 
+    <summary>Retornar todos os bookmarks/summary>
+
+    - POST: http://localhost:8080/bookmarks/video/{videoId}/user/{userId}
+        - Request:
+          ```bash
+            curl --request POST \
+            --url http://localhost:8080/bookmarks/video/65b3bd864d06ff4adef6d2a1/user/65abbc3b252b6124cbb4c9fc \
+            --header 'Content-Type: application/json' \
+          ```
+        - Response 200: OK
   </details>
