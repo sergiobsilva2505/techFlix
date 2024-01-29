@@ -102,4 +102,9 @@ public class VideoGatewayAdapter implements VideoGateway {
         List<String> categoriesNames = categories.stream().map(UserBookmarkedCategoriesPort::getName).toList();
         return videoRepository.getRecommendations(categoriesNames).stream().map(VideoMapper::toDomain).toList();
     }
+
+    @Override
+    public VideoStatisticsPort getOverallStatistics() {
+        return videoRepository.getOverallStatistics();
+    }
 }

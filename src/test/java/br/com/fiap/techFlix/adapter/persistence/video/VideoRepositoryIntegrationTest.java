@@ -1,6 +1,7 @@
 package br.com.fiap.techFlix.adapter.persistence.video;
 
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
+import br.com.fiap.techFlix.adapter.web.video.VideoStatisticsDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,13 @@ class VideoRepositoryIntegrationTest {
         assertEquals(2, recommendations.size());
         assertEquals(video2.getId(), recommendations.get(0).getId());
         assertEquals(video1.getId(), recommendations.get(1).getId());
+    }
+
+    @Test
+    void shouldReturnOverallStatisticsWhenGetOverallStatisticsIsCalled() {
+        VideoStatisticsDTO statistics = videoRepository.getOverallStatistics();
+        assertEquals(3, statistics.totalVideos());
+        assertEquals(2, statistics.totalBookmarks());
+        assertEquals(1, statistics.averageViews());
     }
 }

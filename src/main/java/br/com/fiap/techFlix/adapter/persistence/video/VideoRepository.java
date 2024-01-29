@@ -1,5 +1,7 @@
 package br.com.fiap.techFlix.adapter.persistence.video;
 
+import br.com.fiap.techFlix.adapter.web.video.VideoStatisticsDTO;
+import br.com.fiap.techFlix.application.ports.VideoStatisticsPort;
 import org.springframework.data.mongodb.repository.*;
 
 import java.util.List;
@@ -31,4 +33,10 @@ public interface VideoRepository extends MongoRepository<VideoDocument, String>,
             "{ $limit: 10 }"
     })
     List<VideoDocument> getRecommendations(List<String> categoriesNames);
+
+    @Aggregation(pipeline = {
+            "{ $group: { '_id': null, 'totalVideos': { $sum: 1 }, 'totalBookmarks': { $sum: '$details.likes' }, 'averageViews': { $avg: '$details.views' } } }",
+            "{ $project: { '_id': 0, 'totalVideos': 1, 'totalBookmarks': 1, 'averageViews': { $round: [ '$averageViews', 0 ] } } }"
+    })
+    VideoStatisticsDTO getOverallStatistics();
 }

@@ -1,18 +1,11 @@
 package br.com.fiap.techFlix.adapter.web.video;
 
-import br.com.fiap.techFlix.adapter.web.file.FileMapper;
-import br.com.fiap.techFlix.adapter.web.file.FileShowDTO;
-import br.com.fiap.techFlix.application.gateways.file.FileGateway;
 import br.com.fiap.techFlix.application.ports.PagePort;
 import br.com.fiap.techFlix.application.useCases.video.*;
 import br.com.fiap.techFlix.domain.entities.video.Video;
 import jakarta.validation.Valid;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.List;

@@ -3,6 +3,7 @@ package br.com.fiap.techFlix.adapter.persistence.video;
 import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.BookmarkVideoRepository;
 import br.com.fiap.techFlix.adapter.persistence.bookmarkvideo.UserBookmarkedCategories;
 import br.com.fiap.techFlix.adapter.persistence.category.CategoryDocument;
+import br.com.fiap.techFlix.adapter.web.video.VideoStatisticsDTO;
 import br.com.fiap.techFlix.application.ports.*;
 import br.com.fiap.techFlix.domain.entities.category.Category;
 import br.com.fiap.techFlix.domain.entities.video.Video;
@@ -177,6 +178,16 @@ class VideoGatewayAdapterTest {
         when(videoRepository.getRecommendations(any())).thenReturn(videos);
         List<Video> returnedVideos = videoGatewayAdapter.getRecommendations(List.of(userCategory));
         assertIterableEquals(videos.stream().map(VideoDocument::getId).toList(), returnedVideos.stream().map(Video::getId).toList());
+    }
+
+    @Test
+    void shouldReturnStatisticsWhenDataIsAvailable() {
+        VideoStatisticsDTO videoStatisticsPort = new VideoStatisticsDTO(1, 1, 1);
+        when(videoRepository.getOverallStatistics()).thenReturn(videoStatisticsPort);
+
+        VideoStatisticsPort result = videoGatewayAdapter.getOverallStatistics();
+
+        assertNotNull(result);
     }
 
     private VideoDocument getVideoDocument() {

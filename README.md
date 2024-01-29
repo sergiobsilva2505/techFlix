@@ -516,6 +516,25 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
         ```
   </details>
 
+  <details>
+    <summary>Relatório de vídeos</summary>
+  
+    - POST: http://localhost:8080/videos/statistics
+      - Request:
+        ```bash
+        curl --request GET \
+            --url http://localhost:8080/videos/statistics
+        ```
+      - Response 200:
+        ```json
+          {
+            "totalVideos": 4,
+            "totalBookmarks": 6,
+            "averageViews": 4
+          }
+        ```
+  </details>
+
 - ### API de Bookmark:
   
   <details>

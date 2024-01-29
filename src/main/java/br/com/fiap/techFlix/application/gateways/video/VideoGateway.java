@@ -35,4 +35,6 @@ public interface VideoGateway {
     List<Video> getRecommendations();
 
     List<Video> getRecommendations(List<UserBookmarkedCategoriesPort> categories);
+
+    VideoStatisticsPort getOverallStatistics();
 }

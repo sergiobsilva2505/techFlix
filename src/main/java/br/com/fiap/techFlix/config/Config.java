@@ -106,6 +106,11 @@ public class Config {
     }
 
     @Bean
+    VideoStatisticsUseCase videoStatisticsUseCase(VideoGateway videoGateway) {
+        return new VideoStatisticsUseCase(videoGateway);
+    }
+
+    @Bean
     WatchVideoUseCase watchVideoUseCase(VideoGateway videoGateway) {
         return new WatchVideoUseCase(videoGateway);
     }
