@@ -1,12 +1,16 @@
 # Techflix
 
+## Antes de executar o projeto
+
+O projeto precisa de uma instância do MongoDB executando na porta 27017 para funcionar, na raiz do projeto existe um arquivo do docker compose que cuida dessa dependência caso necessário.
+
 ## Arquitetura e decisões técnicas
 
 O projeto foi feito seguindo principalmente a clean architecture com alguns conceitos de DDD. No código temos 3 camadas principais representadas pelos pacotes domain, application e adapter, cada um funcionando como uma camada da clean architecture e mantendo dependências apenas de camadas mais internas. Internamente em cada pacote os arquivos são separados por domínio, agrupando por exemplo todos os UseCases relacionados a vídeo em um único pacote.
 
 A aplicação da clean architecture foi feita baseada em nossa interpretação, e assim decidimos aplicar uma forma simplificada, sem a criação de todas as interfaces presentes em uma aplicação mais completa, o nosso foco foi no que vimos como mais importante para o projeto atual, como as interfaces de gateways e ports de entrada e a separação em camadas evitando dependências de camadas externas.
 
-Durante o desenvolvimento a primeira decisão técnica maior que surgiu foi como faríamos para armazenar os arquivos de vídeo, depois de pequenos testes fazendo o upload direto para o servidor da aplicação e também para o S3 usando um simulador no docker acabamos decidindo salvar o arquivo direto no banco de dados, assim poderíamos utilizar da capacidade do MongoDB de acessar o arquivo de forma reativa e fazer o streaming direto para o cliente.
+Durante o desenvolvimento a principal decisão técnica que surgiu foi como faríamos para armazenar e disponibilizar os arquivos de vídeo, depois de pequenos testes fazendo o upload direto para o servidor da aplicação e também para o S3 usando um simulador no docker acabamos decidindo salvar o arquivo direto no banco de dados, assim poderíamos utilizar da capacidade do MongoDB para acessar o arquivo de forma reativa e fazer o streaming direto para o cliente.
 
 Outro desafio técnico que surgiu foi como implementar os testes de integração, começamos usando um banco integrado em memória, mas logo depois decidimos trocar por uma representação mais próxima da realidade da aplicação. A decisão final foi criar os testes com a ajuda do framework Testcontaines, assim conseguimos chegar mais próximo da infraestrutura de produção do banco.
 
@@ -204,8 +208,8 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
   <details>
   <summary>Publicar um video</summary>
 
-  - POST: http://localhost:8080/videos/
-      - Request:
+  - POST: http://localhost:8080/videos
+      - Request *(fileId deve ser obtido no endpoint de upload do vídeo)*:
         ```bash
           curl -X POST 'localhost:8080/videos' \
           -H 'Content-Type: application/json' \
@@ -417,8 +421,7 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
     - Request:
       ```bash
         curl -X 'DELETE' \
-          'http://localhost:8080/videos/65b3bd864d06ff4adef6d2a1' \
-          -H 'accept: */*'
+          'http://localhost:8080/videos/65b3bd864d06ff4adef6d2a1'
       ```
 
     - Response 204:
@@ -632,8 +635,7 @@ Outro desafio técnico que surgiu foi como implementar os testes de integração
         - Request:
           ```bash
             curl -X 'GET' \
-              'http://localhost:8080/bookmarks/65b7cef2b018d560abdfdce7' \
-              -H 'accept: */*'
+              'http://localhost:8080/bookmarks/65b7cef2b018d560abdfdce7'
           ```
         - Response 200:
           ```json
