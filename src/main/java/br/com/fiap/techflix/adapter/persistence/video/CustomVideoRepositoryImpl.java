@@ -1,0 +1,58 @@
+package br.com.fiap.techflix.adapter.persistence.video;
+
+import br.com.fiap.techflix.application.ports.Operation;
+import br.com.fiap.techflix.application.ports.VideoSearchPort;
+import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
+
+import java.time.LocalTime;
+import java.util.List;
+import java.util.regex.Pattern;
+
+public class CustomVideoRepositoryImpl implements CustomVideoRepository {
+
+    private final MongoTemplate mongoTemplate;
+
+    public CustomVideoRepositoryImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
+
+    @Override
+    public Page<VideoDocument> search(VideoSearchPort videoSearchPort) {
+        Query query = new Query();
+
+        if (videoSearchPort.hasTitle()) {
+            Pattern pattern = Pattern.compile(".*%s.*".formatted(videoSearchPort.title()), Pattern.CASE_INSENSITIVE);
+            query.addCriteria(Criteria.where("title").regex(pattern));
+        }
+
+        if (videoSearchPort.hasCategoryName()) {
+            Pattern pattern = Pattern.compile(".*%s.*".formatted(videoSearchPort.categoryName()), Pattern.CASE_INSENSITIVE);
+            query.addCriteria(Criteria.where("categories.name").regex(pattern));
+        }
+
+        if (videoSearchPort.hasPublicationDate()) {
+            if (Operation.GTE.equals(videoSearchPort.publicationDateOperation())) {
+                query.addCriteria(Criteria.where("publicationDate").gte(videoSearchPort.publicationDate()));
+            } else if (Operation.LTE.equals(videoSearchPort.publicationDateOperation())) {
+                query.addCriteria(Criteria.where("publicationDate").lte(videoSearchPort.publicationDate().atTime(LocalTime.MAX)));
+            }
+        }
+
+        long count = mongoTemplate.count(query, VideoDocument.class);
+
+        if (videoSearchPort.hasSort()) {
+            query.with(Sort.by(Sort.Direction.valueOf(videoSearchPort.sort().name()), "publicationDate"));
+        }
+
+        PageRequest pageable = PageRequest.of(videoSearchPort.page(), videoSearchPort.size());
+        query.with(pageable);
+
+        List<VideoDocument> videoDocuments = mongoTemplate.find(query, VideoDocument.class);
+
+        return PageableExecutionUtils.getPage(videoDocuments, pageable, () -> count);
+    }
+}
