@@ -51,7 +51,7 @@ class VideoControllerTest {
 
         ResponseEntity<String> response = videoController.publishVideo(mock(VideoPublishDTO.class));
 
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(201, response.getStatusCode().value());
         verify(publishVideoUseCase).publishVideo(any(VideoPublishDTO.class));
     }
 
@@ -62,7 +62,7 @@ class VideoControllerTest {
 
         ResponseEntity<VideoShowDTO> response = videoController.getVideoById("id");
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listVideoUseCase).listVideo(anyString());
     }
 
@@ -73,7 +73,7 @@ class VideoControllerTest {
 
         ResponseEntity<VideoShowDTO> response = videoController.updateVideo("id", mock(VideoUpdateDTO.class));
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(updateVideoUseCase).updateVideo(anyString(), any(VideoUpdateDTO.class));
     }
 
@@ -83,7 +83,7 @@ class VideoControllerTest {
 
         ResponseEntity<Void> response = videoController.deleteVideo("id");
 
-        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(204, response.getStatusCode().value());
         verify(deleteVideoUseCase).deleteVideo(anyString());
     }
 

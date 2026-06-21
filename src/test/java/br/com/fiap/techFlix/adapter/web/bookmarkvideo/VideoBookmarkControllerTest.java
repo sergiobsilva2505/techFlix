@@ -44,7 +44,7 @@ class VideoBookmarkControllerTest {
 
         ResponseEntity<String> response = videoBookmarkController.createBookmarkVideo("videoId", "userId");
 
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(201, response.getStatusCode().value());
         verify(createBookmarkVideoUseCase).createBookmarkVideo(anyString(), anyString());
     }
 
@@ -54,7 +54,7 @@ class VideoBookmarkControllerTest {
 
         ResponseEntity<Void> response = videoBookmarkController.deleteBookmarkVideo("videoId", "userId");
 
-        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(204, response.getStatusCode().value());
         verify(deleteBookmarkVideoUseCase).deleteBookmarkVideo(anyString(), anyString());
     }
 
@@ -69,7 +69,7 @@ class VideoBookmarkControllerTest {
 
         ResponseEntity<BookmarkVideoShowDTO> response = videoBookmarkController.getBookmarkVideoById("id");
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listBookmarkVideoUseCase).listBookmarkVideo(anyString());
     }
 
@@ -80,7 +80,7 @@ class VideoBookmarkControllerTest {
 
         ResponseEntity<PagePort<BookmarkVideoShowDTO>> response = videoBookmarkController.getAllBookmarkVideo(0, 10);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listBookmarkVideoUseCase).listAllBookmarkVideo(anyInt(), anyInt());
     }
 }

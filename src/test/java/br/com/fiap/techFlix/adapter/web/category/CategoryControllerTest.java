@@ -37,7 +37,7 @@ class CategoryControllerTest {
 
         ResponseEntity<String> response = categoryController.createCategory(mock(CategoryCreateDTO.class));
 
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(201, response.getStatusCode().value());
         verify(createCategoryUseCase).createCategory(any(CategoryCreateDTO.class));
     }
 
@@ -48,7 +48,7 @@ class CategoryControllerTest {
 
         ResponseEntity<CategoryShowDTO> response = categoryController.getCategoryById("id");
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listCategoryUseCase).listCategory(anyString());
     }
 }

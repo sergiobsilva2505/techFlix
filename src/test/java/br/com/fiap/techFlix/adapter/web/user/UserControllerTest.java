@@ -38,7 +38,7 @@ class UserControllerTest {
 
         ResponseEntity<String> response = userController.createUser(mock(UserCreateDTO.class));
 
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(201, response.getStatusCode().value());
         verify(createUserUseCase, times(1)).createUser(any(UserCreateDTO.class));
     }
 
@@ -49,7 +49,7 @@ class UserControllerTest {
 
         ResponseEntity<PagePort<UserViewDTO>> response = userController.listUser(0, 10);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listUserUseCase, times(1)).findAll(anyInt(), anyInt());
     }
 
@@ -60,7 +60,7 @@ class UserControllerTest {
 
         ResponseEntity<UserViewDTO> response = userController.showUser("id");
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         verify(listUserUseCase, times(1)).findById(anyString());
     }
 }
