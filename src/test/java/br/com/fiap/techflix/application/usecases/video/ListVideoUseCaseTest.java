@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.video.VideoGateway;
 import br.com.fiap.techflix.application.ports.PagePort;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ class ListVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos quando existem registros")
     void shouldReturnPagePortWhenVideosExist() {
         PagePort<Video> pagePort = mock(PagePort.class);
         when(videoGateway.findAll(anyInt(), anyInt())).thenReturn(pagePort);
@@ -35,6 +37,7 @@ class ListVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna vídeo quando ID existe")
     void shouldReturnVideoWhenIdExists() {
         Video video = mock(Video.class);
         String id = "existingId";
@@ -47,6 +50,7 @@ class ListVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID não existe")
     void shouldThrowExceptionWhenIdDoesNotExist() {
         String id = "nonExistingId";
         when(videoGateway.findById(id)).thenReturn(Optional.empty());

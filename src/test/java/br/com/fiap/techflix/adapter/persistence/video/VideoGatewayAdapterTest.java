@@ -9,6 +9,7 @@ import br.com.fiap.techflix.domain.entities.category.Category;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import br.com.fiap.techflix.domain.entities.video.VideoDetails;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,28 +34,28 @@ class VideoGatewayAdapterTest {
         videoGatewayAdapter = new VideoGatewayAdapter(bookmarkVideoRepository, videoRepository);
     }
 
-    @Test
+    @Test @DisplayName("Incrementa visualizações ao assistir vídeo")
     void shouldIncrementViewsWhenWatchVideoIsCalled() {
         String videoId = "videoId";
         videoGatewayAdapter.watchVideo(videoId);
         verify(videoRepository).addView(videoId);
     }
 
-    @Test
+    @Test @DisplayName("Incrementa curtidas ao curtir vídeo")
     void shouldIncrementLikesWhenLikeVideoIsCalled() {
         String videoId = "videoId";
         videoGatewayAdapter.likeVideo(videoId);
         verify(videoRepository).addLike(videoId);
     }
 
-    @Test
+    @Test @DisplayName("Decrementa curtidas ao descurtir vídeo")
     void shouldDecrementLikesWhenUnlikeVideoIsCalled() {
         String videoId = "videoId";
         videoGatewayAdapter.unlikeVideo(videoId);
         verify(videoRepository).removeLike(videoId);
     }
 
-    @Test
+    @Test @DisplayName("Retorna verdadeiro quando vídeo existe pelo ID")
     void shouldReturnTrueWhenExistsByIdIsCalledWithExistingId() {
         String videoId = "existingId";
         when(videoRepository.existsById(videoId)).thenReturn(true);
@@ -62,7 +63,7 @@ class VideoGatewayAdapterTest {
         assertTrue(exists);
     }
 
-    @Test
+    @Test @DisplayName("Retorna falso quando vídeo não existe pelo ID")
     void shouldReturnFalseWhenExistsByIdIsCalledWithNonExistingId() {
         String videoId = "nonExistingId";
         when(videoRepository.existsById(videoId)).thenReturn(false);
@@ -70,7 +71,7 @@ class VideoGatewayAdapterTest {
         assertFalse(exists);
     }
 
-    @Test
+    @Test @DisplayName("Retorna vídeo quando ID existe")
     void shouldReturnVideoWhenFindByIdIsCalledWithExistingId() {
         String videoId = "existingId";
         VideoDocument video = getVideoDocument();
@@ -79,7 +80,7 @@ class VideoGatewayAdapterTest {
         assertEquals(video.getId(), returnedVideo.get().getId());
     }
 
-    @Test
+    @Test @DisplayName("Retorna vazio quando ID não existe")
     void shouldReturnEmptyWhenFindByIdIsCalledWithNonExistingId() {
         String videoId = "nonExistingId";
         when(videoRepository.findById(videoId)).thenReturn(Optional.empty());
@@ -87,7 +88,7 @@ class VideoGatewayAdapterTest {
         assertEquals(Optional.empty(), returnedVideo);
     }
 
-    @Test
+    @Test @DisplayName("Retorna página de vídeos ao buscar todos")
     void shouldReturnPageOfVideosWhenFindAllIsCalled() {
         Page<Video> page = Page.empty();
         when(videoRepository.findAll(PageRequest.of(0, 10))).thenReturn(Page.empty());
@@ -95,7 +96,7 @@ class VideoGatewayAdapterTest {
         assertIterableEquals(page.getContent(), returnedPage.getContent());
     }
 
-    @Test
+    @Test @DisplayName("Retorna página de vídeos na busca com dados válidos")
     void shouldReturnPageOfVideosWhenSearchVideosIsCalledWithValidData() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         Page<VideoDocument> page = Page.empty();
@@ -104,7 +105,7 @@ class VideoGatewayAdapterTest {
         assertIterableEquals(page.getContent(), returnedPage.getContent());
     }
 
-    @Test
+    @Test @DisplayName("Retorna página vazia quando não há vídeos correspondentes")
     void shouldReturnEmptyPageWhenSearchVideosIsCalledWithNoMatchingData() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoRepository.search(videoSearchPort)).thenReturn(Page.empty());
@@ -112,7 +113,7 @@ class VideoGatewayAdapterTest {
         assertTrue(returnedPage.getContent().isEmpty());
     }
 
-    @Test
+    @Test @DisplayName("Salva vídeo com dados válidos")
     void shouldSaveVideoWhenValidDataIsProvided() {
         VideoPublishPort videoPublishPort = mock(VideoPublishPort.class);
         List<Category> categories = List.of(new Category("123", "action"));
@@ -126,7 +127,7 @@ class VideoGatewayAdapterTest {
         assertEquals(videoDocument.getId(), returnedVideo.getId());
     }
 
-    @Test
+    @Test @DisplayName("Atualiza vídeo com dados válidos")
     void shouldUpdateVideoWhenValidDataIsProvided() {
         Video video = new Video("videoId", "title", "description", List.of(new Category("123", "action")), new VideoDetails(0, 0), LocalDateTime.now());
         VideoUpdatePort videoUpdatePort = mock(VideoUpdatePort.class);
@@ -145,7 +146,7 @@ class VideoGatewayAdapterTest {
         assertIterableEquals(categories.stream().map(Category::getName).toList(), returnedVideo.getCategories().stream().map(Category::getName).toList());
     }
 
-    @Test
+    @Test @DisplayName("Deleta vídeo pelo ID")
     void shouldDeleteVideoWhenDeleteVideoIsCalled() {
         String videoId = "videoId";
         doNothing().when(videoRepository).deleteById(videoId);
@@ -153,7 +154,7 @@ class VideoGatewayAdapterTest {
         verify(videoRepository).deleteById(videoId);
     }
 
-    @Test
+    @Test @DisplayName("Retorna categorias curtidas pelo usuário")
     void shouldReturnLikedCategoriesWhenGetLikedCategoriesIsCalledWithValidUserId() {
         String userId = "userId";
         List<UserBookmarkedCategories> categories = List.of(new UserBookmarkedCategories("action", 5));
@@ -162,7 +163,7 @@ class VideoGatewayAdapterTest {
         assertEquals(categories.size(), returnedCategories.size());
     }
 
-    @Test
+    @Test @DisplayName("Retorna recomendações gerais de vídeos")
     void shouldReturnRecommendationsWhenGetRecommendationsIsCalled() {
         List<VideoDocument> videos = List.of(getVideoDocument());
         when(videoRepository.getRecommendations()).thenReturn(videos);
@@ -170,7 +171,7 @@ class VideoGatewayAdapterTest {
         assertIterableEquals(videos.stream().map(VideoDocument::getId).toList(), returnedVideos.stream().map(Video::getId).toList());
     }
 
-    @Test
+    @Test @DisplayName("Retorna recomendações de vídeos baseadas nas categorias do usuário")
     void shouldReturnRecommendationsWhenGetRecommendationsWithCategoriesIsCalled() {
         List<VideoDocument> videos = List.of(getVideoDocument());
         UserBookmarkedCategories userCategory = new UserBookmarkedCategories("action", 5);
@@ -180,7 +181,7 @@ class VideoGatewayAdapterTest {
         assertIterableEquals(videos.stream().map(VideoDocument::getId).toList(), returnedVideos.stream().map(Video::getId).toList());
     }
 
-    @Test
+    @Test @DisplayName("Retorna estatísticas gerais quando há dados disponíveis")
     void shouldReturnStatisticsWhenDataIsAvailable() {
         VideoStatisticsDTO videoStatisticsPort = new VideoStatisticsDTO(1, 1, 1);
         when(videoRepository.getOverallStatistics()).thenReturn(videoStatisticsPort);

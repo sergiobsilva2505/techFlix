@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.ports.PagePort;
 import br.com.fiap.techflix.application.ports.UserCreatePort;
 import br.com.fiap.techflix.domain.entities.user.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Salva usuário com sucesso")
     void shouldSaveUser() {
         UserCreatePort userCreatePort = mock(UserCreatePort.class);
         UserDocument user = new UserDocument("id", "name", "email", "password", "token");
@@ -37,6 +39,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna todos os usuários paginados")
     void shouldFindAllUsers() {
         when(userRepository.findAll(any(PageRequest.class))).thenReturn(Page.empty());
 
@@ -47,6 +50,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna usuário quando ID existe")
     void shouldFindUserById() {
         UserDocument user = new UserDocument("id", "name", "email", "password", "token");
         when(userRepository.findById(anyString())).thenReturn(Optional.of(user));
@@ -58,6 +62,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna vazio quando ID não existe")
     void shouldNotFindUserById() {
         when(userRepository.findById(anyString())).thenReturn(Optional.empty());
 
@@ -68,6 +73,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna verdadeiro quando e-mail já está cadastrado")
     void shouldExistByEmail() {
         when(userRepository.existsByEmail(anyString())).thenReturn(true);
 
@@ -78,6 +84,7 @@ class UserGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna falso quando e-mail não está cadastrado")
     void shouldNotExistByEmail() {
         when(userRepository.existsByEmail(anyString())).thenReturn(false);
 

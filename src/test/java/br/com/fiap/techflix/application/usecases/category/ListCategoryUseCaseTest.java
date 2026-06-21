@@ -3,6 +3,7 @@ package br.com.fiap.techflix.application.usecases.category;
 import br.com.fiap.techflix.application.gateways.category.CategoryGateway;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -23,6 +24,7 @@ class ListCategoryUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna categoria quando ID existe")
     void shouldReturnCategoryWhenIdExists() {
         Category category = mock(Category.class);
         String id = "existingId";
@@ -35,6 +37,7 @@ class ListCategoryUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID não existe")
     void shouldThrowExceptionWhenIdDoesNotExist() {
         String id = "nonExistingId";
         when(categoryGateway.findById(id)).thenReturn(Optional.empty());

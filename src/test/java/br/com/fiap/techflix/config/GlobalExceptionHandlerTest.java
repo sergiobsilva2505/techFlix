@@ -1,6 +1,7 @@
 package br.com.fiap.techflix.config;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,6 +31,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Retorna 400 quando há erro de validação de campos")
     void shouldReturnBadRequestWhenValidationErrorIsThrown() {
         MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
         when(exception.getLocalizedMessage()).thenReturn("Validation error");
@@ -52,6 +54,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Retorna 400 quando IllegalArgumentException é lançada")
     void shouldReturnBadRequestWhenIllegalArgumentExceptionIsThrown() {
         IllegalArgumentException exception = new IllegalArgumentException("Invalid argument");
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleIllegalArgument(exception);
@@ -63,6 +66,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Retorna 413 quando tamanho do upload excede o limite")
     void shouldReturnPayloadTooLargeWhenMaxUploadSizeExceededExceptionIsThrown() {
         MaxUploadSizeExceededException exception = new MaxUploadSizeExceededException(1L);
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleMaxUploadSizeExceededException(exception);
@@ -70,6 +74,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Retorna 500 quando exceção genérica é lançada")
     void shouldReturnInternalServerErrorWhenExceptionIsThrown() {
         Exception exception = new Exception("Server error");
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleException(exception);

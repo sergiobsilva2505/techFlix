@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.category.CategoryGateway;
 import br.com.fiap.techflix.application.ports.CategoryCreatePort;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +22,7 @@ class CreateCategoryUseCaseTest {
     }
 
     @Test
+    @DisplayName("Cria categoria com sucesso")
     void shouldCreateCategory() {
         CategoryCreatePort categoryCreatePort = mock(CategoryCreatePort.class);
         Category category = mock(Category.class);
@@ -35,6 +37,7 @@ class CreateCategoryUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando categoria já existe")
     void shouldThrowExceptionWhenCategoryAlreadyExists() {
         CategoryCreatePort categoryCreatePort = mock(CategoryCreatePort.class);
         when(categoryCreatePort.name()).thenReturn("Category1");

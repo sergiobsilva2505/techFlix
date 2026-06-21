@@ -6,6 +6,7 @@ import br.com.fiap.techflix.application.ports.VideoPublishPort;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ class PublishVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Publica vídeo com sucesso")
     void shouldPublishVideoSuccessfully() {
         VideoPublishPort videoPublishPort = mock(VideoPublishPort.class);
         Video video = mock(Video.class);
@@ -46,6 +48,7 @@ class PublishVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando categoria não é encontrada")
     void shouldThrowExceptionWhenCategoryNotFound() {
         VideoPublishPort videoPublishPort = mock(VideoPublishPort.class);
         when(videoPublishPort.categoryNames()).thenReturn(Arrays.asList("Action", "Adventure"));

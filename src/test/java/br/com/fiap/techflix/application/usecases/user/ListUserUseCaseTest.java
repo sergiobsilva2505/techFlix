@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.user.UserGateway;
 import br.com.fiap.techflix.application.ports.PagePort;
 import br.com.fiap.techflix.domain.entities.user.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,6 +25,7 @@ class ListUserUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna usuários quando existem registros")
     void shouldReturnUsersWhenUsersExist() {
         User user = mock(User.class);
         PagePort pagePort = mock(PagePort.class);
@@ -37,6 +39,7 @@ class ListUserUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna usuário quando ID existe")
     void shouldReturnUserWhenIdExists() {
         User user = mock(User.class);
         String id = "existingId";
@@ -49,6 +52,7 @@ class ListUserUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID não existe")
     void shouldThrowExceptionWhenIdDoesNotExist() {
         String id = "nonExistingId";
         when(userGateway.findById(id)).thenReturn(Optional.empty());

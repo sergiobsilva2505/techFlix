@@ -2,6 +2,7 @@ package br.com.fiap.techflix.application.usecases.video;
 
 import br.com.fiap.techflix.application.gateways.video.VideoGateway;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,6 +20,7 @@ class WatchVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Registra visualização quando ID existe")
     void shouldWatchVideoWhenIdExists() {
         String id = "existingId";
         when(videoGateway.existsById(id)).thenReturn(true);
@@ -30,6 +32,7 @@ class WatchVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID não existe")
     void shouldThrowExceptionWhenIdDoesNotExist() {
         String id = "nonExistingId";
         when(videoGateway.existsById(id)).thenReturn(false);

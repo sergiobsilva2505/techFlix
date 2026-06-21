@@ -3,6 +3,7 @@ package br.com.fiap.techflix.adapter.persistence.video;
 import br.com.fiap.techflix.adapter.persistence.category.CategoryDocument;
 import br.com.fiap.techflix.adapter.web.video.VideoStatisticsDTO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,6 +48,7 @@ class VideoRepositoryIntegrationTest {
     }
 
     @Test
+    @DisplayName("Retorna vídeos ordenados por curtidas e visualizações sem categorias")
     void shouldReturnVideosOrderedByLikesAndViewsWhenGetRecommendationsIsCalledWithoutCategories() {
         List<VideoDocument> recommendations = videoRepository.getRecommendations();
         assertEquals(3, recommendations.size());
@@ -54,6 +56,7 @@ class VideoRepositoryIntegrationTest {
     }
 
     @Test
+    @DisplayName("Retorna vídeos ordenados por pontuação com categorias")
     void shouldReturnVideosOrderedByScoreLikesAndViewsWhenGetRecommendationsIsCalledWithCategories() {
         List<VideoDocument> recommendations = videoRepository.getRecommendations(List.of("action"));
         assertEquals(2, recommendations.size());
@@ -62,6 +65,7 @@ class VideoRepositoryIntegrationTest {
     }
 
     @Test
+    @DisplayName("Retorna estatísticas gerais dos vídeos")
     void shouldReturnOverallStatisticsWhenGetOverallStatisticsIsCalled() {
         VideoStatisticsDTO statistics = videoRepository.getOverallStatistics();
         assertEquals(3, statistics.totalVideos());

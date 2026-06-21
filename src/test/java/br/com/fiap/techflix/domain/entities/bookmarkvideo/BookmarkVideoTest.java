@@ -2,6 +2,7 @@ package br.com.fiap.techflix.domain.entities.bookmarkvideo;
 
 import br.com.fiap.techflix.domain.entities.user.User;
 import br.com.fiap.techflix.domain.entities.video.Video;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.mock;
 class BookmarkVideoTest {
 
     @Test
+    @DisplayName("Cria bookmark de vídeo com parâmetros válidos")
     void shouldCreateBookmarkVideoWithValidParameters() {
         User user = mock(User.class);
         Video video = mock(Video.class);
@@ -22,6 +24,7 @@ class BookmarkVideoTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID é nulo")
     void shouldThrowExceptionWhenIdIsNull() {
         User user = mock(User.class);
         Video video = mock(Video.class);
@@ -30,6 +33,7 @@ class BookmarkVideoTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando usuário é nulo")
     void shouldThrowExceptionWhenUserIsNull() {
         Video video = mock(Video.class);
 
@@ -37,6 +41,7 @@ class BookmarkVideoTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando vídeo é nulo")
     void shouldThrowExceptionWhenVideoIsNull() {
         User user = mock(User.class);
 

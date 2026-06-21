@@ -6,6 +6,7 @@ import br.com.fiap.techflix.application.gateways.file.FileGateway;
 import br.com.fiap.techflix.application.usecases.video.WatchVideoUseCase;
 import br.com.fiap.techflix.domain.entities.file.File;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.core.io.ByteArrayResource;
@@ -39,6 +40,7 @@ class VideoFileControllerTest {
     }
 
     @Test
+    @DisplayName("Realiza upload de arquivo com sucesso")
     void shouldUploadFile() throws Exception {
         File file = mock(File.class);
         FileShowDTO fileShowDTO = FileMapper.toView(file);
@@ -51,6 +53,7 @@ class VideoFileControllerTest {
     }
 
     @Test
+    @DisplayName("Reproduz vídeo pelo ID")
     void shouldPlayVideo() {
         byte[] byteArray = new byte[0];
         ByteArrayResource resource = new ByteArrayResource(byteArray);

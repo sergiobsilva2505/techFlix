@@ -2,6 +2,7 @@ package br.com.fiap.techflix.adapter.persistence.video;
 
 import br.com.fiap.techflix.application.ports.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -27,6 +28,7 @@ class CustomVideoRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos ao buscar por título")
     void shouldReturnPageOfVideosWhenSearchIsCalledWithValidData() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoSearchPort.hasTitle()).thenReturn(true);
@@ -41,6 +43,7 @@ class CustomVideoRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos ao buscar por nome de categoria")
     void shouldReturnPageOfVideosWhenSearchIsCalledWithCategoryName() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoSearchPort.hasCategoryName()).thenReturn(true);
@@ -55,6 +58,7 @@ class CustomVideoRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos ao buscar por data de publicação com operação GTE")
     void shouldReturnPageOfVideosWhenSearchIsCalledWithPublicationDate() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoSearchPort.hasPublicationDate()).thenReturn(true);
@@ -70,6 +74,7 @@ class CustomVideoRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos ao buscar com ordenação")
     void shouldReturnPageOfVideosWhenSearchIsCalledWithSort() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoSearchPort.hasSort()).thenReturn(true);
@@ -84,6 +89,7 @@ class CustomVideoRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos ao buscar por data de publicação com operação LTE")
     void shouldReturnPageOfVideosWhenSearchIsCalledWithPublicationDateAndOperationLTE() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         when(videoSearchPort.hasPublicationDate()).thenReturn(true);

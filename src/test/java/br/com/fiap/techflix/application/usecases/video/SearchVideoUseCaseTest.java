@@ -5,6 +5,7 @@ import br.com.fiap.techflix.application.ports.PagePort;
 import br.com.fiap.techflix.application.ports.VideoSearchPort;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -25,6 +26,7 @@ class SearchVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna página de vídeos quando há resultados para a busca")
     void shouldReturnPagePortWhenVideosMatchSearch() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         PagePort<Video> pagePort = mock(PagePort.class);
@@ -37,6 +39,7 @@ class SearchVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna página vazia quando nenhum vídeo corresponde à busca")
     void shouldReturnEmptyPagePortWhenNoVideosMatchSearch() {
         VideoSearchPort videoSearchPort = mock(VideoSearchPort.class);
         PagePort<Video> pagePort = mock(PagePort.class);

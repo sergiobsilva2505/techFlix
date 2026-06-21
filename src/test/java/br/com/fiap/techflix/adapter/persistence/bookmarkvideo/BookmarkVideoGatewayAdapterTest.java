@@ -9,6 +9,7 @@ import br.com.fiap.techflix.domain.entities.bookmarkvideo.BookmarkVideo;
 import br.com.fiap.techflix.domain.entities.user.User;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +34,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Cria bookmark de vídeo com sucesso")
     void createBookmarkVideoSuccessfully() {
         User user = mock(User.class);
         Video video = mock(Video.class);
@@ -44,6 +46,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna bookmark quando ID existe")
     void findByIdReturnsBookmarkVideoWhenExists() {
         String bookmarkId = "123";
         BookmarkVideoDocument document = createBookmarkVideoDocument();
@@ -54,6 +57,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna vazio quando ID não existe")
     void findByIdReturnsEmptyWhenDoesNotExist() {
         String bookmarkId = "123";
         when(bookmarkVideoRepository.findById(bookmarkId)).thenReturn(Optional.empty());
@@ -63,6 +67,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna página de bookmarks")
     void allBookmarkVideoReturnsPage() {
         int page = 0;
         int size = 10;
@@ -73,6 +78,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna bookmark pelo ID do vídeo e do usuário")
     void findByVideoIdAndUserIdReturnsBookmarkVideo() {
         String videoId = "123";
         String userId = "456";
@@ -84,6 +90,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna verdadeiro quando existe bookmark para o vídeo e usuário")
     void existsByVideoIdAndUserIdReturnsTrue() {
         String videoId = "123";
         String userId = "456";
@@ -94,6 +101,7 @@ class BookmarkVideoGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Deleta bookmark por ID com sucesso")
     void deleteByIdExecutesSuccessfully() {
         String id = "123";
         doNothing().when(bookmarkVideoRepository).deleteById(id);

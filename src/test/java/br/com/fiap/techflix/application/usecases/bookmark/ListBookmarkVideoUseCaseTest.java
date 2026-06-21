@@ -5,6 +5,7 @@ import br.com.fiap.techflix.application.gateways.bookmark.BookmarkVideoGateway;
 import br.com.fiap.techflix.application.ports.PagePort;
 import br.com.fiap.techflix.domain.entities.bookmarkvideo.BookmarkVideo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -26,6 +27,7 @@ class ListBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lista bookmark quando ele existe para o usuário")
     void shouldListBookmarkVideoWhenBookmarkExistsForUser() {
         BookmarkVideo bookmarkVideo = mock(BookmarkVideo.class);
         when(bookmarkVideoGateway.findById("2")).thenReturn(Optional.of(bookmarkVideo));
@@ -37,6 +39,7 @@ class ListBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando bookmark não existe para o usuário")
     void shouldThrowExceptionWhenBookmarkDoesNotExistForUser() {
         when(bookmarkVideoGateway.findById("2")).thenReturn(Optional.empty());
 
@@ -44,6 +47,7 @@ class ListBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lista todos os bookmarks com paginação")
     void shouldListAllBookmarkVideosWithGivenPageAndSize() {
         PagePort pagePort = mock(PagePort.class);
         PagePort pagePortMapped = mock(PagePort.class);

@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.user.UserGateway;
 import br.com.fiap.techflix.application.ports.UserCreatePort;
 import br.com.fiap.techflix.domain.entities.user.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,6 +23,7 @@ class CreateUserUseCaseTest {
     }
 
     @Test
+    @DisplayName("Cria usuário com sucesso")
     void shouldCreateUserSuccessfully() {
         UserCreatePort userCreatePort = mock(UserCreatePort.class);
         User user = mock(User.class);
@@ -36,6 +38,7 @@ class CreateUserUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando usuário já existe")
     void shouldThrowExceptionWhenUserAlreadyExists() {
         UserCreatePort userCreatePort = mock(UserCreatePort.class);
         when(userCreatePort.email()).thenReturn("test@test.com");

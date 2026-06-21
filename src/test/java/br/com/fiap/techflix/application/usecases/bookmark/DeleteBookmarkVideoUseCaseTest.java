@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.bookmark.BookmarkVideoGateway;
 import br.com.fiap.techflix.application.gateways.video.VideoGateway;
 import br.com.fiap.techflix.domain.entities.bookmarkvideo.BookmarkVideo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -25,6 +26,7 @@ class DeleteBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Remove bookmark quando ele existe")
     void shouldDeleteBookmarkVideoWhenBookmarkExists() {
         BookmarkVideo bookmarkVideo = mock(BookmarkVideo.class);
         when(bookmarkVideo.getId()).thenReturn("1");
@@ -37,6 +39,7 @@ class DeleteBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando bookmark não existe")
     void shouldThrowExceptionWhenBookmarkDoesNotExist() {
         when(bookmarkVideoGateway.findByVideoIdAndUserId("2", "2")).thenReturn(Optional.empty());
 

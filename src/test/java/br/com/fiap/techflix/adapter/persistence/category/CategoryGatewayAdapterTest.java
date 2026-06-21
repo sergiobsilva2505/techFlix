@@ -3,6 +3,7 @@ package br.com.fiap.techflix.adapter.persistence.category;
 import br.com.fiap.techflix.application.ports.CategoryCreatePort;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -22,6 +23,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Salva categoria com sucesso")
     void saveCategorySuccessfully() {
         CategoryCreatePort categoryCreatePort = mock(CategoryCreatePort.class);
         CategoryDocument document = new CategoryDocument("123", "Action");
@@ -32,6 +34,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna categoria quando ID existe")
     void findByIdReturnsCategoryWhenExists() {
         String categoryId = "123";
         CategoryDocument document = new CategoryDocument("123", "Action");
@@ -42,6 +45,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna vazio quando ID não existe")
     void findByIdReturnsEmptyWhenDoesNotExist() {
         String categoryId = "123";
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
@@ -51,6 +55,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna categorias pelos nomes fornecidos")
     void findAllByNameInReturnsCategories() {
         List<String> names = Arrays.asList("Action", "Comedy");
         List<CategoryDocument> documents = Arrays.asList(new CategoryDocument("123", "Action"), new CategoryDocument("456", "Comedy"));
@@ -61,6 +66,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna verdadeiro quando categoria com o nome existe")
     void existsByNameReturnsTrueWhenExists() {
         String name = "Action";
         when(categoryRepository.existsByName(name)).thenReturn(true);
@@ -70,6 +76,7 @@ class CategoryGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna falso quando categoria com o nome não existe")
     void existsByNameReturnsFalseWhenDoesNotExist() {
         String name = "Action";
         when(categoryRepository.existsByName(name)).thenReturn(false);

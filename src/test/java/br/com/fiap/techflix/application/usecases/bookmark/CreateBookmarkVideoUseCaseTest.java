@@ -7,6 +7,7 @@ import br.com.fiap.techflix.domain.entities.bookmarkvideo.BookmarkVideo;
 import br.com.fiap.techflix.domain.entities.user.User;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -31,6 +32,7 @@ class CreateBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Cria bookmark quando usuário e vídeo existem e ainda não foram marcados")
     void shouldCreateBookmarkVideoWhenUserAndVideoExistAndNotBookmarked() {
         User user = mock(User.class);
         Video video = mock(Video.class);
@@ -47,6 +49,7 @@ class CreateBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando usuário não existe")
     void shouldThrowExceptionWhenUserDoesNotExist() {
         when(userGateway.findById("2")).thenReturn(Optional.empty());
 
@@ -57,6 +60,7 @@ class CreateBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando vídeo não existe")
     void shouldThrowExceptionWhenVideoDoesNotExist() {
         User user = mock(User.class);
         when(userGateway.findById("2")).thenReturn(Optional.of(user));
@@ -69,6 +73,7 @@ class CreateBookmarkVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando vídeo já foi marcado como favorito")
     void shouldThrowExceptionWhenVideoIsAlreadyBookmarked() {
         User user = mock(User.class);
         Video video = mock(Video.class);

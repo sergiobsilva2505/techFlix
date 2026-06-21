@@ -3,6 +3,7 @@ package br.com.fiap.techflix.adapter.persistence.file;
 import br.com.fiap.techflix.domain.entities.file.File;
 import br.com.fiap.techflix.domain.entities.file.FileNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
@@ -28,6 +29,7 @@ class FileGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Retorna conteúdo do arquivo quando ID existe")
     void findByIdReturnsFileContentWhenExists() {
         String fileId = "123";
         FileDocument document = new FileDocument("123", "test.txt", "video/mp4", 3, new byte[]{1, 2, 3});
@@ -39,6 +41,7 @@ class FileGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Lança FileNotFoundException quando arquivo não existe")
     void findByIdReturnsEmptyWhenDoesNotExist() {
         String fileId = "123";
         when(fileRepository.findById(fileId)).thenReturn(Mono.empty());
@@ -49,6 +52,7 @@ class FileGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Salva anexo com sucesso")
     void saveAttachmentSuccessfully() throws Exception {
         String fileName = "test.txt";
         when(multipartFile.getOriginalFilename()).thenReturn(fileName);
@@ -62,6 +66,7 @@ class FileGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Falha ao salvar quando nome do arquivo contém caminho inválido")
     void saveAttachmentFailsWhenFileNameContainsInvalidPath() {
         String fileName = "../test.txt";
         when(multipartFile.getOriginalFilename()).thenReturn(fileName);
@@ -80,6 +85,7 @@ class FileGatewayAdapterTest {
     }
 
     @Test
+    @DisplayName("Falha ao salvar quando tamanho do arquivo excede o limite")
     void saveAttachmentFailsWhenFileSizeExceedsLimit() throws IOException {
         String fileName = "test.txt";
         byte[] largeFileContent = new byte[1024 * 1024 * 16]; // 16MB

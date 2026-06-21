@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.usecases.category.CreateCategoryUseCase;
 import br.com.fiap.techflix.application.usecases.category.ListCategoryUseCase;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,6 +31,7 @@ class CategoryControllerTest {
     }
 
     @Test
+    @DisplayName("Cria categoria com sucesso")
     void shouldCreateCategory() {
         Category category = mock(Category.class);
         when(category.getId()).thenReturn("id");
@@ -42,6 +44,7 @@ class CategoryControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna categoria pelo ID")
     void shouldGetCategoryById() {
         Category category = mock(Category.class);
         when(listCategoryUseCase.listCategory(anyString())).thenReturn(category);

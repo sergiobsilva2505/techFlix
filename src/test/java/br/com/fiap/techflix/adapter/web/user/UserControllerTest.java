@@ -6,6 +6,7 @@ import br.com.fiap.techflix.application.usecases.user.CreateUserUseCase;
 import br.com.fiap.techflix.application.usecases.user.ListUserUseCase;
 import br.com.fiap.techflix.domain.entities.user.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Cria usuário com sucesso")
     void shouldCreateUser() {
         User user = mock(User.class);
         when(user.getId()).thenReturn("id");
@@ -43,6 +45,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Lista usuários paginados")
     void shouldListUsers() {
         PagePort<User> pagePort = new PageDTO<>(Page.empty());
         when(listUserUseCase.findAll(anyInt(), anyInt())).thenReturn(pagePort);
@@ -54,6 +57,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna usuário pelo ID")
     void shouldShowUser() {
         User user = mock(User.class);
         when(listUserUseCase.findById(anyString())).thenReturn(user);

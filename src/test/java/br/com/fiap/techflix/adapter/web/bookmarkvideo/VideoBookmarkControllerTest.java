@@ -7,6 +7,7 @@ import br.com.fiap.techflix.domain.entities.bookmarkvideo.BookmarkVideo;
 import br.com.fiap.techflix.domain.entities.user.User;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -37,6 +38,7 @@ class VideoBookmarkControllerTest {
     }
 
     @Test
+    @DisplayName("Cria bookmark de vídeo com sucesso")
     void shouldCreateBookmarkVideo() {
         BookmarkVideo bookmarkVideo = mock(BookmarkVideo.class);
         when(bookmarkVideo.getId()).thenReturn("id");
@@ -49,6 +51,7 @@ class VideoBookmarkControllerTest {
     }
 
     @Test
+    @DisplayName("Remove bookmark de vídeo com sucesso")
     void shouldDeleteBookmarkVideo() {
         doNothing().when(deleteBookmarkVideoUseCase).deleteBookmarkVideo(anyString(), anyString());
 
@@ -59,6 +62,7 @@ class VideoBookmarkControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna bookmark de vídeo pelo ID")
     void shouldGetBookmarkVideoById() {
         BookmarkVideo bookmarkVideo = mock(BookmarkVideo.class);
         User user = mock(User.class);
@@ -74,6 +78,7 @@ class VideoBookmarkControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna todos os bookmarks de vídeo paginados")
     void shouldGetAllBookmarkVideo() {
         PagePort<BookmarkVideoShowDTO> pagePort = new PageDTO<>(Page.empty());
         when(listBookmarkVideoUseCase.listAllBookmarkVideo(anyInt(), anyInt())).thenReturn(pagePort);

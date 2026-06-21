@@ -5,6 +5,7 @@ import br.com.fiap.techflix.adapter.persistence.user.UserDocument;
 import br.com.fiap.techflix.adapter.persistence.video.VideoDetailsDocument;
 import br.com.fiap.techflix.adapter.persistence.video.VideoDocument;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,6 +52,7 @@ class BookmarkVideoRepositoryIntegrationTest {
     }
 
     @Test
+    @DisplayName("Retorna as 5 categorias mais curtidas do usuário")
     void shouldReturnTop5LikedCategories() {
         List<UserBookmarkedCategories> top5LikedCategories = bookmarkVideoRepository.getTop5LikedCategories("123");
         assertEquals(3, top5LikedCategories.size());

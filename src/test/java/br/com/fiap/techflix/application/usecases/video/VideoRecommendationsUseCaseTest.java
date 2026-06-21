@@ -4,6 +4,7 @@ import br.com.fiap.techflix.application.gateways.video.VideoGateway;
 import br.com.fiap.techflix.application.ports.UserBookmarkedCategoriesPort;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -25,6 +26,7 @@ class VideoRecommendationsUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna recomendações personalizadas quando usuário tem categorias curtidas")
     void shouldReturnUserRecommendationsWhenUserHasLikedCategories() {
         String userId = "existingUserId";
         UserBookmarkedCategoriesPort category = mock(UserBookmarkedCategoriesPort.class);
@@ -42,6 +44,7 @@ class VideoRecommendationsUseCaseTest {
     }
 
     @Test
+    @DisplayName("Retorna recomendações gerais quando usuário não tem categorias curtidas")
     void shouldReturnGeneralRecommendationsWhenUserHasNoLikedCategories() {
         String userId = "existingUserId";
         Video video = mock(Video.class);

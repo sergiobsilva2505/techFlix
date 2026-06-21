@@ -6,6 +6,7 @@ import br.com.fiap.techflix.application.ports.VideoUpdatePort;
 import br.com.fiap.techflix.domain.entities.category.Category;
 import br.com.fiap.techflix.domain.entities.video.Video;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -28,6 +29,7 @@ class UpdateVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Atualiza vídeo com ID e categorias válidos")
     void shouldUpdateVideoWhenUpdateVideoIsCalledWithValidIdAndCategories() {
         String videoId = "videoId";
         VideoUpdatePort videoUpdatePort = mock(VideoUpdatePort.class);
@@ -46,6 +48,7 @@ class UpdateVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando ID do vídeo não existe")
     void shouldThrowIllegalArgumentExceptionWhenUpdateVideoIsCalledWithNonExistingId() {
         String videoId = "nonExistingId";
         VideoUpdatePort videoUpdatePort = mock(VideoUpdatePort.class);
@@ -56,6 +59,7 @@ class UpdateVideoUseCaseTest {
     }
 
     @Test
+    @DisplayName("Lança exceção quando categoria informada não existe")
     void shouldThrowIllegalArgumentExceptionWhenUpdateVideoIsCalledWithNonExistingCategories() {
         String videoId = "videoId";
         VideoUpdatePort videoUpdatePort = mock(VideoUpdatePort.class);
