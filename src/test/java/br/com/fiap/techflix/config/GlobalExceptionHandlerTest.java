@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,18 +42,24 @@ class GlobalExceptionHandlerTest {
 
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.validationError(exception);
 
+        ProblemDetail body = response.getBody();
+        assertNotNull(body);
+        assertNotNull(body.getProperties());
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Validation error", response.getBody().getTitle());
-        assertEquals("One or more fields have incorrect data or the data already exists", response.getBody().getDetail());
-        assertEquals(1, ((List<?>) response.getBody().getProperties().get("invalidParams")).size());
+        assertEquals("Validation error", body.getTitle());
+        assertEquals("One or more fields have incorrect data or the data already exists", body.getDetail());
+        assertEquals(1, ((List<?>) body.getProperties().get("invalidParams")).size());
     }
 
     @Test
     void shouldReturnBadRequestWhenIllegalArgumentExceptionIsThrown() {
         IllegalArgumentException exception = new IllegalArgumentException("Invalid argument");
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleIllegalArgument(exception);
+
+        ProblemDetail body = response.getBody();
+        assertNotNull(body);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Invalid argument", response.getBody().getDetail());
+        assertEquals("Invalid argument", body.getDetail());
     }
 
     @Test
@@ -66,8 +73,11 @@ class GlobalExceptionHandlerTest {
     void shouldReturnInternalServerErrorWhenExceptionIsThrown() {
         Exception exception = new Exception("Server error");
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleException(exception);
+
+        ProblemDetail body = response.getBody();
+        assertNotNull(body);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("Server error", response.getBody().getDetail());
+        assertEquals("Server error", body.getDetail());
     }
 
 }
