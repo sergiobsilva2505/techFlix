@@ -6,6 +6,10 @@ import br.com.fiap.techflix.domain.entities.user.User;
 
 public class UserMapper {
 
+    private UserMapper() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static User toDomain(UserDocument userDocument) {
         return new User(userDocument.getId(), userDocument.getName(), userDocument.getEmail(), userDocument.getPassword(), userDocument.getToken());
     }

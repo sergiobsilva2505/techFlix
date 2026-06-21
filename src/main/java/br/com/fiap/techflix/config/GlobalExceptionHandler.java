@@ -1,5 +1,6 @@
 package br.com.fiap.techflix.config;
 
+import br.com.fiap.techflix.domain.entities.file.FileNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class GlobalExceptionHandler {
     private List<FieldMessage> getFieldMessages(MethodArgumentNotValidException exception) {
         List<FieldMessage> invalidParams = new ArrayList<>();
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        fieldErrors.forEach((error) -> {
+        fieldErrors.forEach(error -> {
             String errorMessage = messageSource.getMessage(error, LocaleContextHolder.getLocale());
             invalidParams.add(new FieldMessage(error.getField(), errorMessage));
         });
@@ -52,9 +53,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getLocalizedMessage()));
     }
 
+    @ExceptionHandler(FileNotFoundException.class)
+    ResponseEntity<ProblemDetail> handleFileNotFound(FileNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getLocalizedMessage()));
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     ResponseEntity<ProblemDetail> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception) {
-        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(ProblemDetail.forStatusAndDetail(HttpStatus.PAYLOAD_TOO_LARGE, exception.getLocalizedMessage()));
+        return ResponseEntity.status(HttpStatus.CONTENT_TOO_LARGE).body(ProblemDetail.forStatusAndDetail(HttpStatus.CONTENT_TOO_LARGE, exception.getLocalizedMessage()));
     }
 
     @ExceptionHandler(Exception.class)

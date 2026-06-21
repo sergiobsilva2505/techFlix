@@ -59,7 +59,7 @@ class GlobalExceptionHandlerTest {
     void shouldReturnPayloadTooLargeWhenMaxUploadSizeExceededExceptionIsThrown() {
         MaxUploadSizeExceededException exception = new MaxUploadSizeExceededException(1L);
         ResponseEntity<ProblemDetail> response = globalExceptionHandler.handleMaxUploadSizeExceededException(exception);
-        assertEquals(HttpStatus.PAYLOAD_TOO_LARGE, response.getStatusCode());
+        assertEquals(HttpStatus.CONTENT_TOO_LARGE, response.getStatusCode());
     }
 
     @Test

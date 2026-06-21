@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class CustomVideoRepositoryImpl implements CustomVideoRepository {
 
+    public static final String PUBLICATION_DATE = "publicationDate";
     private final MongoTemplate mongoTemplate;
 
     public CustomVideoRepositoryImpl(MongoTemplate mongoTemplate) {
@@ -36,16 +37,16 @@ public class CustomVideoRepositoryImpl implements CustomVideoRepository {
 
         if (videoSearchPort.hasPublicationDate()) {
             if (Operation.GTE.equals(videoSearchPort.publicationDateOperation())) {
-                query.addCriteria(Criteria.where("publicationDate").gte(videoSearchPort.publicationDate()));
+                query.addCriteria(Criteria.where(PUBLICATION_DATE).gte(videoSearchPort.publicationDate()));
             } else if (Operation.LTE.equals(videoSearchPort.publicationDateOperation())) {
-                query.addCriteria(Criteria.where("publicationDate").lte(videoSearchPort.publicationDate().atTime(LocalTime.MAX)));
+                query.addCriteria(Criteria.where("PUBLICATION_DATE").lte(videoSearchPort.publicationDate().atTime(LocalTime.MAX)));
             }
         }
 
         long count = mongoTemplate.count(query, VideoDocument.class);
 
         if (videoSearchPort.hasSort()) {
-            query.with(Sort.by(Sort.Direction.valueOf(videoSearchPort.sort().name()), "publicationDate"));
+            query.with(Sort.by(Sort.Direction.valueOf(videoSearchPort.sort().name()), "PUBLICATION_DATE"));
         }
 
         PageRequest pageable = PageRequest.of(videoSearchPort.page(), videoSearchPort.size());

@@ -5,6 +5,10 @@ import br.com.fiap.techflix.domain.entities.file.File;
 
 public class FileMapper {
 
+    private FileMapper() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static File toDomain(FileDocument fileDocument) {
         return new File(fileDocument.getId(), fileDocument.getName(), fileDocument.getContentType(), fileDocument.getSize(), fileDocument.getContent());
     }

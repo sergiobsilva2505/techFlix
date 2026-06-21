@@ -14,6 +14,10 @@ import java.util.List;
 
 public class VideoMapper {
 
+    private VideoMapper() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Video toDomain(VideoDocument videoDocument) {
         List<Category> categories = videoDocument.getCategories().stream().map(CategoryMapper::toDomain).toList();
         VideoDetails videoDetails = new VideoDetails(videoDocument.getLikes(), videoDocument.getViews());
