@@ -2,13 +2,8 @@ server:
   port: 8080
 
 spring:
-  data:
-    mongodb:
-      authentication-database: admin
-      auto-index-creation: true
-      database: techflixdb
-      username: root
-      password: pass
+  mongodb:
+    uri: mongodb://root:pass@localhost:27017/techflixdb?authSource=admin
 
   mvc:
     format:
