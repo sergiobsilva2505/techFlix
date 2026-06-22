@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.fiap</groupId>
-    <artifactId>techFlix</artifactId>
+    <artifactId>techflix</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>techFlix</name>
     <description>techFlix</description>

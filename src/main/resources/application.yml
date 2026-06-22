@@ -2,8 +2,9 @@ server:
   port: 8080
 
 spring:
-  mongodb:
-    uri: mongodb://root:pass@localhost:27017/techflixdb?authSource=admin
+  data:
+    mongodb:
+      uri: mongodb://root:pass@localhost:27017/techflixdb?authSource=admin
 
   mvc:
     format:
@@ -15,8 +16,8 @@ spring:
       enabled: true
       location: ${java.io.tmpdir}
       file-size-threshold: 2KB
-      max-file-size: 200MB
-      max-request-size: 215MB
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 springdoc:
   api-docs:
