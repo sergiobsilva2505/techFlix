@@ -15,6 +15,7 @@
     <description>techFlix</description>
     <properties>
         <java.version>21</java.version>
+        <commons-compress.version>1.27.1</commons-compress.version>
     </properties>
 
     <dependencyManagement>
@@ -25,6 +26,12 @@
                 <version>1.21.4</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- ... testcontainers-bom existente ... -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.27.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
