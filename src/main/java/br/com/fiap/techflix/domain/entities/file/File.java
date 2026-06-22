@@ -4,11 +4,11 @@ import br.com.fiap.techflix.domain.validation.Validator;
 
 public class File {
 
-    private String id;
-    private String name;
-    private String contentType;
-    private long size;
-    private byte[] content;
+    private final String id;
+    private final String name;
+    private final String contentType;
+    private final long size;
+    private final byte[] content;
 
     public File(String id, String name, String contentType, long size, byte[] content) {
         Validator.notEmptyOrNull(id, "file id");

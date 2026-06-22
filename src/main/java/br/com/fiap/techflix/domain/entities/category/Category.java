@@ -4,8 +4,8 @@ import br.com.fiap.techflix.domain.validation.Validator;
 
 public class Category {
 
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
 
     public Category(String id, String name) {
         Validator.notEmptyOrNull(id, "Category id");

@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class BookmarkVideoDocument {
 
     @Id
-    private String id;
-    private UserDocument user;
-    private VideoDocument video;
+    private final String id;
+    private final UserDocument user;
+    private final VideoDocument video;
 
     public BookmarkVideoDocument(String id, UserDocument user, VideoDocument video) {
         this.id = id;

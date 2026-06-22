@@ -9,35 +9,35 @@
 #################################################################################
 version: "1.0"
 
-#Specify inspection profile for code analysis
+# Perfil "recommended" cobre mais inspeções que o "starter":
+# segurança, performance, boas práticas Java e Spring
 profile:
-  name: qodana.starter
+  name: qodana.recommended
 
-#Enable inspections
-#include:
-#  - name: <SomeEnabledInspectionId>
-
-#Disable inspections
+# Desabilitar inspeções específicas se necessário
 #exclude:
 #  - name: <SomeDisabledInspectionId>
 #    paths:
 #      - <path/where/not/run/inspection>
 
-projectJDK: "21" #(Applied in CI/CD pipeline)
+# Excluir pastas que não devem ser analisadas
+exclude:
+  - name: All
+    paths:
+      - target          # bytecode e artefatos gerados pelo Maven
+      - .mvn            # wrapper do Maven
 
-#Execute shell command before Qodana execution (Applied in CI/CD pipeline)
-#bootstrap: sh ./prepare-qodana.sh
+projectJDK: "21"
 
-#Install IDE plugins before Qodana execution (Applied in CI/CD pipeline)
-#plugins:
-#  - id: <plugin.id> #(plugin id can be found at https://plugins.jetbrains.com)
+# Compila o projeto antes da análise para que o Qodana resolva
+# corretamente todas as dependências e evite falsos positivos
+bootstrap: ./mvnw clean package -DskipTests --no-transfer-progress
 
-# Quality gate. Will fail the CI/CD pipeline if any condition is not met
+# Quality gate — falha o CI se qualquer condição for violada
 failureConditions:
   severityThresholds:
-    any: 50       # falha se houver mais de 50 problemas no total
-    critical: 0   # falha imediatamente se houver qualquer problema crítico
+    any: 20       # máximo de 20 problemas no total (qualquer severidade)
+    high: 5       # máximo de 5 problemas de alta severidade
+    critical: 0   # zero tolerância para problemas críticos
 
-#Qodana supports other languages, for example, Python, JavaScript, TypeScript, Go, C#, PHP
-#For all supported languages see https://www.jetbrains.com/help/qodana/linters.html
 linter: jetbrains/qodana-jvm-community:2026.1

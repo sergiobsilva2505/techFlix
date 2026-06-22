@@ -4,8 +4,8 @@ import br.com.fiap.techflix.domain.validation.Validator;
 
 public class VideoDetails {
 
-    private int likes;
-    private int views;
+    private final int likes;
+    private final int views;
 
     public VideoDetails(int likes, int views) {
         Validator.greaterThanOrEqual(likes, 0, "Video likes");

@@ -6,9 +6,9 @@ import br.com.fiap.techflix.domain.validation.Validator;
 
 public class BookmarkVideo {
 
-    private String id;
-    private User user;
-    private Video video;
+    private final String id;
+    private final User user;
+    private final Video video;
 
     public BookmarkVideo(String id, User user, Video video) {
         Validator.notNull(id, "bookmark video id");
