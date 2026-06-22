@@ -7,10 +7,16 @@ on:
   pull_request:
     branches: [ "main", "develop" ]
 
+# Cancela runs anteriores do mesmo branch/PR ao receber novo push
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build, Test & Coverage
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       checks: write
@@ -20,6 +26,8 @@ jobs:
       # ── 1. Checkout ──────────────────────────────────────────────────────────
       - name: Checkout do código
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # histórico completo para diff de cobertura no PR
 
       # ── 2. JDK 21 ────────────────────────────────────────────────────────────
       - name: Configurar JDK 21
@@ -67,7 +75,7 @@ jobs:
       # ── 8. Resumo de cobertura no PR / Summary ───────────────────────────────
       - name: Cobertura JaCoCo no GitHub Summary
         uses: madrapps/jacoco-report@v1.7.1
-        if: always()
+        if: success() || failure()   # roda mesmo se testes falharem, mas não se o build nem compilou
         with:
           paths: target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -80,8 +88,9 @@ jobs:
   qodana:
     name: Qodana — Análise de Qualidade
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
-      contents: write
+      contents: read       # corrigido: push-fixes=none não precisa de write
       pull-requests: write
       checks: write
 
