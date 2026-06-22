@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Video {
 
-    private String id;
+    private final String id;
     private String title;
     private String description;
     private List<Category> categories;
-    private VideoDetails details;
-    private LocalDateTime publicationDate;
+    private final VideoDetails details;
+    private final LocalDateTime publicationDate;
 
     public Video(String id, String title, String description, List<Category> categories, VideoDetails details, LocalDateTime publicationDate) {
         Validator.notEmptyOrNull(id, "video id");

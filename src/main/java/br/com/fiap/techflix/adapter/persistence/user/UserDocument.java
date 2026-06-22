@@ -7,11 +7,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UserDocument {
 
     @Id
-    private String id;
-    private String name;
-    private String email;
-    private String password;
-    private String token;
+    private final String id;
+    private final String name;
+    private final String email;
+    private final String password;
+    private final String token;
 
     public UserDocument(String id, String name, String email, String password, String token) {
         this.id = id;

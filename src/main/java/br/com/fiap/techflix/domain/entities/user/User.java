@@ -4,11 +4,11 @@ import br.com.fiap.techflix.domain.validation.Validator;
 
 public class User {
 
-    private String id;
-    private String name;
-    private String email;
-    private String password;
-    private String token;
+    private final String id;
+    private final String name;
+    private final String email;
+    private final String password;
+    private final String token;
 
     public User(String id, String name, String email, String password, String token) {
         Validator.notEmptyOrNull(id, "user id");
