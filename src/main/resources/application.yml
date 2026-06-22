@@ -11,16 +11,13 @@ spring:
       date: iso
       date-time: iso-offset
 
-  codec:
-    max-in-memory-size: 10MB
-
   servlet:
     multipart:
       enabled: true
       location: ${java.io.tmpdir}
       file-size-threshold: 2KB
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: 8MB
+      max-request-size: 8MB
 
 springdoc:
   api-docs:
