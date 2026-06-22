@@ -11,6 +11,9 @@ spring:
       date: iso
       date-time: iso-offset
 
+  codec:
+    max-in-memory-size: 10MB
+
   servlet:
     multipart:
       enabled: true
