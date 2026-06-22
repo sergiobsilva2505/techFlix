@@ -1,0 +1,147 @@
+### TechFlix API - All available endpoints
+### Base URL: http://localhost:8080
+
+
+# ==========================================
+# VIDEOS
+# ==========================================
+
+### Publish a video
+POST http://localhost:8080/videos
+Content-Type: application/json
+
+{
+  "fileId": "file-id-here",
+  "title": "My Video Title",
+  "description": "Video description",
+  "categoryNames": ["action", "comedy"]
+}
+
+###
+
+### Search videos (all query params are optional)
+GET http://localhost:8080/videos?page=0&size=10&title=My+Video&categoryName=action&publicationDate=2024-01-01&publicationDateOperation=GREATER_THAN&sort=ASC
+
+###
+
+### Get video by ID
+GET http://localhost:8080/videos/{{videoId}}
+
+###
+
+### Update video
+PUT http://localhost:8080/videos/{{videoId}}
+Content-Type: application/json
+
+{
+  "title": "Updated Title",
+  "description": "Updated description",
+  "categoryNames": ["drama"]
+}
+
+###
+
+### Delete video
+DELETE http://localhost:8080/videos/{{videoId}}
+
+###
+
+### Get video recommendations for a user
+GET http://localhost:8080/videos/{{userId}}/recommendations
+
+
+# ==========================================
+# VIDEO FILES
+# ==========================================
+
+### Upload a video file
+POST http://localhost:8080/videos/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="video.mp4"
+Content-Type: video/mp4
+
+< ./video.mp4
+--boundary--
+
+###
+
+### Play/stream a video
+GET http://localhost:8080/videos/play/{{fileId}}
+Range: bytes=0-
+
+
+# ==========================================
+# VIDEO STATISTICS
+# ==========================================
+
+### Get overall video statistics
+GET http://localhost:8080/videos/statistics
+
+
+# ==========================================
+# USERS
+# ==========================================
+
+### Create a user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+
+###
+
+### List users (paginated)
+GET http://localhost:8080/users?page=0&size=10
+
+###
+
+### Get user by ID
+GET http://localhost:8080/users/{{userId}}
+
+
+# ==========================================
+# CATEGORIES
+# ==========================================
+
+### Create a category
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "action"
+}
+
+###
+
+### Get category by ID
+GET http://localhost:8080/categories/{{categoryId}}
+
+
+# ==========================================
+# BOOKMARKS
+# ==========================================
+
+### Create a bookmark (bookmark a video for a user)
+POST http://localhost:8080/bookmarks/video/{{videoId}}/user/{{userId}}
+
+###
+
+### Delete a bookmark
+DELETE http://localhost:8080/bookmarks/video/{{videoId}}/user/{{userId}}
+
+###
+
+### Get bookmark by ID
+GET http://localhost:8080/bookmarks/{{bookmarkId}}
+
+###
+
+### List all bookmarks (paginated)
+GET http://localhost:8080/bookmarks?page=0&size=10
+

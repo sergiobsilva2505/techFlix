@@ -1,0 +1,35 @@
+package br.com.fiap.techflix.application.usecases.video;
+
+import br.com.fiap.techflix.adapter.web.video.VideoStatisticsDTO;
+import br.com.fiap.techflix.application.gateways.video.VideoGateway;
+import br.com.fiap.techflix.application.ports.VideoStatisticsPort;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+class VideoStatisticsUseCaseTest {
+
+    private VideoGateway videoGateway;
+    private VideoStatisticsUseCase videoStatisticsUseCase;
+
+    @BeforeEach
+    void setUp() {
+        videoGateway = mock(VideoGateway.class);
+        videoStatisticsUseCase = new VideoStatisticsUseCase(videoGateway);
+    }
+
+    @Test
+    @DisplayName("Retorna estatísticas gerais quando há dados disponíveis")
+    void shouldReturnStatisticsWhenDataIsAvailable() {
+        VideoStatisticsPort videoStatisticsPort = new VideoStatisticsDTO(1, 1, 1);
+        when(videoGateway.getOverallStatistics()).thenReturn(videoStatisticsPort);
+
+        VideoStatisticsPort result = videoStatisticsUseCase.getOverallStatistics();
+
+        assertNotNull(result);
+    }
+}

@@ -1,0 +1,36 @@
+package br.com.fiap.techflix.adapter.web.category;
+
+import br.com.fiap.techflix.application.usecases.category.CreateCategoryUseCase;
+import br.com.fiap.techflix.application.usecases.category.ListCategoryUseCase;
+import br.com.fiap.techflix.domain.entities.category.Category;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+@RestController
+public class CategoryController {
+
+    private final CreateCategoryUseCase createCategoryUseCase;
+    private final ListCategoryUseCase listCategoryUseCase;
+
+    public CategoryController(CreateCategoryUseCase createCategoryUseCase, ListCategoryUseCase listCategoryUseCase) {
+        this.createCategoryUseCase = createCategoryUseCase;
+        this.listCategoryUseCase = listCategoryUseCase;
+    }
+
+    @PostMapping("/categories")
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryCreateDTO categoryDTO) {
+        Category category = createCategoryUseCase.createCategory(categoryDTO);
+
+        URI uri = URI.create("/categories/" + category.getId());
+        return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<CategoryShowDTO> getCategoryById(@PathVariable String id) {
+        CategoryShowDTO view = CategoryMapper.toView(listCategoryUseCase.listCategory(id));
+        return ResponseEntity.ok(view);
+    }
+}
