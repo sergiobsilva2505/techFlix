@@ -1,0 +1,105 @@
+name: CI — Build & Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  build:
+    name: Build, Test & Coverage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # ── 2. JDK 21 ────────────────────────────────────────────────────────────
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'corretto'
+
+      # ── 3. Cache Maven (~/.m2) ───────────────────────────────────────────────
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # ── 4. Permissão para o mvnw ─────────────────────────────────────────────
+      - name: Permissão de execução para mvnw
+        run: chmod +x ./mvnw
+
+      # ── 5. Build + Testes + JaCoCo ───────────────────────────────────────────
+      #    Testcontainers sobe o MongoDB via Docker (disponível no ubuntu-latest)
+      - name: Build e testes
+        run: ./mvnw clean verify --no-transfer-progress
+
+      # ── 6. Publicar resultado dos testes ─────────────────────────────────────
+      - name: Publicar relatório de testes (JUnit)
+        uses: mikepenz/action-junit-report@v4
+        if: always()
+        with:
+          report_paths: '**/target/surefire-reports/TEST-*.xml'
+          fail_on_failure: true
+          require_tests: true
+
+      # ── 7. Upload relatório JaCoCo ───────────────────────────────────────────
+      - name: Upload relatório de cobertura (JaCoCo)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          retention-days: 15
+
+      # ── 8. Resumo de cobertura no PR / Summary ───────────────────────────────
+      - name: Cobertura JaCoCo no GitHub Summary
+        uses: madrapps/jacoco-report@v1.7.1
+        if: always()
+        with:
+          paths: target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 60
+          min-coverage-changed-files: 60
+          title: '📊 Cobertura de Código — TechFlix'
+          update-comment: true
+
+  # ────────────────────────────────────────────────────────────────────────────
+  qodana:
+    name: Qodana — Análise de Qualidade
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Qodana Scan
+        uses: JetBrains/qodana-action@v2026.1
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        with:
+          pr-mode: false
+          use-caches: true
+          post-pr-comment: true
+          use-annotations: true
+          upload-result: false
+          push-fixes: 'none'
