@@ -12,18 +12,12 @@
 
 </div>
 
----
+<div align="center">
 
-## Sumário
+[Pré-requisitos](#-pré-requisitos), [Como executar](#-como-executar), [Arquitetura](#-arquitetura-e-decisões-técnicas), [Tecnologias](#-tecnologias),
+ [Ferramentas](#-ferramentas), [API Reference](#-guia-de-uso-da-api)
 
-- [Pré-requisitos](#-pré-requisitos)
-- [Como executar](#-como-executar)
-- [Arquitetura](#-arquitetura-e-decisões-técnicas)
-- [Tecnologias](#-tecnologias)
-- [Ferramentas](#-ferramentas)
-- [API Reference](#-guia-de-uso-da-api)
-
----
+</div>
 
 ## ✅ Pré-requisitos
 
