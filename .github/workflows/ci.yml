@@ -3,9 +3,7 @@ name: CI — Build & Test
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main", "develop" ]
 
 # Cancela runs anteriores do mesmo branch/PR ao receber novo push
 concurrency:
